@@ -138,6 +138,14 @@ namespace FactorioTest
             WriteLine();
             Write("Name: ");
             name = ReadLine();
+
+            if(items.Find(x => x.Name == name) != null)
+            {
+                WriteLine("Error: Item already exists!");
+                ReadKey();
+                return;
+            }
+
             Write("Quantity: ");
             quantity = Convert.ToInt32(ReadLine());
             Write("Crafttime: ");

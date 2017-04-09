@@ -41,7 +41,11 @@ namespace Factorio
             if (Recipe == null)
                 Recipe = new Dictionary<Item, int>();
 
-            Recipe.Add(item, quantity);
+            if(!Recipe.ContainsKey(item))
+            {
+                Recipe.Add(item, quantity);
+            }
+                
         }
     #endregion
 
