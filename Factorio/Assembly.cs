@@ -62,6 +62,11 @@ namespace Factorio
             }
             
         }
+
+        public void PrintRaw(params string[] args)
+        {
+
+        }
         #endregion
 
     }

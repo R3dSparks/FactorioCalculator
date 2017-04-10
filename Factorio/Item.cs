@@ -76,6 +76,7 @@ namespace Factorio
             this.Name = reader.GetAttribute(XmlItemAttributeName);
             this.Output = Convert.ToInt32(reader.GetAttribute(XmlItemAttributeOutput));
             this.Time = Convert.ToDouble(reader.GetAttribute(XmlItemAttributeTime));
+            this.Productivity = this.Output / this.Time;
         }
 
         public void WriteXml(XmlWriter writer)
