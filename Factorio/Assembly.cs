@@ -31,7 +31,7 @@ namespace Factorio
         {
             AssemblyItem = assemblyItem;
 
-            Quantity = quantity * ((topAssembly.Quantity * topAssembly.AssemblyItem.Productivity) / assemblyItem.Productivity);
+            Quantity = (quantity * ((topAssembly.Quantity * topAssembly.AssemblyItem.Productivity)) / (assemblyItem.Productivity * topAssembly.AssemblyItem.Output));
 
             SubAssembly = new List<Assembly>();
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -12,7 +13,8 @@ namespace Factorio
 
         public static readonly string XmlItemElement = "Item";
         public static readonly string XmlItemAttributeName = "name";
-        public static readonly string XmlItemAttributeProductivity = "productivity";
+        public static readonly string XmlItemAttributeOutput = "output";
+        public static readonly string XmlItemAttributeTime = "time";
 
         public static readonly string XmlCraftingElement = "Crafting";
         public static readonly string XmlCraftingAttributeItem = "item";
@@ -23,6 +25,10 @@ namespace Factorio
         public string Name { get; private set; }
 
         public double Productivity { get; set; }
+
+        public int Output { get; set; }
+
+        public double Time { get; set; }
 
         public Dictionary<Item, int> Recipe { get; private set; }
 
@@ -36,16 +42,12 @@ namespace Factorio
 
         }
 
-        public Item(string name, double productivity)
+        public Item(string name, int output, double time)
         {
             Name = name;
-            Productivity = productivity;
-        }
-
-        public Item(string name, int quantity, double crafttime)
-        {
-            Name = name;
-            Productivity = quantity / crafttime;
+            Output = output;
+            Time = time;
+            Productivity = output / time;
         }
         #endregion
 
@@ -71,22 +73,16 @@ namespace Factorio
 
         public void ReadXml(XmlReader reader)
         {
-            reader.MoveToContent();
-            this.Name = reader.GetAttribute("name");
-
-            bool isEmptyElement = reader.IsEmptyElement;
-            reader.ReadStartElement();
-
-            if(!isEmptyElement)
-            {
-
-            }
+            this.Name = reader.GetAttribute(XmlItemAttributeName);
+            this.Output = Convert.ToInt32(reader.GetAttribute(XmlItemAttributeOutput));
+            this.Time = Convert.ToDouble(reader.GetAttribute(XmlItemAttributeTime));
         }
 
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString(XmlItemAttributeName, this.Name);
-            writer.WriteAttributeString(XmlItemAttributeProductivity, this.Productivity.ToString());
+            writer.WriteAttributeString(XmlItemAttributeOutput, this.Output.ToString());
+            writer.WriteAttributeString(XmlItemAttributeTime, this.Time.ToString());
             
             if(this.Recipe != null)
             {

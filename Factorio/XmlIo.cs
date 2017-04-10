@@ -20,14 +20,12 @@ namespace Factorio
             //Add all items to the list without crafts
             while(reader.Read())
             {
-                if (reader.Name == Item.XmlItemElement && reader.NodeType != XmlNodeType.EndElement)
+                if(reader.Name == Item.XmlItemElement && reader.NodeType != XmlNodeType.EndElement)
                 {
-                    items.Add(new Item(                       
-                        reader.GetAttribute(Item.XmlItemAttributeName), 
-                        Convert.ToDouble(reader.GetAttribute(Item.XmlItemAttributeProductivity))
-                        )
-                    );
-                }
+                    Item item = new Item();
+                    item.ReadXml(reader);
+                    items.Add(item);
+                }               
             }
 
             reader.Close();
@@ -83,13 +81,6 @@ namespace Factorio
 
             writer.Close();
 
-        }
-
-        public static void AddItem(Item item, string path)
-        {
-            List<Item> items = ReadItems(path);
-            items.Add(item);
-            SaveItems(items, path);
         }
 
         private static void createXmlFile(string path)
