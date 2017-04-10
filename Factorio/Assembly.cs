@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Factorio.Entities;
+using Factorio.DAL;
+
 namespace Factorio
 {
     public class Assembly
     {
         #region Properties
-        public Item AssemblyItem { get; private set; }
+        public FactorioItem AssemblyItem { get; private set; }
         public double Quantity { get; private set; }
         public List<Assembly> SubAssembly { get; set; }
         #endregion
 
         #region Constructors
-        public Assembly(Item assemblyItem)
+        public Assembly(FactorioItem assemblyItem)
         {
             AssemblyItem = assemblyItem;
 
@@ -27,11 +30,11 @@ namespace Factorio
             }
         }
 
-        public Assembly(Item assemblyItem, Assembly topAssembly, int quantity)
+        public Assembly(FactorioItem assemblyItem, Assembly topAssembly, int quantity)
         {
             AssemblyItem = assemblyItem;
 
-            Quantity = (quantity * ((topAssembly.Quantity * topAssembly.AssemblyItem.Productivity)) / (assemblyItem.Productivity * topAssembly.AssemblyItem.Output));
+            Quantity = (quantity * ((topAssembly.Quantity * topAssembly.AssemblyItem.Productivity)) / (assemblyItem.Productivity * topAssembly.AssemblyItem.CraftingOutput));
 
             SubAssembly = new List<Assembly>();
 

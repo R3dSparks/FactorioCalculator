@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Xml;
 
 using static System.Console;
+using Factorio.Entities;
+using Factorio.DAL;
 
 namespace FactorioTest
 {
@@ -14,14 +16,14 @@ namespace FactorioTest
     {
         static string path = "ItemList.xml";
 
-        static List<Item> items;
+        static List<FactorioItem> items;
 
         static void Main(string[] args)
         {
 
             bool isRunning = true;
 
-            items = XmlIO.ReadItems(path);
+            items = FactorioXmlDal.ReadItems(path);
 
             while(isRunning)
             {
@@ -89,7 +91,7 @@ namespace FactorioTest
 
                 string itemName = ReadLine();
 
-                Item item = items.Find(x => x.Name == itemName);
+                FactorioItem item = items.Find(x => x.Name == itemName);
 
                 WriteLine();
                 WriteLine($"Name: {item.Name}");
@@ -151,7 +153,7 @@ namespace FactorioTest
 
             string recipeItem = ReadLine();
 
-            Item item = items.Find(x => x.Name == recipeItem);
+            FactorioItem item = items.Find(x => x.Name == recipeItem);
 
             do
             {
@@ -181,7 +183,7 @@ namespace FactorioTest
 
             } while (ReadKey(true).KeyChar == 'y');
 
-            XmlIO.SaveItems(items, path);
+            FactorioXmlDal.SaveItems(items, path);
             
         }
 
@@ -209,9 +211,9 @@ namespace FactorioTest
             Write("Crafttime: ");
             crafttime = Convert.ToDouble(ReadLine());
 
-            items.Add(new Item(name, quantity, crafttime));
+            items.Add(new FactorioItem(name, quantity, crafttime));
 
-            XmlIO.SaveItems(items, path);
+            FactorioXmlDal.SaveItems(items, path);
 
         }
         #endregion

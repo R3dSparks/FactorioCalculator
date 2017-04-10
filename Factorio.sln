@@ -1,11 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.12
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factorio", "Factorio\Factorio.csproj", "{C3F2BECF-01EC-48D0-AE8F-D9A034A17D98}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactorioTest", "FactorioTest\FactorioTest.csproj", "{DB9D90B7-E73C-4CCF-9124-28339A754923}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factorio.DAL", "Factorio.DAL\Factorio.DAL.csproj", "{BF393920-F0A8-41D8-8BE0-CF245CE6CF4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factorio.Entities", "Factorio.Entities\Factorio.Entities.csproj", "{6A92C8F5-841D-4EA2-BB7C-59B7E261FA0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{972D8754-94D5-4BD4-8758-70DE053E9A6D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{8BCD8D11-094B-41AA-BA49-191BA43C8B78}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{D1A37A06-23B7-4674-8E6F-B33073F06949}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +31,22 @@ Global
 		{DB9D90B7-E73C-4CCF-9124-28339A754923}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB9D90B7-E73C-4CCF-9124-28339A754923}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB9D90B7-E73C-4CCF-9124-28339A754923}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF393920-F0A8-41D8-8BE0-CF245CE6CF4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF393920-F0A8-41D8-8BE0-CF245CE6CF4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF393920-F0A8-41D8-8BE0-CF245CE6CF4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF393920-F0A8-41D8-8BE0-CF245CE6CF4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A92C8F5-841D-4EA2-BB7C-59B7E261FA0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A92C8F5-841D-4EA2-BB7C-59B7E261FA0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A92C8F5-841D-4EA2-BB7C-59B7E261FA0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A92C8F5-841D-4EA2-BB7C-59B7E261FA0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C3F2BECF-01EC-48D0-AE8F-D9A034A17D98} = {8BCD8D11-094B-41AA-BA49-191BA43C8B78}
+		{DB9D90B7-E73C-4CCF-9124-28339A754923} = {972D8754-94D5-4BD4-8758-70DE053E9A6D}
+		{BF393920-F0A8-41D8-8BE0-CF245CE6CF4E} = {D1A37A06-23B7-4674-8E6F-B33073F06949}
+		{6A92C8F5-841D-4EA2-BB7C-59B7E261FA0D} = {8BCD8D11-094B-41AA-BA49-191BA43C8B78}
 	EndGlobalSection
 EndGlobal

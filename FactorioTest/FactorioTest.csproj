@@ -49,6 +49,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Factorio.DAL\Factorio.DAL.csproj">
+      <Project>{bf393920-f0a8-41d8-8be0-cf245ce6cf4e}</Project>
+      <Name>Factorio.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Factorio.Entities\Factorio.Entities.csproj">
+      <Project>{6a92c8f5-841d-4ea2-bb7c-59b7e261fa0d}</Project>
+      <Name>Factorio.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Factorio\Factorio.csproj">
       <Project>{c3f2becf-01ec-48d0-ae8f-d9a034a17d98}</Project>
       <Name>Factorio</Name>
