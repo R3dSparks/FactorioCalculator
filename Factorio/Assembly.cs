@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Factorio
 {
-    class Assembly
+    public class Assembly
     {
         #region Properties
         public Item AssemblyItem { get; private set; }
@@ -14,6 +12,7 @@ namespace Factorio
         public List<Assembly> SubAssembly { get; set; }
         #endregion
 
+        #region Constructors
         public Assembly(Item assemblyItem)
         {
             AssemblyItem = assemblyItem;
@@ -45,12 +44,15 @@ namespace Factorio
             }
         }
 
-        public void Print(int quantity, int tabs)
+        #endregion
+
+        #region Public methods
+        public void Print(int quantity, int tabs = 0)
         {
             for (int i = 0; i < tabs; i++)
                 Console.Write("\t");
 
-            Console.WriteLine($"{this.AssemblyItem.Name}: {this.Quantity * quantity} ({this.AssemblyItem.Productivity * this.Quantity * quantity}/second)");
+            Console.WriteLine($"{this.AssemblyItem.Name}: {this.Quantity * quantity:F4} ({this.AssemblyItem.Productivity * this.Quantity * quantity:F4}/second)");
             if(this.SubAssembly.Count() != 0)
             {
                 foreach (var subAssembly in this.SubAssembly)
@@ -60,7 +62,7 @@ namespace Factorio
             }
             
         }
-
+        #endregion
 
     }
 }

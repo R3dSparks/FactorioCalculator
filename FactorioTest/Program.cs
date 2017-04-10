@@ -39,6 +39,9 @@ namespace FactorioTest
                         CreateProduction();
                         break;
                     case "4":
+                        ViewItems();
+                        break;
+                    case "5":
                         isRunning = false;
                         break;
                     default:
@@ -48,6 +51,7 @@ namespace FactorioTest
         
         }
 
+        #region Menus
         static void MainMenu()
         {
             Clear();
@@ -56,8 +60,60 @@ namespace FactorioTest
             WriteLine("1) Add new item");
             WriteLine("2) Add recipe to item");
             WriteLine("3) Create production");
-            WriteLine("4) Exit");
+            WriteLine("4) View items");
+            WriteLine("5) Exit");
             Write(">");
+        }
+
+        static void ViewItems()
+        {
+            Clear();
+            WriteLine("View items");
+            WriteLine();
+
+            foreach (var i in items)
+            {
+                WriteLine(i.Name);
+            }
+
+            WriteLine();
+
+            Write("View item details?(y/n)");
+
+
+            if(ReadKey(true).KeyChar == 'y')
+            {
+                WriteLine();
+                WriteLine();
+                Write("Item: ");
+
+                string itemName = ReadLine();
+
+                Item item = items.Find(x => x.Name == itemName);
+
+                WriteLine();
+                WriteLine($"Name: {item.Name}");
+                WriteLine($"Productivity: {item.Productivity}");
+                WriteLine();
+                if(item.Recipe != null)
+                {
+                    WriteLine("Recipe:");
+
+                    foreach (var craft in item.Recipe)
+                    {
+                        WriteLine($"\t{craft.Value}x {craft.Key.Name}");
+                    }
+                }
+                else
+                {
+                    WriteLine("This item has no recipe");
+                }
+
+                WriteLine();
+                Write("Press any key...");
+                ReadKey();
+
+            }
         }
 
         static void CreateProduction()
@@ -67,11 +123,13 @@ namespace FactorioTest
             WriteLine();
             Write("Item: ");
 
-            Production production = new Production(ReadLine(), items);
+            string itemName = ReadLine();
+
+            Assembly assembly = new Assembly(items.Find(x => x.Name == itemName));
 
             Write("Quantity: ");         
 
-            production.Print(Convert.ToInt32(ReadLine()));
+            assembly.Print(Convert.ToInt32(ReadLine()));
 
             ReadKey();
         }
@@ -119,9 +177,9 @@ namespace FactorioTest
                 item.AddRecipeItem(items.Find(x => x.Name == itemName), quantity);
 
                 WriteLine();
-                Write("Do you want to add another item to the recipe?(y/n): ");
+                Write("Do you want to add another item to the recipe?(y/n)");
 
-            } while (ReadLine() == "y");
+            } while (ReadKey(true).KeyChar == 'y');
 
             XmlIO.SaveItems(items, path);
             
@@ -156,6 +214,6 @@ namespace FactorioTest
             XmlIO.SaveItems(items, path);
 
         }
-
+        #endregion
     }
 }

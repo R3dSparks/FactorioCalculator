@@ -7,12 +7,26 @@ namespace Factorio
 {
     public class Item : IXmlSerializable
     {
+        #region Xml markers
+        public static readonly string XmlMainElement = "Items";
+
+        public static readonly string XmlItemElement = "Item";
+        public static readonly string XmlItemAttributeName = "name";
+        public static readonly string XmlItemAttributeProductivity = "productivity";
+
+        public static readonly string XmlCraftingElement = "Crafting";
+        public static readonly string XmlCraftingAttributeItem = "item";
+        public static readonly string XmlCraftingAttributeQuantity = "quantity";
+        #endregion
+
         #region Properties
         public string Name { get; private set; }
 
         public double Productivity { get; set; }
 
         public Dictionary<Item, int> Recipe { get; private set; }
+
+        public Crafting MadeIn { get; set; }
 
         #endregion
 
@@ -71,16 +85,16 @@ namespace Factorio
 
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteAttributeString("name", this.Name);
-            writer.WriteAttributeString("productivity", this.Productivity.ToString());
+            writer.WriteAttributeString(XmlItemAttributeName, this.Name);
+            writer.WriteAttributeString(XmlItemAttributeProductivity, this.Productivity.ToString());
             
             if(this.Recipe != null)
             {
                 foreach(var craft in this.Recipe)
                 {
-                    writer.WriteStartElement("Crafting");
-                    writer.WriteAttributeString("item", craft.Key.Name);
-                    writer.WriteAttributeString("quantity", craft.Value.ToString());
+                    writer.WriteStartElement(XmlCraftingElement);
+                    writer.WriteAttributeString(XmlCraftingAttributeItem, craft.Key.Name);
+                    writer.WriteAttributeString(XmlCraftingAttributeQuantity, craft.Value.ToString());
                     writer.WriteEndElement();
                 }
             }

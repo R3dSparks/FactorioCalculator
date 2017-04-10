@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace Factorio
 {
     public static class XmlIO
-    {
+    {    
 
         public static List<Item> ReadItems(string path)
         {
@@ -23,12 +20,11 @@ namespace Factorio
             //Add all items to the list without crafts
             while(reader.Read())
             {
-                if (reader.Name == "Item" && reader.NodeType != XmlNodeType.EndElement)
+                if (reader.Name == Item.XmlItemElement && reader.NodeType != XmlNodeType.EndElement)
                 {
-                    string temp = reader.GetAttribute("name");
                     items.Add(new Item(                       
-                        reader.GetAttribute("name"), 
-                        Convert.ToDouble(reader.GetAttribute("productivity"))
+                        reader.GetAttribute(Item.XmlItemAttributeName), 
+                        Convert.ToDouble(reader.GetAttribute(Item.XmlItemAttributeProductivity))
                         )
                     );
                 }
@@ -43,15 +39,15 @@ namespace Factorio
             //Add crafts to items in the list
             while(reader.Read())
             {
-                if(reader.Name == "Item" && !reader.IsEmptyElement)
+                if(reader.Name == Item.XmlItemElement && !reader.IsEmptyElement)
                 {
-                    currentItem = items.Find(x => x.Name == reader.GetAttribute("name"));
+                    currentItem = items.Find(x => x.Name == reader.GetAttribute(Item.XmlItemAttributeName));
                 }
-                else if(reader.Name == "Crafting")
+                else if(reader.Name == Item.XmlCraftingElement)
                 {
                     currentItem.AddRecipeItem(
-                        items.Find(x => x.Name == reader.GetAttribute("item")),
-                        Convert.ToInt32(reader.GetAttribute("quantity"))
+                        items.Find(x => x.Name == reader.GetAttribute(Item.XmlCraftingAttributeItem)),
+                        Convert.ToInt32(reader.GetAttribute(Item.XmlCraftingAttributeQuantity))
                     );
                 }
                 
@@ -72,11 +68,11 @@ namespace Factorio
 
             writer.WriteStartDocument();
 
-            writer.WriteStartElement("Items");
+            writer.WriteStartElement(Item.XmlMainElement);
 
             foreach(var item in items)
             {
-                writer.WriteStartElement("Item");
+                writer.WriteStartElement(Item.XmlItemElement);
 
                 item.WriteXml(writer);
 
@@ -105,7 +101,7 @@ namespace Factorio
 
             writer.WriteStartDocument();
 
-            writer.WriteStartElement("Items");
+            writer.WriteStartElement(Item.XmlMainElement);
             writer.WriteEndElement();
 
             writer.WriteEndDocument();
