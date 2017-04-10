@@ -7,18 +7,34 @@ using Factorio.Entities;
 
 namespace Factorio.DAL
 {
-
-    public static class FactorioXmlDal
+    /// <summary>
+    /// This class saves <see cref="FactorioItem"/> into a xml file and reads from such a file.
+    /// </summary>
+    public class FactorioXmlDal : IFactorioXmlDal
     {
 
+        #region Constructor
 
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        public FactorioXmlDal()
+        {
+
+        }
+
+
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
         /// Read all <see cref="FactorioItem"/> from a xml file
         /// </summary>
         /// <param name="path">path to file</param>
         /// <returns></returns>
-        public static List<FactorioItem> ReadItems(string path)
+        public List<FactorioItem> ReadItems(string path)
         {
             if (!File.Exists(path))
                 createXmlFile(path);
@@ -72,7 +88,7 @@ namespace Factorio.DAL
         /// </summary>
         /// <param name="items">save these <see cref="FactorioItem"/>s</param>
         /// <param name="path">save the file here</param>
-        public static void SaveItems(List<FactorioItem> items, string path)
+        public void SaveItems(List<FactorioItem> items, string path)
         {
 
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -100,11 +116,16 @@ namespace Factorio.DAL
         }
 
 
+        #endregion
+
+        #region Private Methods
+
+
         /// <summary>
         /// create the file 
         /// </summary>
         /// <param name="path"></param>
-        private static void createXmlFile(string path)
+        private void createXmlFile(string path)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
@@ -120,5 +141,8 @@ namespace Factorio.DAL
 
             writer.Close();
         }
+
+
+        #endregion
     }
 }

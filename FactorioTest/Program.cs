@@ -8,40 +8,44 @@ using System.Xml;
 
 using static System.Console;
 using Factorio.Entities;
-using Factorio.DAL;
 
 namespace FactorioTest
 {
+
+
     class Program
     {
-        static string path = "ItemList.xml";
+        private static string path = "ItemList.xml";
 
-        static List<FactorioItem> items;
 
-        static void Main(string[] args)
+        /// <summary>
+        /// main programm
+        /// </summary>
+        /// <param name="args"></param>
+        private static void Main(string[] args)
         {
-
+            IFactorioLogic logic = new FactorioLogic();
             bool isRunning = true;
 
-            items = FactorioXmlDal.ReadItems(path);
+            logic.ReadFile(path);
 
-            while(isRunning)
+            while (isRunning)
             {
                 MainMenu();
 
                 switch (ReadLine())
                 {
                     case "1":
-                        AddItem();
+                        AddItem(logic);
                         break;
                     case "2":
-                        AddRecipe();
+                        AddRecipe(logic);
                         break;
                     case "3":
-                        CreateProduction();
+                        CreateProduction(logic);
                         break;
                     case "4":
-                        ViewItems();
+                        ViewItems(logic);
                         break;
                     case "5":
                         isRunning = false;
@@ -50,11 +54,18 @@ namespace FactorioTest
                         break;
                 }
             }
-        
+
         }
 
+
+
         #region Menus
-        static void MainMenu()
+
+
+        /// <summary>
+        /// display the menu
+        /// </summary>
+        private static void MainMenu()
         {
             Clear();
             WriteLine("Factorio calculator v0.1");
@@ -67,13 +78,17 @@ namespace FactorioTest
             Write(">");
         }
 
-        static void ViewItems()
+
+        /// <summary>
+        /// show the names of all items and ask if you want to 
+        /// </summary>
+        private static void ViewItems(IFactorioLogic logic)
         {
             Clear();
             WriteLine("View items");
             WriteLine();
 
-            foreach (var i in items)
+            foreach (var i in logic.Items)
             {
                 WriteLine(i.Name);
             }
@@ -83,42 +98,56 @@ namespace FactorioTest
             Write("View item details?(y/n)");
 
 
-            if(ReadKey(true).KeyChar == 'y')
+            if (ReadKey(true).KeyChar == 'y')
             {
-                WriteLine();
-                WriteLine();
-                Write("Item: ");
-
-                string itemName = ReadLine();
-
-                FactorioItem item = items.Find(x => x.Name == itemName);
-
-                WriteLine();
-                WriteLine($"Name: {item.Name}");
-                WriteLine($"Productivity: {item.Productivity}");
-                WriteLine();
-                if(item.Recipe != null)
-                {
-                    WriteLine("Recipe:");
-
-                    foreach (var craft in item.Recipe)
-                    {
-                        WriteLine($"\t{craft.Value}x {craft.Key.Name}");
-                    }
-                }
-                else
-                {
-                    WriteLine("This item has no recipe");
-                }
-
-                WriteLine();
-                Write("Press any key...");
-                ReadKey();
-
+                showDetails(logic);
             }
         }
 
-        static void CreateProduction()
+
+        /// <summary>
+        /// show all items in detail
+        /// </summary>
+        /// <param name="logic"></param>
+        private static void showDetails(IFactorioLogic logic)
+        {
+            WriteLine();
+            WriteLine();
+            Write("Item: ");
+
+            string itemName = ReadLine();
+
+            FactorioItem item = logic.Items.Find(x => x.Name == itemName);
+
+            WriteLine();
+            WriteLine($"Name: {item.Name}");
+            WriteLine($"Productivity: {item.Productivity}");
+            WriteLine();
+            if (item.Recipe != null)
+            {
+                WriteLine("Recipe:");
+
+                foreach (var craft in item.Recipe)
+                {
+                    WriteLine($"\t{craft.Value}x {craft.Key.Name}");
+                }
+            }
+            else
+            {
+                WriteLine("This item has no recipe");
+            }
+
+            WriteLine();
+            Write("Press any key...");
+            ReadKey();
+        }
+
+
+        /// <summary>
+        /// read a item name and output the production of it
+        /// </summary>
+        /// <param name="logic"></param>
+        private static void CreateProduction(IFactorioLogic logic)
         {
             Clear();
             WriteLine("Create a new production");
@@ -127,34 +156,49 @@ namespace FactorioTest
 
             string itemName = ReadLine();
 
-            Assembly assembly = new Assembly(items.Find(x => x.Name == itemName));
+            Assembly assembly = new Assembly(logic.Items.Find(x => x.Name == itemName));
 
-            Write("Quantity: ");         
+            Write("Quantity: ");
 
-            assembly.Print(Convert.ToInt32(ReadLine()));
+            assembly.PrintProduction(Convert.ToInt32(ReadLine()));
 
             ReadKey();
         }
 
-        static void AddRecipe()
+
+        /// <summary>
+        /// add a recipe to an item.
+        /// first it selects the item where the can edit the recipe.
+        /// then the user can add a item to the recipe by entering the item name and the amount which is needed.
+        /// </summary>
+        /// <param name="logic"></param>
+        private static void AddRecipe(IFactorioLogic logic)
         {
             Clear();
             WriteLine("Add recipe to item");
             WriteLine();
 
-            foreach(var i in items)
+            foreach (var i in logic.Items)
             {
                 WriteLine(i.Name);
             }
 
             WriteLine();
-
             Write("Item: ");
 
             string recipeItem = ReadLine();
+            FactorioItem item = logic.Items.Find(x => x.Name == recipeItem);
 
-            FactorioItem item = items.Find(x => x.Name == recipeItem);
+            addItemToRecipe(logic, item);
+            logic.WriteFile(path);
+        }
 
+
+        /// <summary>
+        /// continue adding items to the recipe until the user enters not the character 'y' at the end.
+        /// </summary>
+        private static void addItemToRecipe(IFactorioLogic logic, FactorioItem item)
+        {
             do
             {
                 string itemName;
@@ -164,9 +208,9 @@ namespace FactorioTest
                 WriteLine($"Add recipe to {item.Name}");
                 WriteLine();
 
-                foreach (var i in items)
+                foreach (var i in logic.Items)
                 {
-                    if(i.Name != item.Name)                 
+                    if (i.Name != item.Name)
                         WriteLine(i.Name);
                 }
 
@@ -176,18 +220,20 @@ namespace FactorioTest
                 Write("Item quantity: ");
                 quantity = Convert.ToInt32(ReadLine());
 
-                item.AddRecipeItem(items.Find(x => x.Name == itemName), quantity);
+                item.AddRecipeItem(logic.Items.Find(x => x.Name == itemName), quantity);
 
                 WriteLine();
                 Write("Do you want to add another item to the recipe?(y/n)");
 
             } while (ReadKey(true).KeyChar == 'y');
-
-            FactorioXmlDal.SaveItems(items, path);
-            
         }
 
-        static void AddItem()
+
+        /// <summary>
+        /// Add a new item into the list
+        /// </summary>
+        /// <param name="logic"></param>
+        public static void AddItem(IFactorioLogic logic)
         {
             string name;
             int quantity;
@@ -199,7 +245,7 @@ namespace FactorioTest
             Write("Name: ");
             name = ReadLine();
 
-            if(items.Find(x => x.Name == name) != null)
+            if (logic.Items.Find(x => x.Name == name) != null)
             {
                 WriteLine("Error: Item already exists!");
                 ReadKey();
@@ -211,11 +257,12 @@ namespace FactorioTest
             Write("Crafttime: ");
             crafttime = Convert.ToDouble(ReadLine());
 
-            items.Add(new FactorioItem(name, quantity, crafttime));
-
-            FactorioXmlDal.SaveItems(items, path);
+            logic.Items.Add(new FactorioItem(name, quantity, crafttime));
+            logic.WriteFile(path);
 
         }
+
+
         #endregion
     }
 }

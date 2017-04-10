@@ -9,13 +9,22 @@ namespace Factorio
 {
     public class Assembly
     {
+
+
         #region Properties
+
+
         public FactorioItem AssemblyItem { get; private set; }
         public double Quantity { get; private set; }
+        // Tip: für listen immer eine private variable anlegen und im falle wenn diese null ist, eine neue leere liste anzulegen.
         public List<Assembly> SubAssembly { get; set; }
+
+
         #endregion
 
         #region Constructors
+
+
         public Assembly(FactorioItem assemblyItem)
         {
             AssemblyItem = assemblyItem;
@@ -24,11 +33,13 @@ namespace Factorio
 
             SubAssembly = new List<Assembly>();
 
-            foreach(var item in assemblyItem.Recipe)
+            foreach (var item in assemblyItem.Recipe)
             {
                 SubAssembly.Add(new Assembly(item.Key, this, item.Value));
             }
         }
+
+
 
         public Assembly(FactorioItem assemblyItem, Assembly topAssembly, int quantity)
         {
@@ -47,30 +58,66 @@ namespace Factorio
             }
         }
 
+
+
         #endregion
 
         #region Public methods
-        public void Print(int quantity, int tabs = 0)
+
+
+        public void PrintProduction(int quantity, int tabs = 0)
         {
             for (int i = 0; i < tabs; i++)
                 Console.Write("\t");
 
             Console.WriteLine($"{this.AssemblyItem.Name}: {this.Quantity * quantity:F4} ({this.AssemblyItem.Productivity * this.Quantity * quantity:F4}/second)");
-            if(this.SubAssembly.Count() != 0)
+            if (this.SubAssembly.Count() != 0)
             {
                 foreach (var subAssembly in this.SubAssembly)
                 {
-                    subAssembly.Print(quantity, tabs + 1);
+                    subAssembly.PrintProduction(quantity, tabs + 1);
                 }
             }
-            
+
         }
 
-        public void PrintRaw(params string[] args)
+        public Dictionary<FactorioItem, double> GetRaw(int quantity, params string[] args)
         {
+            foreach (var itemName in args)
+            {
+                if (this.AssemblyItem.Name == itemName)
+                {
+                    Dictionary<FactorioItem, double> dict = new Dictionary<FactorioItem, double>();
+
+                    dict.Add(this.AssemblyItem, this.AssemblyItem.Productivity * this.Quantity * quantity);
+
+                    return dict;
+                }
+            }
+
+            Dictionary<FactorioItem, double> itemProductivity = new Dictionary<FactorioItem, double>();
+
+            foreach (var subAssembly in this.SubAssembly)
+            {
+                foreach (var subItemProductivity in subAssembly.GetRaw(quantity, args))
+                {
+                    if (itemProductivity.ContainsKey(subItemProductivity.Key))
+                    {
+                        itemProductivity[subItemProductivity.Key] += subItemProductivity.Value;
+                    }
+                    else
+                    {
+                        itemProductivity.Add(subItemProductivity.Key, subItemProductivity.Value);
+                    }
+                }
+            }
+
+            return itemProductivity;
+
 
         }
         #endregion
 
     }
 }
+

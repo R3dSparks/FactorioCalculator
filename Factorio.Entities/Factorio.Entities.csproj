@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="Enum\Crafting.cs" />
     <Compile Include="Entites\FactorioItem.cs" />
+    <Compile Include="Interfaces\IFactorioLogic.cs" />
+    <Compile Include="Interfaces\IFactorioXmlDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
