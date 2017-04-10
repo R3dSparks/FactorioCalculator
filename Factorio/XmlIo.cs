@@ -13,6 +13,9 @@ namespace Factorio
 
         public static List<Item> ReadItems(string path)
         {
+            if (!File.Exists(path))
+                createXmlFile(path);
+
             XmlReader reader = XmlReader.Create(path);
 
             List<Item> items = new List<Item>();
@@ -91,6 +94,23 @@ namespace Factorio
             List<Item> items = ReadItems(path);
             items.Add(item);
             SaveItems(items, path);
+        }
+
+        private static void createXmlFile(string path)
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+
+            XmlWriter writer = XmlWriter.Create(path, settings);
+
+            writer.WriteStartDocument();
+
+            writer.WriteStartElement("Items");
+            writer.WriteEndElement();
+
+            writer.WriteEndDocument();
+
+            writer.Close();
         }
     }
 }

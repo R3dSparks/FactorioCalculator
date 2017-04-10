@@ -25,7 +25,6 @@ namespace Factorio
             foreach(var subAssembly in firstAssembly.SubAssembly)
             {
                 subAssembly.Print(quantity, 1);
-                //Console.WriteLine();
             }
         }
 

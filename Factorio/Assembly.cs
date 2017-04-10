@@ -50,7 +50,7 @@ namespace Factorio
             for (int i = 0; i < tabs; i++)
                 Console.Write("\t");
 
-            Console.WriteLine($"{this.AssemblyItem.Name}: {this.Quantity * quantity} ({this.AssemblyItem.Productivity * quantity}/second)");
+            Console.WriteLine($"{this.AssemblyItem.Name}: {this.Quantity * quantity} ({this.AssemblyItem.Productivity * this.Quantity * quantity}/second)");
             if(this.SubAssembly.Count() != 0)
             {
                 foreach (var subAssembly in this.SubAssembly)
