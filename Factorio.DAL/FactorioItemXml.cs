@@ -32,12 +32,13 @@ namespace Factorio.DAL
         /// Fill this object with the information from the <paramref name="reader"/>.
         /// </summary>
         /// <param name="reader">contains the information for this object</param>
-        public static void ReadXml(this FactorioItem item, XmlReader reader)
+        public static FactorioItem ReadXml(this FactorioItem item, XmlReader reader)
         {
             item.Name = reader.GetAttribute(FactorioItemXmlExtenstion.XmlItemAttributeName);
             item.CraftingOutput = Convert.ToInt32(reader.GetAttribute(FactorioItemXmlExtenstion.XmlItemAttributeOutput));
             item.CraftingTime = Convert.ToDouble(reader.GetAttribute(FactorioItemXmlExtenstion.XmlItemAttributeTime));
             item.Productivity = item.CraftingOutput / item.CraftingTime;
+            return item;
         }
 
 

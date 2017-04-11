@@ -4,6 +4,7 @@ using System.IO;
 using System.Xml;
 
 using Factorio.Entities;
+using System.Linq;
 
 namespace Factorio.DAL
 {
@@ -29,6 +30,7 @@ namespace Factorio.DAL
 
         #region Public Methods
 
+
         /// <summary>
         /// Read all <see cref="FactorioItem"/> from a xml file
         /// </summary>
@@ -40,46 +42,29 @@ namespace Factorio.DAL
                 createXmlFile(path);
 
             var reader = XmlReader.Create(path);
-
-            var items = new List<FactorioItem>();
-
-            //Add all items to the list without crafts
-            while(reader.Read())
-            {
-                if(reader.Name == FactorioItemXmlExtenstion.XmlItemElement && reader.NodeType != XmlNodeType.EndElement)
-                {
-                    var item = new FactorioItem();
-                    item.ReadXml(reader);
-                    items.Add(item);
-                }               
-            }
-
-            reader.Close();
-
-            reader = XmlReader.Create(path);
+            
 
             FactorioItem currentItem = null;
-
-            //Add crafts to items in the list
-            while(reader.Read())
+            // contains items where all properties are known
+            var knownItems = new List<FactorioItem>();
+            // contains items where only the name is known
+            var unknownItems = new List<FactorioItem>();
+            
+            // read all lines
+            while (reader.Read())
             {
-                if(reader.Name == FactorioItemXmlExtenstion.XmlItemElement && !reader.IsEmptyElement)
+                if (reader.Name == FactorioItemXmlExtenstion.XmlItemElement && reader.NodeType != XmlNodeType.EndElement)
                 {
-                    currentItem = items.Find(x => x.Name == reader.GetAttribute(FactorioItemXmlExtenstion.XmlItemAttributeName));
+                    readItemElement(reader, out currentItem, knownItems, unknownItems);
                 }
-                else if(reader.Name == FactorioItemXmlExtenstion.XmlCraftingElement)
+                else if (reader.Name == FactorioItemXmlExtenstion.XmlCraftingElement)
                 {
-                    currentItem.AddRecipeItem(
-                        items.Find(x => x.Name == reader.GetAttribute(FactorioItemXmlExtenstion.XmlCraftingAttributeItem)),
-                        Convert.ToInt32(reader.GetAttribute(FactorioItemXmlExtenstion.XmlCraftingAttributeQuantity))
-                    );
+                    readCraftingElement(reader, currentItem, knownItems, unknownItems);
                 }
-                
             }
 
             reader.Close();
-
-            return items;
+            return knownItems;
         }
 
 
@@ -100,7 +85,7 @@ namespace Factorio.DAL
 
             writer.WriteStartElement(FactorioItemXmlExtenstion.XmlMainElement);
 
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 writer.WriteStartElement(FactorioItemXmlExtenstion.XmlItemElement);
 
@@ -143,6 +128,73 @@ namespace Factorio.DAL
         }
 
 
+        /// <summary>
+        /// read an item
+        /// </summary>
+        /// <param name="reader">xml reader with the item element</param>
+        /// <param name="currentItem">get the reference of the currently read item</param>
+        /// <param name="knownItems">all known items</param>
+        /// <param name="unknownItems">all unknown items</param>
+        private void readItemElement(XmlReader reader, out FactorioItem currentItem, List<FactorioItem> knownItems, List<FactorioItem> unknownItems)
+        {
+            var newItem = new FactorioItem().ReadXml(reader);
+
+            // check if this item is in the unknown list
+            var item = unknownItems.Where(x => x.Name == newItem.Name).FirstOrDefault();
+            if (item != null)
+            {
+                // exists in the unknown list
+                // copy properties to existing 
+                item.CraftingOutput = newItem.CraftingOutput;
+                item.CraftingTime = newItem.CraftingTime;
+                item.Productivity = newItem.Productivity;
+                // remove item von unknown list
+                unknownItems.Remove(item);
+                // override the newItem instance with the existing unknown instance
+                // all items which reference the unknown item are automaticaly updated with the new information
+                newItem = item;
+            }
+
+            knownItems.Add(newItem);
+            currentItem = newItem;
+        }
+
+
+        /// <summary>
+        /// read a craft and add it to the current item 
+        /// </summary>
+        /// <param name="reader">xml reader with the current craft</param>
+        /// <param name="currentItem">item where the craft gets added</param>
+        /// <param name="knownItems">all known items</param>
+        /// <param name="unknownItems">all unknown items</param>
+        private void readCraftingElement(XmlReader reader, FactorioItem currentItem, List<FactorioItem> knownItems, List<FactorioItem> unknownItems)
+        {
+            if (currentItem != null)
+            {
+                // get the values
+                string name = reader.GetAttribute(FactorioItemXmlExtenstion.XmlCraftingAttributeItem);
+                int amount = Convert.ToInt32(reader.GetAttribute(FactorioItemXmlExtenstion.XmlCraftingAttributeQuantity));
+
+                // check if this item already exists in the known list
+                var item = knownItems.Where(x => x.Name == name).FirstOrDefault();
+                if (item == null)
+                {
+                    // check if this item already exists in the unknown list
+                    item = unknownItems.Where(x => x.Name == name).FirstOrDefault();
+                    if (item == null)
+                    {
+                        // if not create a new one and add it to the unknown list
+                        item = new FactorioItem();
+                        item.Name = name;
+                        unknownItems.Add(item);
+                    }
+                }
+                currentItem.AddRecipeItem(item, amount);
+            }
+        }
+
+
         #endregion
+
     }
 }

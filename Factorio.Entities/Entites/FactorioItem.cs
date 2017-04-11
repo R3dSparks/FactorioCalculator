@@ -14,6 +14,7 @@ namespace Factorio.Entities
 
         #region Properties
 
+
         /// <summary>
         /// name of the item
         /// </summary>
@@ -39,9 +40,11 @@ namespace Factorio.Entities
         /// </summary>
         public Crafting MadeIn { get; set; }
 
+
         #endregion
 
         #region Constructors
+
 
         /// <summary>
         /// default constructor
@@ -50,6 +53,8 @@ namespace Factorio.Entities
         {
 
         }
+
+
         /// <summary>
         /// create a <see cref="FactorioItem"/> with a name, craft amount and a crafting time
         /// </summary>
@@ -63,6 +68,7 @@ namespace Factorio.Entities
             CraftingTime = time;
             Productivity = output / time;
         }
+
 
         #endregion
         
