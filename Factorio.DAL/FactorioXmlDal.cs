@@ -36,34 +36,54 @@ namespace Factorio.DAL
         /// </summary>
         /// <param name="path">path to file</param>
         /// <returns></returns>
+        /// <exception cref="FactorioException"></exception>
         public List<FactorioItem> ReadItems(string path)
         {
-            if (!File.Exists(path))
-                createXmlFile(path);
-
-            var reader = XmlReader.Create(path);
-            
-
-            FactorioItem currentItem = null;
             // contains items where all properties are known
             var knownItems = new List<FactorioItem>();
             // contains items where only the name is known
             var unknownItems = new List<FactorioItem>();
-            
-            // read all lines
-            while (reader.Read())
+            XmlReader reader = null;
+
+            try
             {
-                if (reader.Name == FactorioItemXmlExtenstion.XmlItemElement && reader.NodeType != XmlNodeType.EndElement)
+                // check if file exists
+                if (!File.Exists(path))
+                    throw new FactorioException(DiagnosticEvents.DalXmlRead, String.Format("The file with the path '{0}' does not exist.", path));
+
+                reader = XmlReader.Create(path);
+                FactorioItem currentItem = null;
+
+                // read all lines
+                while (reader.Read())
                 {
-                    readItemElement(reader, out currentItem, knownItems, unknownItems);
-                }
-                else if (reader.Name == FactorioItemXmlExtenstion.XmlCraftingElement)
-                {
-                    readCraftingElement(reader, currentItem, knownItems, unknownItems);
+                    if (reader.Name == FactorioXmlHelper.XmlItemElement && reader.NodeType != XmlNodeType.EndElement)
+                    {
+                        readItemElement(reader, out currentItem, knownItems, unknownItems);
+                    }
+                    else if (reader.Name == FactorioXmlHelper.XmlCraftingElement)
+                    {
+                        readCraftingElement(reader, currentItem, knownItems, unknownItems);
+                    }
                 }
             }
+            catch (FactorioException fex)
+            {
+                // pass through
+                throw fex;
+            }
+            catch (Exception ex)
+            {
+                // create a new exception to add the event code
+                throw new FactorioException(DiagnosticEvents.DalXmlRead, "An error occurred while reading a xml file with the message: " + ex.Message, ex);
+            }
+            finally
+            {
+                // make sure to close the reader
+                if (reader != null)
+                    reader.Close();
+            }
 
-            reader.Close();
             return knownItems;
         }
 
@@ -83,11 +103,11 @@ namespace Factorio.DAL
 
             writer.WriteStartDocument();
 
-            writer.WriteStartElement(FactorioItemXmlExtenstion.XmlMainElement);
+            writer.WriteStartElement(FactorioXmlHelper.XmlMainElement);
 
             foreach (var item in items)
             {
-                writer.WriteStartElement(FactorioItemXmlExtenstion.XmlItemElement);
+                writer.WriteStartElement(FactorioXmlHelper.XmlItemElement);
 
                 item.WriteXml(writer);
 
@@ -119,7 +139,7 @@ namespace Factorio.DAL
 
             writer.WriteStartDocument();
 
-            writer.WriteStartElement(FactorioItemXmlExtenstion.XmlMainElement);
+            writer.WriteStartElement(FactorioXmlHelper.XmlMainElement);
             writer.WriteEndElement();
 
             writer.WriteEndDocument();
@@ -172,8 +192,8 @@ namespace Factorio.DAL
             if (currentItem != null)
             {
                 // get the values
-                string name = reader.GetAttribute(FactorioItemXmlExtenstion.XmlCraftingAttributeItem);
-                int amount = Convert.ToInt32(reader.GetAttribute(FactorioItemXmlExtenstion.XmlCraftingAttributeQuantity));
+                var name = FactorioXmlHelper.ReadAttribute<string>(reader, FactorioXmlHelper.XmlCraftingAttributeItem);
+                var amount = FactorioXmlHelper.ReadAttribute<int>(reader, FactorioXmlHelper.XmlCraftingAttributeQuantity);
 
                 // check if this item already exists in the known list
                 var item = knownItems.Where(x => x.Name == name).FirstOrDefault();
