@@ -35,8 +35,8 @@ namespace Factorio.DAL
         public static FactorioItem ReadXml(this FactorioItem item, XmlReader reader)
         {
             item.Name = FactorioXmlHelper.ReadAttribute<string>(reader, FactorioXmlHelper.XmlItemAttributeName);
-            item.CraftingOutput = FactorioXmlHelper.ReadAttribute<int>(reader, FactorioXmlHelper.XmlItemAttributeName);
-            item.CraftingTime = FactorioXmlHelper.ReadAttribute<int>(reader, FactorioXmlHelper.XmlItemAttributeName);
+            item.CraftingOutput = FactorioXmlHelper.ReadAttribute<int>(reader, FactorioXmlHelper.XmlItemAttributeOutput);
+            item.CraftingTime = FactorioXmlHelper.ReadAttribute<double>(reader, FactorioXmlHelper.XmlItemAttributeTime);
             item.Productivity = item.CraftingOutput / item.CraftingTime;
             return item;
         }

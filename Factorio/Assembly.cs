@@ -28,8 +28,11 @@ namespace Factorio
         public Assembly(FactorioItem assemblyItem)
         {
             AssemblyItem = assemblyItem;
-
+          
             Quantity = 1;
+
+            if (assemblyItem.Recipe == null)
+                return;
 
             SubAssembly = new List<Assembly>();
 
