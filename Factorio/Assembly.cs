@@ -67,7 +67,12 @@ namespace Factorio
 
         #region Public methods
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="quantity"></param>
+        /// <param name="tabs"></param>
+        /// <returns></returns>
         public string GetProductionPerAssembly(double quantity, int tabs = 0)
         {
             string output = "";
@@ -93,46 +98,27 @@ namespace Factorio
             return GetProductionPerAssembly(itemsPerSecond / this.AssemblyItem.Productivity);
         }
 
-        public Dictionary<FactorioItem, double> GetRawPerAssembly(double quantity, params string[] args)
+
+        /// <summary>
+        /// Get all items and needed productivity that are needed for this production
+        /// </summary>
+        /// <param name="quantity">Quantity of assembling machines</param>
+        /// <param name="rawItems">Dictionary where all items and there productivity will be saved</param>
+        public void GetItemSummary(double quantity, Dictionary<FactorioItem, double> rawItems)
         {
+            if (!rawItems.ContainsKey(this.AssemblyItem))
+                rawItems.Add(this.AssemblyItem, this.AssemblyItem.Productivity * this.Quantity * quantity);
+            else
+                rawItems[this.AssemblyItem] += this.AssemblyItem.Productivity * this.Quantity * quantity;
+            
 
-
-            foreach (var itemName in args)
+            foreach (var assembly in this.SubAssembly)
             {
-                if (this.AssemblyItem.Name == itemName)
-                {
-                    Dictionary<FactorioItem, double> dict = new Dictionary<FactorioItem, double>();
-
-                    dict.Add(this.AssemblyItem, this.AssemblyItem.Productivity * this.Quantity * quantity);
-
-                    return dict;
-                }
+                assembly.GetItemSummary(quantity, rawItems);
             }
 
-            Dictionary<FactorioItem, double> itemProductivity = new Dictionary<FactorioItem, double>();
-
-            foreach (var subAssembly in this.SubAssembly)
-            {
-                foreach (var subItemProductivity in subAssembly.GetRawPerAssembly(quantity, args))
-                {
-                    if (itemProductivity.ContainsKey(subItemProductivity.Key))
-                    {
-                        itemProductivity[subItemProductivity.Key] += subItemProductivity.Value;
-                    }
-                    else
-                    {
-                        itemProductivity.Add(subItemProductivity.Key, subItemProductivity.Value);
-                    }
-                }
-            }
-
-            return itemProductivity;
         }
 
-        public Dictionary<FactorioItem, double> GetRawPerSecond(double itemsPerSecond, params string[] args)
-        {
-            return GetRawPerAssembly(itemsPerSecond / this.AssemblyItem.Productivity, args);
-        }
         #endregion
 
     }

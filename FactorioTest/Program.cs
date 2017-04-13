@@ -181,7 +181,9 @@ namespace FactorioTest
 
                 WriteLine();
 
-                Dictionary<FactorioItem, double> rawItems = assembly.GetRawPerAssembly(quantity, "Iron plate", "Copper plate");
+                Dictionary<FactorioItem, double> rawItems = new Dictionary<FactorioItem, double>();
+
+                assembly.GetItemSummary(quantity, rawItems);
 
                 foreach (var item in rawItems)
                 {
@@ -198,7 +200,9 @@ namespace FactorioTest
 
                 WriteLine();
 
-                Dictionary<FactorioItem, double> rawItems = assembly.GetRawPerAssembly(itemsPerSecond, "Iron plate", "Copper plate");
+                Dictionary<FactorioItem, double> rawItems = new Dictionary<FactorioItem, double>();
+
+                assembly.GetItemSummary(itemsPerSecond / assembly.AssemblyItem.Productivity, rawItems);
 
                 foreach (var item in rawItems)
                 {
