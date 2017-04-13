@@ -68,20 +68,24 @@ namespace Factorio
         #region Public methods
 
 
-        public void PrintProduction(int quantity, int tabs = 0)
+        public string PrintProduction(int quantity, int tabs = 0)
         {
-            for (int i = 0; i < tabs; i++)
-                Console.Write("\t");
+            string output = "";
 
-            Console.WriteLine($"{this.AssemblyItem.Name}: {this.Quantity * quantity:F4} ({this.AssemblyItem.Productivity * this.Quantity * quantity:F4}/second)");
+            for (int i = 0; i < tabs; i++)
+                output += ("\t");
+
+            output += ($"{this.AssemblyItem.Name}: {this.Quantity * quantity:F4} ({this.AssemblyItem.Productivity * this.Quantity * quantity:F4}/second)\n");
+
             if (this.SubAssembly.Count() != 0)
             {
                 foreach (var subAssembly in this.SubAssembly)
                 {
-                    subAssembly.PrintProduction(quantity, tabs + 1);
+                    output += subAssembly.PrintProduction(quantity, tabs + 1);
                 }
             }
 
+            return output;
         }
 
         public Dictionary<FactorioItem, double> GetRaw(int quantity, params string[] args)

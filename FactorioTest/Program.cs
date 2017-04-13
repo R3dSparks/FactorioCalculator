@@ -156,11 +156,29 @@ namespace FactorioTest
 
             string itemName = ReadLine();
 
+            if (logic.Items.Find(x => x.Name == itemName) == null)
+            {
+                WriteLine($"Error: Item {itemName} does not exist! Press any key to continue...");
+                ReadKey();
+                return;
+            }
+
             Assembly assembly = new Assembly(logic.Items.Find(x => x.Name == itemName));
 
             Write("Quantity: ");
 
-            assembly.PrintProduction(Convert.ToInt32(ReadLine()));
+            int quantity = Convert.ToInt32(ReadLine());
+
+            WriteLine(assembly.PrintProduction(quantity));
+
+            WriteLine();
+
+            Dictionary<FactorioItem, double> rawItems = assembly.GetRaw(quantity, "Iron plate", "Copper plate");
+
+            foreach (var item in rawItems)
+            {
+                WriteLine($"{item.Key.Name}: {item.Value}/second");
+            }
 
             ReadKey();
         }
@@ -217,6 +235,14 @@ namespace FactorioTest
                 WriteLine();
                 Write("Item name: ");
                 itemName = ReadLine();
+
+                if(logic.Items.Find(x => x.Name == itemName) == null)
+                {
+                    WriteLine($"Error: Item {itemName} does not exist! Press any key to continue...");
+                    ReadKey();
+                    return;
+                }
+
                 Write("Item quantity: ");
                 quantity = Convert.ToInt32(ReadLine());
 
