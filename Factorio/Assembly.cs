@@ -93,8 +93,10 @@ namespace Factorio
             return GetProductionPerAssembly(itemsPerSecond / this.AssemblyItem.Productivity);
         }
 
-        public Dictionary<FactorioItem, double> GetRaw(int quantity, params string[] args)
+        public Dictionary<FactorioItem, double> GetRawPerAssembly(double quantity, params string[] args)
         {
+
+
             foreach (var itemName in args)
             {
                 if (this.AssemblyItem.Name == itemName)
@@ -111,7 +113,7 @@ namespace Factorio
 
             foreach (var subAssembly in this.SubAssembly)
             {
-                foreach (var subItemProductivity in subAssembly.GetRaw(quantity, args))
+                foreach (var subItemProductivity in subAssembly.GetRawPerAssembly(quantity, args))
                 {
                     if (itemProductivity.ContainsKey(subItemProductivity.Key))
                     {
@@ -125,8 +127,11 @@ namespace Factorio
             }
 
             return itemProductivity;
+        }
 
-
+        public Dictionary<FactorioItem, double> GetRawPerSecond(double itemsPerSecond, params string[] args)
+        {
+            return GetRawPerAssembly(itemsPerSecond / this.AssemblyItem.Productivity, args);
         }
         #endregion
 

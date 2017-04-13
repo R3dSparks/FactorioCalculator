@@ -178,6 +178,15 @@ namespace FactorioTest
                 int quantity = Convert.ToInt32(ReadLine());
 
                 WriteLine(assembly.GetProductionPerAssembly(quantity));
+
+                WriteLine();
+
+                Dictionary<FactorioItem, double> rawItems = assembly.GetRawPerAssembly(quantity, "Iron plate", "Copper plate");
+
+                foreach (var item in rawItems)
+                {
+                    WriteLine($"{item.Key.Name}: {item.Value}/second");
+                }
             }
             else if(key == '2')
             {
@@ -186,14 +195,18 @@ namespace FactorioTest
                 double itemsPerSecond = Convert.ToDouble(ReadLine());
 
                 WriteLine(assembly.GetProductionPerSecond(itemsPerSecond));
+
+                WriteLine();
+
+                Dictionary<FactorioItem, double> rawItems = assembly.GetRawPerAssembly(itemsPerSecond, "Iron plate", "Copper plate");
+
+                foreach (var item in rawItems)
+                {
+                    WriteLine($"{item.Key.Name}: {item.Value}/second");
+                }
             }
 
-            //Dictionary<FactorioItem, double> rawItems = assembly.GetRaw(quantity, "Iron plate", "Copper plate");
 
-            //foreach (var item in rawItems)
-            //{
-            //    WriteLine($"{item.Key.Name}: {item.Value}/second");
-            //}
 
             ReadKey();
         }
