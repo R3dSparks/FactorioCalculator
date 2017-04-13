@@ -206,7 +206,7 @@ namespace FactorioTest
 
                 foreach (var item in rawItems)
                 {
-                    WriteLine($"{item.Key.Name}: {item.Value}/second");
+                    WriteLine($"{item.Key.Name}: {item.Value}/{item.Value * item.Key.Productivity}/second");
                 }
             }
 

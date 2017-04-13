@@ -107,9 +107,9 @@ namespace Factorio
         public void GetItemSummary(double quantity, Dictionary<FactorioItem, double> rawItems)
         {
             if (!rawItems.ContainsKey(this.AssemblyItem))
-                rawItems.Add(this.AssemblyItem, this.AssemblyItem.Productivity * this.Quantity * quantity);
+                rawItems.Add(this.AssemblyItem, this.Quantity * quantity);
             else
-                rawItems[this.AssemblyItem] += this.AssemblyItem.Productivity * this.Quantity * quantity;
+                rawItems[this.AssemblyItem] += this.Quantity * quantity;
             
 
             foreach (var assembly in this.SubAssembly)
