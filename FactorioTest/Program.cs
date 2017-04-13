@@ -150,7 +150,7 @@ namespace FactorioTest
         private static void CreateProduction(IFactorioLogic logic)
         {
             Clear();
-            WriteLine("Create a new production");
+            WriteLine("View production chain");
             WriteLine();
             Write("Item: ");
 
@@ -165,20 +165,35 @@ namespace FactorioTest
 
             Assembly assembly = new Assembly(logic.Items.Find(x => x.Name == itemName));
 
-            Write("Quantity: ");
+            WriteLine("Get production chain for Assembly machine quantity or items per second?(1/2)...");
 
-            int quantity = Convert.ToInt32(ReadLine());
-
-            WriteLine(assembly.PrintProduction(quantity));
+            char key = ReadKey(true).KeyChar;
 
             WriteLine();
 
-            Dictionary<FactorioItem, double> rawItems = assembly.GetRaw(quantity, "Iron plate", "Copper plate");
-
-            foreach (var item in rawItems)
+            if(key == '1')
             {
-                WriteLine($"{item.Key.Name}: {item.Value}/second");
+                Write("Quantity: ");
+
+                int quantity = Convert.ToInt32(ReadLine());
+
+                WriteLine(assembly.GetProductionPerAssembly(quantity));
             }
+            else if(key == '2')
+            {
+                Write("Items per second: ");
+
+                double itemsPerSecond = Convert.ToDouble(ReadLine());
+
+                WriteLine(assembly.GetProductionPerSecond(itemsPerSecond));
+            }
+
+            //Dictionary<FactorioItem, double> rawItems = assembly.GetRaw(quantity, "Iron plate", "Copper plate");
+
+            //foreach (var item in rawItems)
+            //{
+            //    WriteLine($"{item.Key.Name}: {item.Value}/second");
+            //}
 
             ReadKey();
         }

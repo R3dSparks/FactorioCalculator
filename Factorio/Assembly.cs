@@ -68,7 +68,7 @@ namespace Factorio
         #region Public methods
 
 
-        public string PrintProduction(int quantity, int tabs = 0)
+        public string GetProductionPerAssembly(double quantity, int tabs = 0)
         {
             string output = "";
 
@@ -81,11 +81,16 @@ namespace Factorio
             {
                 foreach (var subAssembly in this.SubAssembly)
                 {
-                    output += subAssembly.PrintProduction(quantity, tabs + 1);
+                    output += subAssembly.GetProductionPerAssembly(quantity, tabs + 1);
                 }
             }
 
             return output;
+        }
+
+        public string GetProductionPerSecond(double itemsPerSecond)
+        {
+            return GetProductionPerAssembly(itemsPerSecond / this.AssemblyItem.Productivity);
         }
 
         public Dictionary<FactorioItem, double> GetRaw(int quantity, params string[] args)
