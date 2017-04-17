@@ -181,14 +181,7 @@ namespace FactorioTest
 
                 WriteLine();
 
-                Dictionary<FactorioItem, double> rawItems = new Dictionary<FactorioItem, double>();
-
-                assembly.GetItemSummary(quantity, rawItems);
-
-                foreach (var item in rawItems)
-                {
-                    WriteLine($"{item.Key.Name}: {item.Value}|{item.Value * item.Key.Productivity}/second");
-                }
+                WriteLine(assembly.GetItemSummary(quantity));
             }
             else if(key == '2')
             {
@@ -199,15 +192,8 @@ namespace FactorioTest
                 WriteLine(assembly.GetProductionPerSecond(itemsPerSecond));
 
                 WriteLine();
-                
-                Dictionary<FactorioItem, double> rawItems = new Dictionary<FactorioItem, double>();
 
-                assembly.GetItemSummary(itemsPerSecond / assembly.AssemblyItem.Productivity, rawItems);
-
-                foreach (var item in rawItems)
-                {
-                    WriteLine($"{item.Key.Name}: {item.Value}|{item.Value * item.Key.Productivity}/second");
-                }
+                WriteLine(assembly.GetItemSummary(itemsPerSecond / assembly.AssemblyItem.Productivity));
             }
 
 

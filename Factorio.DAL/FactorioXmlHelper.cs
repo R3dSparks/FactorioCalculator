@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 using Factorio.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace Factorio.DAL
 {
@@ -20,6 +21,7 @@ namespace Factorio.DAL
         public static readonly string XmlItemAttributeName = "name";
         public static readonly string XmlItemAttributeOutput = "output";
         public static readonly string XmlItemAttributeTime = "time";
+        public static readonly string XmlItemAttributeCraftingStation = "crafting";
 
         public static readonly string XmlCraftingElement = "Crafting";
         public static readonly string XmlCraftingAttributeItem = "item";
@@ -37,6 +39,7 @@ namespace Factorio.DAL
             item.Name = FactorioXmlHelper.ReadAttribute<string>(reader, FactorioXmlHelper.XmlItemAttributeName);
             item.CraftingOutput = FactorioXmlHelper.ReadAttribute<int>(reader, FactorioXmlHelper.XmlItemAttributeOutput);
             item.CraftingTime = FactorioXmlHelper.ReadAttribute<double>(reader, FactorioXmlHelper.XmlItemAttributeTime);
+            item.DefaultCraftingStation = FactorioXmlHelper.ReadAttribute(reader, FactorioXmlHelper.XmlItemAttributeCraftingStation);
             item.Productivity = item.CraftingOutput / item.CraftingTime;
             return item;
         }
@@ -52,17 +55,50 @@ namespace Factorio.DAL
         /// <exception cref="FactorioException"></exception>
         public static T ReadAttribute<T>(XmlReader reader, string attributeName)
         {
+            string val = readAttributeValue(reader, attributeName);
+
+
+            if (FactorioXmlHelper.CanChangeType(val, typeof(T)) == false)
+                throw new FactorioException(DiagnosticEvents.DalXmlReadAttribute, String.Format("The read information from the XmlReader cannot be Converted to the type '{0}'. The value is '{1}'", typeof(T), val));
+
+            return (T)Convert.ChangeType(val, typeof(T));
+
+
+        }
+
+
+        public static Crafting ReadAttribute(XmlReader reader, string attributeName)
+        {
+            string val = readAttributeValue(reader, attributeName);
+
+            if (val == null)
+                return default(Crafting);
+            
+            Crafting crafting = default(Crafting);
+
+            if (Enum.TryParse(val, out crafting) == false)
+                throw new FactorioException(DiagnosticEvents.DalXmlReadAttribute);
+            else
+                return crafting;
+        }
+
+
+        /// <summary>
+        /// Read the value from an attribute
+        /// </summary>
+        /// <param name="reader">this reader contains the attribute</param>
+        /// <param name="attributeName">read the attribute with this name</param>
+        /// <returns></returns>
+        private static string readAttributeValue(XmlReader reader, string attributeName)
+        {
+
             if (reader == null)
                 throw new FactorioException(DiagnosticEvents.DalXmlReadAttribute, "Cannot read the attribute value, because the reade is empty.");
 
             if (reader.HasAttributes == false)
                 throw new FactorioException(DiagnosticEvents.DalXmlReadAttribute, "The reader does not have any attributes.");
 
-            string val = reader.GetAttribute(attributeName);
-            if (FactorioXmlHelper.CanChangeType(val, typeof(T)) == false)
-                throw new FactorioException(DiagnosticEvents.DalXmlReadAttribute, String.Format("The read information from the XmlReader cannot be Converted to the type '{0}'. The value is '{1}'", typeof(T), val));
-            
-            return (T)Convert.ChangeType(val, typeof(T));
+            return reader.GetAttribute(attributeName);
         }
 
 
@@ -105,6 +141,7 @@ namespace Factorio.DAL
             writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeName, item.Name);
             writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeOutput, item.CraftingOutput.ToString());
             writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeTime, item.CraftingTime.ToString());
+            writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeCraftingStation, item.DefaultCraftingStation.ToString());
 
             if (item.Recipe != null)
             {

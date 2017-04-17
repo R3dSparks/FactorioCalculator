@@ -22,8 +22,6 @@ namespace Factorio
 
         public Crafting CraftingStation { get; set; }
 
-        public double CraftingSpeed { get; set; }
-
         #endregion
 
         #region Constructors
@@ -32,7 +30,9 @@ namespace Factorio
         public Assembly(FactorioItem assemblyItem)
         {
             AssemblyItem = assemblyItem;
-          
+
+            CraftingStation = AssemblyItem.DefaultCraftingStation;
+
             Quantity = 1;
 
             if (assemblyItem.Recipe == null)
@@ -52,7 +52,11 @@ namespace Factorio
         {
             AssemblyItem = assemblyItem;
 
+            CraftingStation = AssemblyItem.DefaultCraftingStation;
+
             Quantity = (quantity * ((topAssembly.Quantity * topAssembly.AssemblyItem.Productivity)) / (assemblyItem.Productivity * topAssembly.AssemblyItem.CraftingOutput));
+
+            Quantity *= FactorioHelper.CraftingSpeeds[topAssembly.CraftingStation] / FactorioHelper.CraftingSpeeds[CraftingStation];
 
             SubAssembly = new List<Assembly>();
 
@@ -84,7 +88,7 @@ namespace Factorio
             for (int i = 0; i < tabs; i++)
                 output += ("\t");
 
-            output += ($"{this.AssemblyItem.Name}: {this.Quantity * quantity:F4} ({this.AssemblyItem.Productivity * this.Quantity * quantity:F4}/second)\n");
+            output += ($"{this.AssemblyItem.Name}: {this.Quantity * quantity:F4} ({this.AssemblyItem.Productivity * this.Quantity * quantity * FactorioHelper.CraftingSpeeds[this.CraftingStation]:F4}/second)\n");
 
             if (this.SubAssembly.Count() != 0)
             {
@@ -108,19 +112,35 @@ namespace Factorio
         /// </summary>
         /// <param name="quantity">Quantity of assembling machines</param>
         /// <param name="rawItems">Dictionary where all items and there productivity will be saved</param>
-        public void GetItemSummary(double quantity, Dictionary<FactorioItem, double> rawItems)
+        public string GetItemSummary(double quantity)
         {
-            if (!rawItems.ContainsKey(this.AssemblyItem))
+            string output = "";
+
+            Dictionary<FactorioItem, double> rawItems = new Dictionary<FactorioItem, double>();
+
+            getItemSummary(quantity, rawItems);
+
+            foreach(var item in rawItems)
+            {
+                output += $"{item.Key.Name}: {item.Value}x{item.Key.DefaultCraftingStation.ToString()} | {item.Value * item.Key.Productivity * FactorioHelper.CraftingSpeeds[item.Key.DefaultCraftingStation]}/second\n";
+            }
+
+            return output;
+
+        }
+
+        private void getItemSummary(double quantity, Dictionary<FactorioItem, double> rawItems)
+        {
+            if (rawItems.ContainsKey(this.AssemblyItem) == false)
                 rawItems.Add(this.AssemblyItem, this.Quantity * quantity);
             else
                 rawItems[this.AssemblyItem] += this.Quantity * quantity;
-            
+
 
             foreach (var assembly in this.SubAssembly)
             {
-                assembly.GetItemSummary(quantity, rawItems);
+                assembly.getItemSummary(quantity, rawItems);
             }
-
         }
 
         #endregion
