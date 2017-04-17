@@ -23,6 +23,13 @@ namespace FactorioWpf
         public MainWindow()
         {
             InitializeComponent();
+
+            TreeViewItem item = new TreeViewItem()
+            {
+                Header = "MyHeader"
+            };
+
+            FolderView.Items.Add(item);
         }
     }
 }
