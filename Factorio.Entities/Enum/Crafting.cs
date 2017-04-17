@@ -9,11 +9,15 @@ namespace Factorio.Entities
         /// <summary>
         /// crafted in an assembling machine
         /// </summary>
-        AssemblingMachine,
+        AssemblingMachine1,
+        AssemblingMachine2,
+        AssemblingMachine3,
         /// <summary>
         /// crafted in a furnace
         /// </summary>
-        Furnace,
+        StoneFurnace,
+        SteelFurnace,
+        ElectricFurnace,
         /// <summary>
         /// crafted in a chemical plant
         /// </summary>

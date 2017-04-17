@@ -38,8 +38,7 @@ namespace Factorio.Entities
         /// <summary>
         /// Where this item is crafted
         /// </summary>
-        public Crafting MadeIn { get; set; }
-
+        public Crafting DefaultCraftingStation { get; set; }
 
         #endregion
 

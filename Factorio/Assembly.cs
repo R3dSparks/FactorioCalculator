@@ -15,10 +15,14 @@ namespace Factorio
 
 
         public FactorioItem AssemblyItem { get; private set; }
+
         public double Quantity { get; private set; }
         // Tip: für listen immer eine private variable anlegen und im falle wenn diese null ist, eine neue leere liste anzulegen.
         public List<Assembly> SubAssembly { get; set; }
 
+        public Crafting CraftingStation { get; set; }
+
+        public double CraftingSpeed { get; set; }
 
         #endregion
 
