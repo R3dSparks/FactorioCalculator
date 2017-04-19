@@ -88,11 +88,60 @@ namespace FactorioWpf
                 {                    
                     Text =  $"Output: {tempItem.CraftingOutput} item" + (tempItem.CraftingOutput == 1 ? "" : "s") + "\n" +
                             $"CraftTime: {tempItem.CraftingTime} seconds\n" +
-                            $"Productivity: {tempItem.Productivity} items per second\n" +
-                            (tempItem.Recipe == null ? "This item has no recipe" : "This item has a recipe"),
-                    Foreground = Brushes.Black,                    
+                            $"Productivity: {tempItem.Productivity} items per second" +
+                            (tempItem.Recipe == null ? "\nThis item has no recipe" : "")
                 }
                     );
+
+                if (tempItem.Recipe != null)
+                {
+                    var recipeItem = new TreeViewItem()
+                    {
+                        Header = "Recipe",
+                        Tag = tempItem
+                    };
+
+                    //Add dummy item
+                    recipeItem.Items.Add(null);
+
+                    recipeItem.Expanded += Recipe_Expanded;
+
+                    item.Items.Add(recipeItem);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Expand recipe
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Recipe_Expanded(object sender, RoutedEventArgs e)
+        {
+            var item = sender as TreeViewItem;
+
+            if(item.Items[0] == null)
+            {
+                item.Items.RemoveAt(0);
+
+                var factorioItem = item.Tag as FactorioItem;
+
+                var recipeText = new TextBlock();
+
+                item.Items.Add(recipeText);
+
+                //Stupid counter value
+                int i = 1;
+
+                foreach(var recipe in factorioItem.Recipe)
+                { 
+                    recipeText.Text += $"{recipe.Value}x {recipe.Key.Name}";
+
+                    if (i < factorioItem.Recipe.Count)
+                        recipeText.Text += "\n";
+
+                    i++;
+                }
             }
         }
     }
