@@ -46,12 +46,12 @@ namespace FactorioWpf
         {
             TreeViewItem treeItem = sender as TreeViewItem;
 
-            if(treeItem.Items[0] == null)
+            if (treeItem.Items[0] == null)
             {
                 //Remove dummy item
                 treeItem.Items.RemoveAt(0);
 
-                foreach(var item in logic.Items)
+                foreach (var item in logic.Items)
                 {
                     var newTreeItem = new TreeViewItem()
                     {
@@ -77,7 +77,7 @@ namespace FactorioWpf
         {
             var item = sender as TreeViewItem;
 
-            if(item.Items[0] == null)
+            if (item.Items[0] == null)
             {
                 //Remove dummy item
                 item.Items.RemoveAt(0);
@@ -85,8 +85,8 @@ namespace FactorioWpf
                 var tempItem = logic.Items.Find(x => x.Name == (string)item.Header);
 
                 item.Items.Add(new TextBlock()
-                {                    
-                    Text =  $"Output: {tempItem.CraftingOutput} item" + (tempItem.CraftingOutput == 1 ? "" : "s") + "\n" +
+                {
+                    Text = $"Output: {tempItem.CraftingOutput} item" + (tempItem.CraftingOutput == 1 ? "" : "s") + "\n" +
                             $"CraftTime: {tempItem.CraftingTime} seconds\n" +
                             $"Productivity: {tempItem.Productivity} items per second" +
                             (tempItem.Recipe == null ? "\nThis item has no recipe" : "")
@@ -120,7 +120,7 @@ namespace FactorioWpf
         {
             var item = sender as TreeViewItem;
 
-            if(item.Items[0] == null)
+            if (item.Items[0] == null)
             {
                 item.Items.RemoveAt(0);
 
@@ -133,8 +133,8 @@ namespace FactorioWpf
                 //Stupid counter value
                 int i = 1;
 
-                foreach(var recipe in factorioItem.Recipe)
-                { 
+                foreach (var recipe in factorioItem.Recipe)
+                {
                     recipeText.Text += $"{recipe.Value}x {recipe.Key.Name}";
 
                     if (i < factorioItem.Recipe.Count)

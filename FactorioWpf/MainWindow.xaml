@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FactorioWpf"
         mc:Ignorable="d"
-        Title="FactorioCalculator" Height="600" Width="400">
+        Title="FactorioCalculator" Height="400" Width="600">
 
     <StackPanel>
-        
-        <TreeView x:Name="FolderView">
+
+        <TreeView x:Name="FolderView" BorderBrush="White">
             <TreeView.Resources>
                 <Style TargetType="TreeViewItem">
                     <Style.Resources>
@@ -20,7 +20,7 @@
                 </Style>
             </TreeView.Resources>
         </TreeView>
-        
+
     </StackPanel>
 
 </Window>
