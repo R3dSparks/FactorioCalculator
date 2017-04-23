@@ -20,7 +20,7 @@ namespace FactorioWpf
 
             logic = new FactorioLogic();
 
-            logic.ReadFile(@"..\..\FactorioCalculator\Factorio.DAL\Files\ItemList.xml");
+            logic.ReadFile(@"E:\OneDrive\Develop\Development\C#\FactorioCalculator\Factorio.DAL\Files\ItemList.xml");
 
             TreeViewItem item = new TreeViewItem()
             {

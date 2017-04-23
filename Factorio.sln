@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factorio", "Factorio\Factorio.csproj", "{C3F2BECF-01EC-48D0-AE8F-D9A034A17D98}"
 EndProject
@@ -18,6 +18,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{D1A37A06-23B7-4674-8E6F-B33073F06949}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactorioWpf", "FactorioWpf\FactorioWpf.csproj", "{227F99CD-C47E-4BC3-9CD3-FE6B14DD4259}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factorio.Original.Dal", "Factorio.Original.Dal\Factorio.Original.Dal.csproj", "{9051F2D0-03C4-4FA4-A34D-1C68DA8445AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factorio.Original.Entities", "Factorio.Original.Entities\Factorio.Original.Entities.csproj", "{B38A4352-9488-43FC-925F-E35CD4D37F07}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{1E5000A6-3129-4166-9B02-ADBBEB24FA42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factorio.Original.Dal.Test", "Factorio.Original.Dal.Test\Factorio.Original.Dal.Test.csproj", "{3A032E34-4831-49AD-910C-2F82AA301E73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +53,18 @@ Global
 		{227F99CD-C47E-4BC3-9CD3-FE6B14DD4259}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{227F99CD-C47E-4BC3-9CD3-FE6B14DD4259}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{227F99CD-C47E-4BC3-9CD3-FE6B14DD4259}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9051F2D0-03C4-4FA4-A34D-1C68DA8445AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9051F2D0-03C4-4FA4-A34D-1C68DA8445AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9051F2D0-03C4-4FA4-A34D-1C68DA8445AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9051F2D0-03C4-4FA4-A34D-1C68DA8445AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B38A4352-9488-43FC-925F-E35CD4D37F07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B38A4352-9488-43FC-925F-E35CD4D37F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B38A4352-9488-43FC-925F-E35CD4D37F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B38A4352-9488-43FC-925F-E35CD4D37F07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A032E34-4831-49AD-910C-2F82AA301E73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A032E34-4831-49AD-910C-2F82AA301E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A032E34-4831-49AD-910C-2F82AA301E73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A032E34-4831-49AD-910C-2F82AA301E73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,5 +75,8 @@ Global
 		{BF393920-F0A8-41D8-8BE0-CF245CE6CF4E} = {D1A37A06-23B7-4674-8E6F-B33073F06949}
 		{6A92C8F5-841D-4EA2-BB7C-59B7E261FA0D} = {8BCD8D11-094B-41AA-BA49-191BA43C8B78}
 		{227F99CD-C47E-4BC3-9CD3-FE6B14DD4259} = {972D8754-94D5-4BD4-8758-70DE053E9A6D}
+		{9051F2D0-03C4-4FA4-A34D-1C68DA8445AC} = {D1A37A06-23B7-4674-8E6F-B33073F06949}
+		{B38A4352-9488-43FC-925F-E35CD4D37F07} = {8BCD8D11-094B-41AA-BA49-191BA43C8B78}
+		{3A032E34-4831-49AD-910C-2F82AA301E73} = {1E5000A6-3129-4166-9B02-ADBBEB24FA42}
 	EndGlobalSection
 EndGlobal
