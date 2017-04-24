@@ -1,10 +1,7 @@
 ﻿using Factorio;
 using Factorio.Entities;
-using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace FactorioWpf
 {
@@ -13,27 +10,11 @@ namespace FactorioWpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        IFactorioLogic logic;
         public MainWindow()
         {
             InitializeComponent();
 
-            logic = new FactorioLogic();
-
-            logic.ReadFile(@"..\..\FactorioCalculator\Factorio.DAL\Files\ItemList.xml");
-
-            TreeViewItem item = new TreeViewItem()
-            {
-                Header = "Items"
-            };
-
-            FolderView.Items.Add(item);
-
-            item.Expanded += TreeView_Expanded;
-
-            //Add dummy item
-            item.Items.Add(null);
-
+            this.DataContext = new ItemViewerStructureViewModel();
 
         }
 

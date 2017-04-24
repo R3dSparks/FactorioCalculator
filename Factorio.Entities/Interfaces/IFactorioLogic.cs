@@ -24,14 +24,12 @@ namespace Factorio.Entities
         /// <summary>
         /// Read a file into the business layer
         /// </summary>
-        /// <param name="path"></param>
-        void ReadFile(string path);
+        void ReadFile();
 
         /// <summary>
         /// Write a file from the business layer
         /// </summary>
-        /// <param name="path"></param>
-        void WriteFile(string path);
+        void WriteFile();
 
 
         #endregion

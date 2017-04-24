@@ -13,9 +13,9 @@ namespace Factorio
     {
         private List<FactorioItem> m_items;
         private IFactorioXmlDal m_xmlDal;
+        private string ItemListXmlPath;
 
         #region Properties
-
 
         /// <summary>
         /// Contains all items of this application
@@ -25,7 +25,7 @@ namespace Factorio
             get
             {
                 if (m_items == null)
-                    m_items = new List<FactorioItem>();
+                    ReadFile();
                 return m_items;
             }
             private set
@@ -60,9 +60,9 @@ namespace Factorio
         /// <summary>
         /// default constructor
         /// </summary>
-        public FactorioLogic()
+        public FactorioLogic(string path)
         {
-
+            ItemListXmlPath = path;
         }
 
 
@@ -75,9 +75,9 @@ namespace Factorio
         /// Read a file into the business layer
         /// </summary>
         /// <param name="path"></param>
-        public void ReadFile(string path)
+        public void ReadFile()
         {
-            this.Items = this.XmlDal.ReadItems(path);
+            this.Items = this.XmlDal.ReadItems(ItemListXmlPath);
         }
 
 
@@ -85,9 +85,9 @@ namespace Factorio
         /// Write a file from the business layer
         /// </summary>
         /// <param name="path"></param>
-        public void WriteFile(string path)
+        public void WriteFile()
         {
-            this.XmlDal.SaveItems(this.Items, path);
+            this.XmlDal.SaveItems(this.Items, ItemListXmlPath);
         }
         
 
