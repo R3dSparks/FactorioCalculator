@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 using Factorio.Entities;
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace Factorio.DAL
 {
@@ -158,5 +159,14 @@ namespace Factorio.DAL
 
 
         #endregion
+
+        public static void CreateXml(string path)
+        {
+            XDocument doc = new XDocument();
+
+            doc.Add(new XElement(XmlMainElement));
+
+            doc.Save(path);
+        }
     }
 }

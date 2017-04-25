@@ -49,7 +49,11 @@ namespace Factorio.DAL
             {
                 // check if file exists
                 if (!File.Exists(path))
-                    throw new FactorioException(DiagnosticEvents.DalXmlRead, String.Format("The file with the path '{0}' does not exist.", path));
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(path));
+                    FactorioXmlHelper.CreateXml(path);
+                    //throw new FactorioException(DiagnosticEvents.DalXmlRead, String.Format("The file with the path '{0}' does not exist.", path));
+                }
 
                 reader = XmlReader.Create(path);
                 FactorioItem currentItem = null;

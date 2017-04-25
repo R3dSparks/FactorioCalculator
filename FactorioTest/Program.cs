@@ -15,7 +15,7 @@ namespace FactorioTest
 
     class Program
     {
-        private static string path = "ItemList.xml";
+        private static string path = @"..\..\..\Factorio.DAL\Files\ItemList.xml";
 
 
         /// <summary>
@@ -24,10 +24,8 @@ namespace FactorioTest
         /// <param name="args"></param>
         private static void Main(string[] args)
         {
-            IFactorioLogic logic = new FactorioLogic();
+            IFactorioLogic logic = new FactorioLogic(path);
             bool isRunning = true;
-
-            logic.ReadFile(path);
 
             while (isRunning)
             {
@@ -226,7 +224,7 @@ namespace FactorioTest
             FactorioItem item = logic.Items.Find(x => x.Name == recipeItem);
 
             addItemToRecipe(logic, item);
-            logic.WriteFile(path);
+            logic.WriteFile();
         }
 
 
@@ -302,7 +300,7 @@ namespace FactorioTest
             crafttime = Convert.ToDouble(ReadLine());
 
             logic.Items.Add(new FactorioItem(name, quantity, crafttime));
-            logic.WriteFile(path);
+            logic.WriteFile();
 
         }
 
