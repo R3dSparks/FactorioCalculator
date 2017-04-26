@@ -60,12 +60,13 @@ namespace Factorio.Entities
         /// <param name="name"></param>
         /// <param name="output"></param>
         /// <param name="time"></param>
-        public FactorioItem(string name, int output, double time)
+        public FactorioItem(string name, int output, double time, Crafting crafting = Crafting.AssemblingMachine1)
         {
             Name = name;
             CraftingOutput = output;
             CraftingTime = time;
             Productivity = output / time;
+            DefaultCraftingStation = crafting;
         }
 
 

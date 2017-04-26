@@ -1,0 +1,44 @@
+﻿<Window x:Class="FactorioWpf.AddItemWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FactorioWpf"
+        mc:Ignorable="d"
+        Title="Add new item" Height="Auto" Width="300" SizeToContent="Height"
+        ResizeMode="NoResize" 
+        KeyDown="Window_KeyDown">
+
+    <StackPanel>
+
+        <Grid Margin="5 5 5 5">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Grid.Row="0" Content="Name"/>
+            <Label Grid.Column="0" Grid.Row="1" Content="Output" />
+            <Label Grid.Column="0" Grid.Row="2" Content="Time" />
+            <Label Grid.Column="0" Grid.Row="3" Content="Crafting" />
+
+            <TextBox Grid.Column="1" Grid.Row="0" Name="AddItemName" Margin="0 3 0 3"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Name="AddItemOutput" Margin="0 3 0 3"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Name="AddItemTime" Margin="0 3 0 3"/>
+            <ComboBox Grid.Column="1" Grid.Row="3" Name="AddItemCrafting" Margin="0 3 0 3"
+                      Loaded="CraftingStations_Loaded"
+                      SelectionChanged="CraftingStations_SelectionChanged"/>
+
+
+        </Grid>
+
+    </StackPanel>
+
+</Window>

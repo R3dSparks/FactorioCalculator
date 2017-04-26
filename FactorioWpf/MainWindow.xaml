@@ -5,10 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FactorioWpf"
         mc:Ignorable="d"
-        Title="FactorioCalculator" Height="200" Width="400">
+        Title="MainWindow" Height="350" Width="525" 
+        Closing="Window_Closing">
 
     <StackPanel>
-        
+        <Menu>
+            <MenuItem Header="Items">
+                <MenuItem Header="Load" Click="ItemsLoad_Click"></MenuItem>
+                <MenuItem Header="Add" Click="ItemsAdd_Click"></MenuItem>
+            </MenuItem>
+        </Menu>
     </StackPanel>
 
 </Window>

@@ -160,6 +160,10 @@ namespace Factorio.DAL
 
         #endregion
 
+        /// <summary>
+        /// Create a standart xml file to save items
+        /// </summary>
+        /// <param name="path"></param>
         public static void CreateXml(string path)
         {
             XDocument doc = new XDocument();

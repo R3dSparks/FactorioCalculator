@@ -1,0 +1,15 @@
+﻿<Window x:Class="FactorioWpf.AddItemError"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FactorioWpf"
+        mc:Ignorable="d"
+        Title="Error" Height="Auto" Width="Auto" SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
+
+    <StackPanel Margin="5 5 5 5">
+        <Label Content="Error while creating item. Check your input!" FontSize="14" HorizontalContentAlignment="Center" />
+        <Button Content="Ok" Click="AddItemErrorOk_Click" Margin="0 5 0 0"/>
+    </StackPanel>
+</Window>
