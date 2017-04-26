@@ -71,10 +71,10 @@ namespace Factorio.DAL
                     }
                 }
             }
-            catch (FactorioException fex)
+            catch (FactorioException)
             {
                 // pass through
-                throw fex;
+                throw;
             }
             catch (Exception ex)
             {

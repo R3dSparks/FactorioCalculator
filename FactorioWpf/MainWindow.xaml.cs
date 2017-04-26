@@ -27,19 +27,26 @@ namespace FactorioWpf
         public MainWindow()
         {
             InitializeComponent();
+
+            this.ItemViewerItemsControl.ItemsSource = logic.Items;
         }
 
-        private void ItemsLoad_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Opens the Add Item dialog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ItemsAdd_Click(object sender, RoutedEventArgs e)
         {
             AddItemWindow addItemWindow = new AddItemWindow(logic);
             addItemWindow.ShowDialog();
         }
 
+        /// <summary>
+        /// Close every window from this application if the main window is closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Application.Current.Shutdown();
