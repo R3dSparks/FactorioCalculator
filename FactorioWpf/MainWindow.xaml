@@ -11,8 +11,7 @@
     <StackPanel>
         <Menu>
             <MenuItem Header="Items">
-                <MenuItem Header="Load" Click="ItemsLoad_Click"></MenuItem>
-                <MenuItem Header="Add" Click="ItemsAdd_Click"></MenuItem>
+                <MenuItem Header="Add" Click="ItemsAdd_Click" />
             </MenuItem>
         </Menu>
     </StackPanel>
