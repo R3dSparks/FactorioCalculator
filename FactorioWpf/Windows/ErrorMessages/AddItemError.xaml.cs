@@ -19,9 +19,15 @@ namespace FactorioWpf
     /// </summary>
     public partial class AddItemError : Window
     {
-        public AddItemError()
+        private Exception exception;
+
+        public AddItemError(Exception e)
         {
             InitializeComponent();
+
+            this.exception = e;
+
+            this.AddItemErrorLabel.Content = e.Message;
         }
 
         public void AddItemErrorOk_Click(object sender, RoutedEventArgs e)

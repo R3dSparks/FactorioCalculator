@@ -9,7 +9,7 @@
         ResizeMode="NoResize">
 
     <StackPanel Margin="5 5 5 5">
-        <Label Content="Error while creating item. Check your input!" FontSize="14" HorizontalContentAlignment="Center" />
+        <Label Name="AddItemErrorLabel" Content="Error while creating item. Check your input!" FontSize="14" HorizontalContentAlignment="Center" />
         <Button Content="Ok" Click="AddItemErrorOk_Click" Margin="0 5 0 0"/>
     </StackPanel>
 </Window>

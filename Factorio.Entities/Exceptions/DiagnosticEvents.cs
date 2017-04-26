@@ -16,10 +16,15 @@ namespace Factorio.Entities
 
         #region Data Access Layer
 
-
         public static int Dal = Base + 1;
         public static int DalXmlRead = Base + 2;
         public static int DalXmlReadAttribute = Base + 3;
+
+        #endregion
+
+        #region Factorio Logic
+
+        public static int ItemAlreadyExists = Base + 4;
 
         #endregion
     }

@@ -101,19 +101,24 @@ namespace FactorioWpf
                 name = this.AddItemName.Text;
                 output = Convert.ToInt32(this.AddItemOutput.Text);
                 time = Convert.ToDouble(this.AddItemTime.Text);
-                crafting = (Crafting)this.AddItemCrafting.SelectedItem;
+                crafting = (Crafting)this.AddItemCrafting.SelectedItem;                             
+
+                if (logic.Items.Exists(i => i.Name == name))
+                {
+                    throw new FactorioException(DiagnosticEvents.ItemAlreadyExists, "Item already exists!");
+                }
+
+                logic.Items.Add(new FactorioItem(name, output, time, crafting));
+                logic.WriteFile();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 //If the user input is wrong return to AddItemWindow
-                var creatingItemError = new AddItemError();
+                var creatingItemError = new AddItemError(e);
                 creatingItemError.ShowDialog();
 
                 return false;
             }
-
-            logic.Items.Add(new FactorioItem(name, output, time, crafting));
-            logic.WriteFile();
 
             return true;
         }
