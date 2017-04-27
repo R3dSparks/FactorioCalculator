@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Factorio.Entities;
+using System.Linq;
 
 namespace FactorioWpf
 {
@@ -101,9 +102,9 @@ namespace FactorioWpf
                 name = this.AddItemName.Text;
                 output = Convert.ToInt32(this.AddItemOutput.Text);
                 time = Convert.ToDouble(this.AddItemTime.Text);
-                crafting = (Crafting)this.AddItemCrafting.SelectedItem;                             
+                crafting = (Crafting)this.AddItemCrafting.SelectedItem;
 
-                if (logic.Items.Exists(i => i.Name == name))
+                if (logic.Items.Any(i => i.Name == name))
                 {
                     throw new FactorioException(DiagnosticEvents.ItemAlreadyExists, "Item already exists!");
                 }

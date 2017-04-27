@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Factorio.Entities
         /// </summary>
         /// <param name="path">path to file</param>
         /// <returns></returns>
-        List<FactorioItem> ReadItems(string path);
+        ObservableCollection<FactorioItem> ReadItems(string path);
 
 
         /// <summary>
@@ -24,7 +25,7 @@ namespace Factorio.Entities
         /// </summary>
         /// <param name="items">save these <see cref="FactorioItem"/>s</param>
         /// <param name="path">save the file here</param>
-        void SaveItems(List<FactorioItem> items, string path);
+        void SaveItems(ObservableCollection<FactorioItem> items, string path);
 
     }
 }
