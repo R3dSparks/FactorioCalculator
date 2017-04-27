@@ -30,8 +30,21 @@ namespace FactorioWpf
         /// <param name="e"></param>
         private void AddItemOk_Click(object sender, EventArgs e)
         {
-            if(AddItem())
+            try
+            {
+                logic.AddItem(
+                    this.AddItemName.Text,
+                    this.AddItemOutput.Text,
+                    this.AddItemTime.Text,
+                    this.AddItemCrafting.SelectedItem);
+
                 this.Close();
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = new AddItemError(ex);
+                errorMessage.ShowDialog();
+            }
         }
 
         /// <summary>
@@ -70,8 +83,21 @@ namespace FactorioWpf
             switch (e.Key)
             {
                 case Key.Enter:
-                    if (AddItem())
+                    try
+                    {
+                        logic.AddItem(
+                            this.AddItemName.Text,
+                            this.AddItemOutput.Text,
+                            this.AddItemTime.Text,
+                            this.AddItemCrafting.SelectedItem);
+
                         this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        var errorMessage = new AddItemError(ex);
+                        errorMessage.ShowDialog();
+                    }
                     break;
                 case Key.Escape:
                     //Close without saving
@@ -84,46 +110,5 @@ namespace FactorioWpf
 
         #endregion
 
-        #region Helper Methods
-
-        /// <summary>
-        /// Try to create a new item.
-        /// </summary>
-        /// <returns>True if add was successfull</returns>
-        private bool AddItem()
-        {
-            string name;
-            int output;
-            double time;
-            Crafting crafting;
-
-            try
-            {
-                name = this.AddItemName.Text;
-                output = Convert.ToInt32(this.AddItemOutput.Text);
-                time = Convert.ToDouble(this.AddItemTime.Text);
-                crafting = (Crafting)this.AddItemCrafting.SelectedItem;
-
-                if (logic.Items.Any(i => i.Name == name))
-                {
-                    throw new FactorioException(DiagnosticEvents.ItemAlreadyExists, "Item already exists!");
-                }
-
-                logic.Items.Add(new FactorioItem(name, output, time, crafting));
-                logic.WriteFile();
-            }
-            catch (Exception e)
-            {
-                //If the user input is wrong return to AddItemWindow
-                var creatingItemError = new AddItemError(e);
-                creatingItemError.ShowDialog();
-
-                return false;
-            }
-
-            return true;
-        }
-
-        #endregion
     }
 }
