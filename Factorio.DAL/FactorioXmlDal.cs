@@ -5,6 +5,7 @@ using System.Xml;
 
 using Factorio.Entities;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace Factorio.DAL
 {
@@ -37,7 +38,7 @@ namespace Factorio.DAL
         /// <param name="path">path to file</param>
         /// <returns></returns>
         /// <exception cref="FactorioException"></exception>
-        public List<FactorioItem> ReadItems(string path)
+        public ObservableCollection<FactorioItem> ReadItems(string path)
         {
             // contains items where all properties are known
             var knownItems = new List<FactorioItem>();
@@ -88,7 +89,7 @@ namespace Factorio.DAL
                     reader.Close();
             }
 
-            return knownItems;
+            return new ObservableCollection<FactorioItem>(knownItems);
         }
 
 
@@ -97,7 +98,7 @@ namespace Factorio.DAL
         /// </summary>
         /// <param name="items">save these <see cref="FactorioItem"/>s</param>
         /// <param name="path">save the file here</param>
-        public void SaveItems(List<FactorioItem> items, string path)
+        public void SaveItems(ObservableCollection<FactorioItem> items, string path)
         {
 
             XmlWriterSettings settings = new XmlWriterSettings();

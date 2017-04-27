@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 using Factorio.Entities;
 using Factorio.DAL;
+using System.Collections.ObjectModel;
 
 namespace Factorio
 {
     public class FactorioLogic : IFactorioLogic
     {
-        private List<FactorioItem> m_items;
+        private ObservableCollection<FactorioItem> m_items;
         private IFactorioXmlDal m_xmlDal;
         private string ItemListXmlPath;
 
@@ -20,7 +21,7 @@ namespace Factorio
         /// <summary>
         /// Contains all items of this application
         /// </summary>
-        public List<FactorioItem> Items
+        public ObservableCollection<FactorioItem> Items
         {
             get
             {

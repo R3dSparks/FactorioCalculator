@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Factorio.Entities
 {
@@ -13,7 +14,7 @@ namespace Factorio.Entities
         /// <summary>
         /// contains all items from the business layer
         /// </summary>
-        List<FactorioItem> Items { get; }
+        ObservableCollection<FactorioItem> Items { get; }
 
 
         #endregion
