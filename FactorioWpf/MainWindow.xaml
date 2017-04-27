@@ -28,17 +28,21 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Margin="10 5 0 5">
-                <ItemsControl  Name="ItemViewerItemsControl">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Name}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
+            <ListBox Grid.Column="0" Margin="5 5 5 5" Name="ItemViewerItemsControl">
+
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Tag="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" Header="Delete" Click="ItemDelete_Click"/>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Content" Value="{Binding Path=Name}"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
+            </ListBox>
             
         </Grid>
         

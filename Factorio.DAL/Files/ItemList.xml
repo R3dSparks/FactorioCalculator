@@ -141,4 +141,6 @@
     <Crafting item="Advanced circuit" quantity="45" />
     <Crafting item="Iron gear wheel" quantity="45" />
   </Item>
+  <Item name="Random Item 1" output="1" time="1" crafting="AssemblingMachine1" />
+  <Item name="Random Item 2" output="1" time="1" crafting="AssemblingMachine1" />
 </Items>

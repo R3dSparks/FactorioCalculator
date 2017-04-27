@@ -3,6 +3,7 @@ using Factorio.Entities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,6 +52,16 @@ namespace FactorioWpf
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        /// <summary>
+        /// Event for context menu delete over item in ItemBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ItemDelete_Click(object sender, RoutedEventArgs e)
+        {
+            logic.RemoveItem((sender as MenuItem)?.Tag as FactorioItem);
         }
     }
 }

@@ -37,7 +37,22 @@ namespace Factorio.Entities
 
         #region Public Methods
 
+        /// <summary>
+        /// Add an item to Items from raw input
+        /// </summary>
+        /// <param name="arg1"></param>
+        /// <param name="arg2"></param>
+        /// <param name="arg3"></param>
+        /// <param name="arg4"></param>
+        /// <exception cref="FactorioException"></exception>
+        /// <exception cref="InvalidCastException"></exception>
         void AddItem(string arg1, string arg2, string arg3, object arg4);
+
+        /// <summary>
+        /// Remove an item from Items
+        /// </summary>
+        /// <param name="item"></param>
+        void RemoveItem(FactorioItem item);
 
         #endregion
 

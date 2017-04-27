@@ -49,8 +49,8 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Click="AddItemOk_Click" Content="Ok" Margin="3 3 3 3"/>
-            <Button Grid.Column="1" Click="AddItemCancel_Click" Content="Cancel" Margin="3 3 3 3"/>
+            <Button Grid.Column="0" Name="AddItemOk" Click="AddItemOk_Click" Content="Ok" Margin="3 3 3 3"/>
+            <Button Grid.Column="1" Name="AddItemCancel" Click="AddItemCancel_Click" Content="Cancel" Margin="3 3 3 3"/>
             
         </Grid>
 

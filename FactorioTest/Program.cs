@@ -115,7 +115,7 @@ namespace FactorioTest
 
             string itemName = ReadLine();
 
-            FactorioItem item = logic.Items.Find(x => x.Name == itemName);
+            FactorioItem item = logic.Items.First(x => x.Name == itemName);
 
             WriteLine();
             WriteLine($"Name: {item.Name}");
@@ -154,14 +154,14 @@ namespace FactorioTest
 
             string itemName = ReadLine();
 
-            if (logic.Items.Find(x => x.Name == itemName) == null)
+            if (logic.Items.First(x => x.Name == itemName) == null)
             {
                 WriteLine($"Error: Item {itemName} does not exist! Press any key to continue...");
                 ReadKey();
                 return;
             }
 
-            Assembly assembly = new Assembly(logic.Items.Find(x => x.Name == itemName));
+            Assembly assembly = new Assembly(logic.Items.First(x => x.Name == itemName));
 
             WriteLine("Get production chain for Assembly machine quantity or items per second?(1/2)...");
 
@@ -221,7 +221,7 @@ namespace FactorioTest
             Write("Item: ");
 
             string recipeItem = ReadLine();
-            FactorioItem item = logic.Items.Find(x => x.Name == recipeItem);
+            FactorioItem item = logic.Items.First(x => x.Name == recipeItem);
 
             addItemToRecipe(logic, item);
             logic.WriteFile();
@@ -252,7 +252,7 @@ namespace FactorioTest
                 Write("Item name: ");
                 itemName = ReadLine();
 
-                if(logic.Items.Find(x => x.Name == itemName) == null)
+                if(logic.Items.First(x => x.Name == itemName) == null)
                 {
                     WriteLine($"Error: Item {itemName} does not exist! Press any key to continue...");
                     ReadKey();
@@ -262,7 +262,7 @@ namespace FactorioTest
                 Write("Item quantity: ");
                 quantity = Convert.ToInt32(ReadLine());
 
-                item.AddRecipeItem(logic.Items.Find(x => x.Name == itemName), quantity);
+                item.AddRecipeItem(logic.Items.First(x => x.Name == itemName), quantity);
 
                 WriteLine();
                 Write("Do you want to add another item to the recipe?(y/n)");
@@ -287,7 +287,7 @@ namespace FactorioTest
             Write("Name: ");
             name = ReadLine();
 
-            if (logic.Items.Find(x => x.Name == name) != null)
+            if (logic.Items.First(x => x.Name == name) != null)
             {
                 WriteLine("Error: Item already exists!");
                 ReadKey();
