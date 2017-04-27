@@ -34,6 +34,28 @@ namespace Factorio
             }
         }
 
+        public void AddItem(string argName, string argOutput, string argTime, object argCrafting)
+        {
+            string name;
+            int output;
+            double time;
+            Crafting crafting;
+
+            name = argName;
+            output = Convert.ToInt32(argOutput);
+            time = Convert.ToDouble(argTime);
+            crafting = (Crafting)argCrafting;
+
+            if (this.Items.Any(i => i.Name == name))
+            {
+                throw new FactorioException(DiagnosticEvents.ItemAlreadyExists, "Item already exists!");
+            }
+
+            // Add item and save
+            this.Items.Add(new FactorioItem(name, output, time, crafting));
+            this.WriteFile();
+        }
+
         /// <summary>
         /// public accessor for the xml dal
         /// </summary>

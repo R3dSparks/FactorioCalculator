@@ -36,7 +36,7 @@ namespace Factorio.Entities
 
         #region Public Methods
 
-        
+        void AddItem(string arg1, string arg2, string arg3, object arg4);
 
         #endregion
 

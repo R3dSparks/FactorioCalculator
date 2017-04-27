@@ -18,6 +18,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -34,8 +35,13 @@
             <TextBox Grid.Column="1" Grid.Row="2" Name="AddItemTime" Margin="0 3 0 3"/>
             <ComboBox Grid.Column="1" Grid.Row="3" Name="AddItemCrafting" Margin="0 3 0 3"
                       Loaded="CraftingStations_Loaded" />
+
+        </Grid>
+
+        <Grid>
             
         </Grid>
+
         <Grid Margin="0 5 0 0">
 
             <Grid.ColumnDefinitions>
@@ -45,6 +51,7 @@
 
             <Button Grid.Column="0" Click="AddItemOk_Click" Content="Ok" Margin="3 3 3 3"/>
             <Button Grid.Column="1" Click="AddItemCancel_Click" Content="Cancel" Margin="3 3 3 3"/>
+            
         </Grid>
 
     </StackPanel>
