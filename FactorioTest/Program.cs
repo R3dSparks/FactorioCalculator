@@ -224,7 +224,7 @@ namespace FactorioTest
             FactorioItem item = logic.Items.First(x => x.Name == recipeItem);
 
             addItemToRecipe(logic, item);
-            logic.WriteFile();
+            logic.SaveItems();
         }
 
 
@@ -300,7 +300,7 @@ namespace FactorioTest
             crafttime = Convert.ToDouble(ReadLine());
 
             logic.Items.Add(new FactorioItem(name, quantity, crafttime));
-            logic.WriteFile();
+            logic.SaveItems();
 
         }
 

@@ -26,7 +26,7 @@ namespace Factorio
             get
             {
                 if (m_items == null)
-                    ReadFile();
+                    LoadItems();
                 return m_items;
             }
             private set
@@ -78,7 +78,7 @@ namespace Factorio
         /// Read a file into the business layer
         /// </summary>
         /// <param name="path"></param>
-        public void ReadFile()
+        public void LoadItems()
         {
             this.Items = this.XmlDal.ReadItems(ItemListXmlPath);
         }
@@ -88,7 +88,7 @@ namespace Factorio
         /// Write a file from the business layer
         /// </summary>
         /// <param name="path"></param>
-        public void WriteFile()
+        public void SaveItems()
         {
             this.XmlDal.SaveItems(this.Items, ItemListXmlPath);
         }
@@ -124,7 +124,7 @@ namespace Factorio
 
             // Add item and save
             this.Items.Add(new FactorioItem(name, output, time, crafting));
-            this.WriteFile();
+            this.SaveItems();
         }
 
         #endregion

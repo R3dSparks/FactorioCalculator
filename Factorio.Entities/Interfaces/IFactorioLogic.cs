@@ -25,12 +25,12 @@ namespace Factorio.Entities
         /// <summary>
         /// Read a file into the business layer
         /// </summary>
-        void ReadFile();
+        void LoadItems();
 
         /// <summary>
         /// Write a file from the business layer
         /// </summary>
-        void WriteFile();
+        void SaveItems();
 
 
         #endregion
