@@ -57,22 +57,6 @@ namespace FactorioWpf
             this.Close();
         }
 
-
-
-        /// <summary>
-        /// Add crafting stations to the combobox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CraftingStations_Loaded(object sender, RoutedEventArgs e)
-        {
-            var comboBox = sender as ComboBox;
-
-            comboBox.ItemsSource = Enum.GetValues(typeof(Crafting));
-
-            comboBox.SelectedIndex = 0;
-        }
-
         /// <summary>
         /// Called if a key on AddItemWindow is pressed
         /// </summary>

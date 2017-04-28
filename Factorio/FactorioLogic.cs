@@ -14,9 +14,14 @@ namespace Factorio
     {
         private ObservableCollection<FactorioItem> m_items;
         private IFactorioXmlDal m_xmlDal;
-        private string ItemListXmlPath;
 
         #region Properties
+
+        /// <summary>
+        /// Path to ItemList xml
+        /// </summary>
+        public string ItemListXmlPath { get; private set; }
+
 
         /// <summary>
         /// Contains all items of this application
@@ -59,10 +64,18 @@ namespace Factorio
 
         #region Constructor
 
-        
         /// <summary>
-        /// default constructor
+        /// Default constructor
         /// </summary>
+        public FactorioLogic()
+        {
+
+        }
+
+        /// <summary>
+        /// Create FactorioLogic with path to items file
+        /// </summary>
+        /// <param name="path">Path to items file</param>
         public FactorioLogic(string path)
         {
             ItemListXmlPath = path;
