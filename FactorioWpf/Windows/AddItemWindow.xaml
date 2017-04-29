@@ -7,8 +7,13 @@
         mc:Ignorable="d"
         Title="Add new item" Height="Auto" Width="300" SizeToContent="Height"
         ResizeMode="NoResize" 
-        KeyDown="Window_KeyDown">
+        KeyDown="Window_KeyDown"
+        xmlns:vmns="clr-namespace:FactorioWpf.ViewModels" >
 
+    <Window.Resources>
+        <vmns:AddItemViewModell x:Key="addItemViewModell"/>
+    </Window.Resources>
+    
     <StackPanel Margin="5 5 5 5">
 
         <Grid>
@@ -30,16 +35,25 @@
             <Label Grid.Column="0" Grid.Row="2" Content="Time" />
             <Label Grid.Column="0" Grid.Row="3" Content="Crafting" />
 
-            <TextBox Grid.Column="1" Grid.Row="0" Name="AddItemName" Margin="0 3 0 3"/>
-            <TextBox Grid.Column="1" Grid.Row="1" Name="AddItemOutput" Margin="0 3 0 3"/>
-            <TextBox Grid.Column="1" Grid.Row="2" Name="AddItemTime" Margin="0 3 0 3"/>
-            <ComboBox Grid.Column="1" Grid.Row="3" Name="AddItemCrafting" Margin="0 3 0 3"
-                      Loaded="CraftingStations_Loaded" />
+            <TextBox Grid.Column="1" Grid.Row="0" 
+                     Text="{Binding TxtItemName, Source={StaticResource addItemViewModell}}" 
+                     Name="AddItemName" 
+                     Margin="0 3 0 3"/>
+            <TextBox Grid.Column="1" Grid.Row="1"
+                     Text="{Binding TxtItemOutput, Source={StaticResource addItemViewModell}}" 
+                     Name="AddItemOutput" 
+                     Margin="0 3 0 3"/>
+            <TextBox Grid.Column="1" Grid.Row="2" 
+                     Text="{Binding TxtItemTime, Source={StaticResource addItemViewModell}}" 
+                     Name="AddItemTime" 
+                     Margin="0 3 0 3"/>
+            <ComboBox Grid.Column="1" Grid.Row="3" 
+                      ItemsSource="{Binding CraftingItemCrafting, Source={StaticResource addItemViewModell}}"                       
+                      SelectedIndex="0"
+                      Name="AddItemCrafting"
+                      Margin="0 3 0 3">
+            </ComboBox>
 
-        </Grid>
-
-        <Grid>
-            
         </Grid>
 
         <Grid Margin="0 5 0 0">
