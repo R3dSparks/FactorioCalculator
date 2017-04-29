@@ -1,4 +1,4 @@
-﻿<Window x:Class="FactorioWpf.AddItemWindow"
+﻿<Window x:Name="AddItemWindowInstance" x:Class="FactorioWpf.AddItemWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,13 +7,13 @@
         mc:Ignorable="d"
         Title="Add new item" Height="Auto" Width="300" SizeToContent="Height"
         ResizeMode="NoResize" 
-        KeyDown="Window_KeyDown"
-        xmlns:vmns="clr-namespace:FactorioWpf.ViewModels" >
+        xmlns:FactorioWpf.ViewModels="clr-namespace:FactorioWpf.ViewModels">
 
+    <!--Adding view modell-->
     <Window.Resources>
-        <vmns:AddItemViewModell x:Key="addItemViewModell"/>
+        <FactorioWpf.ViewModels:AddItemViewModell x:Key="AddItemViewModell"/>
     </Window.Resources>
-    
+
     <StackPanel Margin="5 5 5 5">
 
         <Grid>
@@ -36,23 +36,23 @@
             <Label Grid.Column="0" Grid.Row="3" Content="Crafting" />
 
             <TextBox Grid.Column="1" Grid.Row="0" 
-                     Text="{Binding TxtItemName, Source={StaticResource addItemViewModell}}" 
+                     Text="{Binding TxtItemName, Source={StaticResource AddItemViewModell}}" 
                      Name="AddItemName" 
                      Margin="0 3 0 3"/>
             <TextBox Grid.Column="1" Grid.Row="1"
-                     Text="{Binding TxtItemOutput, Source={StaticResource addItemViewModell}}" 
+                     Text="{Binding TxtItemOutput, Source={StaticResource AddItemViewModell}}" 
                      Name="AddItemOutput" 
                      Margin="0 3 0 3"/>
             <TextBox Grid.Column="1" Grid.Row="2" 
-                     Text="{Binding TxtItemTime, Source={StaticResource addItemViewModell}}" 
+                     Text="{Binding TxtItemTime, Source={StaticResource AddItemViewModell}}" 
                      Name="AddItemTime" 
                      Margin="0 3 0 3"/>
             <ComboBox Grid.Column="1" Grid.Row="3" 
-                      ItemsSource="{Binding CraftingItemCrafting, Source={StaticResource addItemViewModell}}"                       
+                      ItemsSource="{Binding CraftingItemCrafting, Source={StaticResource AddItemViewModell}}"                       
                       SelectedIndex="0"
+                      SelectedItem="{Binding SelectedCrafting, Source={StaticResource AddItemViewModell}}"
                       Name="AddItemCrafting"
-                      Margin="0 3 0 3">
-            </ComboBox>
+                      Margin="0 3 0 3" />
 
         </Grid>
 
@@ -63,9 +63,17 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Name="AddItemOk" Click="AddItemOk_Click" Content="Ok" Margin="3 3 3 3"/>
-            <Button Grid.Column="1" Name="AddItemCancel" Click="AddItemCancel_Click" Content="Cancel" Margin="3 3 3 3"/>
-            
+            <Button Grid.Column="0" 
+                    Command="{Binding AddItemOk_Click, Mode=OneWay, Source={StaticResource AddItemViewModell}}"
+                    CommandParameter="{Binding ElementName=AddItemWindowInstance}"
+                    Content="Ok" 
+                    Margin="3 3 3 3" />
+            <Button Grid.Column="1" 
+                    Command="{Binding AddItemCancel_Click, Mode=OneWay, Source={StaticResource AddItemViewModell}}" 
+                    CommandParameter="{Binding ElementName=AddItemWindowInstance}"
+                    Content="Cancel" 
+                    Margin="3 3 3 3"/>
+
         </Grid>
 
     </StackPanel>

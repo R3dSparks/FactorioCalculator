@@ -1,5 +1,6 @@
 ﻿using Factorio;
 using Factorio.Entities;
+using FactorioWpf.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,24 +11,11 @@ namespace FactorioWpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IFactorioLogic logic = new FactorioLogic(@"..\..\..\Factorio.DAL\Files\ItemList.xml");
-
         public MainWindow()
         {
             InitializeComponent();
 
-            this.ItemViewerItemsControl.ItemsSource = logic.Items;
-        }
-
-        /// <summary>
-        /// Opens the Add Item dialog
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ItemsAdd_Click(object sender, RoutedEventArgs e)
-        {
-            AddItemWindow addItemWindow = new AddItemWindow(logic);
-            addItemWindow.ShowDialog();
+            this.DataContext = new MainWindowViewModell(new FactorioLogic(@"..\..\..\Factorio.DAL\Files\ItemList.xml"));
         }
 
         /// <summary>
@@ -40,15 +28,5 @@ namespace FactorioWpf
             Application.Current.Shutdown();
         }
 
-        /// <summary>
-        /// Event for context menu delete over item in ItemBox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ItemDelete_Click(object sender, RoutedEventArgs e)
-        {
-            logic.RemoveItem((sender as MenuItem)?.Tag as FactorioItem);
-            logic.SaveItems();
-        }
     }
 }

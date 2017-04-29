@@ -141,4 +141,8 @@
     <Crafting item="Advanced circuit" quantity="45" />
     <Crafting item="Iron gear wheel" quantity="45" />
   </Item>
+  <Item name="Science pack 2" output="1" time="6" crafting="AssemblingMachine1">
+    <Crafting item="Transport belt" quantity="1" />
+    <Crafting item="Inserter" quantity="1" />
+  </Item>
 </Items>

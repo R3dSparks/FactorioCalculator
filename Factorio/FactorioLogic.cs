@@ -111,23 +111,26 @@ namespace Factorio
 
         #region Public Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
         public void RemoveItem(FactorioItem item)
         {
             this.Items.Remove(item);
+            this.SaveItems();
         }
 
-        public void AddItem(string argName, string argOutput, string argTime, object argCrafting)
+        /// <summary>
+        /// Add a new item to the Items list and save Items list to xml file
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="output"></param>
+        /// <param name="time"></param>
+        /// <param name="crafting"></param>
+        /// <exception cref="FactorioException"></exception>
+        public void AddItem(string name, int output, double time, Crafting crafting)
         {
-            string name;
-            int output;
-            double time;
-            Crafting crafting;
-
-            name = argName;
-            output = Convert.ToInt32(argOutput);
-            time = Convert.ToDouble(argTime);
-            crafting = (Crafting)argCrafting;
-
             // If item already exists throw exception
             if (this.Items.Any(i => i.Name == name))
             {

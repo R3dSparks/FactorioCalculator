@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Factorio.Entities;
 using System.Linq;
+using FactorioWpf.ViewModels;
 
 namespace FactorioWpf
 {
@@ -12,87 +13,22 @@ namespace FactorioWpf
     /// </summary>
     public partial class AddItemWindow : Window
     {
-        private IFactorioLogic logic;
 
         public AddItemWindow(IFactorioLogic logic)
         {
             InitializeComponent();
 
-            this.logic = logic;
-        }
-
-        #region Events
-
-        /// <summary>
-        /// Event for ok button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AddItemOk_Click(object sender, EventArgs e)
-        {
-            try
+            // Add FactorioLogic to the window view modell
+            foreach(var x in this.Resources.Values)
             {
-                logic.AddItem(
-                    this.AddItemName.Text,
-                    this.AddItemOutput.Text,
-                    this.AddItemTime.Text,
-                    this.AddItemCrafting.SelectedItem);
-
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                var errorMessage = new AddItemError(ex);
-                errorMessage.ShowDialog();
+                if (x is AddItemViewModell)
+                {
+                    ((AddItemViewModell)x).Logic = logic;
+                    ((AddItemViewModell)x).CurrentWindow = this.AddItemWindowInstance;
+                }
+                    
             }
         }
-
-        /// <summary>
-        /// Event for cancel button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AddItemCancel_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        /// <summary>
-        /// Called if a key on AddItemWindow is pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.Enter:
-                    try
-                    {
-                        logic.AddItem(
-                            this.AddItemName.Text,
-                            this.AddItemOutput.Text,
-                            this.AddItemTime.Text,
-                            this.AddItemCrafting.SelectedItem);
-
-                        this.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        var errorMessage = new AddItemError(ex);
-                        errorMessage.ShowDialog();
-                    }
-                    break;
-                case Key.Escape:
-                    //Close without saving
-                    this.Close();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        #endregion
 
     }
 }

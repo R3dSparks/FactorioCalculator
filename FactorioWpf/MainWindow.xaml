@@ -17,7 +17,7 @@
 
         <Menu Grid.Row="0">
             <MenuItem Header="Items">
-                <MenuItem Header="Add" Click="ItemsAdd_Click" />
+                <MenuItem Header="Add" Command="{Binding OpenAddItemDialog, Mode=OneWay}" />
             </MenuItem>
         </Menu>
 
@@ -27,12 +27,17 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
-            <ListBox Grid.Column="0" Margin="5 5 5 5" Name="ItemViewerItemsControl">
+
+            <ListBox Grid.Column="0" Margin="5 5 5 5" 
+                     ItemsSource="{Binding Path=ItemList}" 
+                     SelectedItem="{Binding Path=SelectedItem}">
 
                 <ListBox.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Tag="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" Header="Delete" Click="ItemDelete_Click"/>
+                        <MenuItem 
+                            Tag="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" 
+                            Header="Delete"
+                            Command="{Binding ListBoxItemDelete, Mode=OneWay}"/>
                     </ContextMenu>
                 </ListBox.ContextMenu>
 

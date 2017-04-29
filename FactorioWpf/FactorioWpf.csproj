@@ -64,12 +64,13 @@
     </ApplicationDefinition>
     <Compile Include="ViewModels\AddItemViewModell.cs" />
     <Compile Include="ViewModels\Base\BaseViewModell.cs" />
+    <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\MainWindowViewModell.cs" />
     <Compile Include="Windows\AddItemWindow.xaml.cs">
       <DependentUpon>AddItemWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ErrorMessages\AddItemError.xaml.cs">
-      <DependentUpon>AddItemError.xaml</DependentUpon>
+    <Compile Include="Windows\ErrorMessages\ErrorMessage.xaml.cs">
+      <DependentUpon>ErrorMessage.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -87,9 +88,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ErrorMessages\AddItemError.xaml">
+    <Page Include="Windows\ErrorMessages\ErrorMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
   </ItemGroup>
   <ItemGroup>
