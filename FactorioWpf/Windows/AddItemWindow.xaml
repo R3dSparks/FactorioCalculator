@@ -4,22 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FactorioWpf"
+        xmlns:converters="clr-namespace:FactorioWpf.Converters"
         mc:Ignorable="d"
         Title="Add new item" Height="Auto" Width="300" SizeToContent="Height"
-        ResizeMode="NoResize" 
-        xmlns:FactorioWpf.ViewModels="clr-namespace:FactorioWpf.ViewModels">
+        ResizeMode="NoResize" >
 
-    <!--Adding view modell-->
     <Window.Resources>
-        <FactorioWpf.ViewModels:AddItemViewModell x:Key="AddItemViewModell"/>
+        <converters:PathToPictureConverter x:Key="PathToPictureConverter" />
     </Window.Resources>
-
+    
     <StackPanel Margin="5 5 5 5">
 
         <Grid>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
@@ -36,26 +34,47 @@
             <Label Grid.Column="0" Grid.Row="3" Content="Crafting" />
 
             <TextBox Grid.Column="1" Grid.Row="0" 
-                     Text="{Binding TxtItemName, Source={StaticResource AddItemViewModell}}" 
+                     Text="{Binding TxtItemName}" 
                      Name="AddItemName" 
                      Margin="0 3 0 3"/>
             <TextBox Grid.Column="1" Grid.Row="1"
-                     Text="{Binding TxtItemOutput, Source={StaticResource AddItemViewModell}}" 
+                     Text="{Binding TxtItemOutput}" 
                      Name="AddItemOutput" 
                      Margin="0 3 0 3"/>
             <TextBox Grid.Column="1" Grid.Row="2" 
-                     Text="{Binding TxtItemTime, Source={StaticResource AddItemViewModell}}" 
+                     Text="{Binding TxtItemTime}" 
                      Name="AddItemTime" 
                      Margin="0 3 0 3"/>
             <ComboBox Grid.Column="1" Grid.Row="3" 
-                      ItemsSource="{Binding CraftingItemCrafting, Source={StaticResource AddItemViewModell}}"                       
+                      ItemsSource="{Binding CraftingItemCrafting}"                       
                       SelectedIndex="0"
-                      SelectedItem="{Binding SelectedCrafting, Source={StaticResource AddItemViewModell}}"
+                      SelectedItem="{Binding SelectedCrafting}"
                       Name="AddItemCrafting"
                       Margin="0 3 0 3" />
 
         </Grid>
 
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+
+            <Button Height="25" Margin="3 0 3 0" Grid.Column="0" Content="Add Picture"
+                    Command="{Binding AddItemPicture_Click}"/>
+
+            <Image Grid.Column="1" 
+                   Source="{Binding Path=PicturePath, Converter={StaticResource PathToPictureConverter}, Mode=OneWay}" />
+
+
+
+        </Grid>
+        
         <Grid Margin="0 5 0 0">
 
             <Grid.ColumnDefinitions>
@@ -64,12 +83,12 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" 
-                    Command="{Binding AddItemOk_Click, Mode=OneWay, Source={StaticResource AddItemViewModell}}"
+                    Command="{Binding AddItemOk_Click, Mode=OneWay}"
                     CommandParameter="{Binding ElementName=AddItemWindowInstance}"
                     Content="Ok" 
                     Margin="3 3 3 3" />
             <Button Grid.Column="1" 
-                    Command="{Binding AddItemCancel_Click, Mode=OneWay, Source={StaticResource AddItemViewModell}}" 
+                    Command="{Binding AddItemCancel_Click, Mode=OneWay}" 
                     CommandParameter="{Binding ElementName=AddItemWindowInstance}"
                     Content="Cancel" 
                     Margin="3 3 3 3"/>

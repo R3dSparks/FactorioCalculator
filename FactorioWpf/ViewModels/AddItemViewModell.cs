@@ -1,4 +1,5 @@
 ﻿using Factorio.Entities;
+using Microsoft.Win32;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -7,10 +8,24 @@ namespace FactorioWpf.ViewModels
 {
     public class AddItemViewModell : BaseViewModell
     {
+        #region Private Variables
+
         /// <summary>
         /// Names of <see cref="Crafting"/>
         /// </summary>
         private string[] craftingItemCrafting;
+
+        /// <summary>
+        /// Logic for interaction with business layer
+        /// </summary>
+        private IFactorioLogic fLogic;
+
+        /// <summary>
+        /// Window this view modell is displayed in
+        /// </summary>
+        private Window currentWindow;
+
+        #endregion
 
         #region Commands
 
@@ -24,16 +39,33 @@ namespace FactorioWpf.ViewModels
         /// </summary>
         private RelayCommand addItemCancel_Click;
 
+        /// <summary>
+        /// Command for Add Picture button
+        /// </summary>
+        private RelayCommand addItemPicture_Click;
+
         #endregion
 
         #region Public Properties
 
-        public Window CurrentWindow { get; set; }
-
-        public IFactorioLogic Logic { get; set; }
+        #region ICommands
 
         /// <summary>
-        /// ICommand to bind to the Ok button
+        /// ICommand binded to the Add Picture button
+        /// </summary>
+        public ICommand AddItemPicture_Click
+        {
+            get
+            {
+                if (addItemPicture_Click == null)
+                    addItemPicture_Click = new RelayCommand(AddPicture);
+
+                return addItemPicture_Click;
+            }
+        }
+
+        /// <summary>
+        /// ICommand binded to the Ok button
         /// </summary>
         public ICommand AddItemOk_Click
         {
@@ -47,7 +79,7 @@ namespace FactorioWpf.ViewModels
         }
 
         /// <summary>
-        /// ICommand to bind to the Cancel button
+        /// ICommand binded to the Cancel button
         /// </summary>
         public ICommand AddItemCancel_Click
         {
@@ -59,6 +91,15 @@ namespace FactorioWpf.ViewModels
                 return addItemCancel_Click;
             }
         }
+
+        #endregion
+
+        #region Visual Properties
+
+        /// <summary>
+        /// Path to the item picture
+        /// </summary>
+        public string PicturePath { get; set; }
 
         /// <summary>
         /// TextBox for item name
@@ -89,6 +130,8 @@ namespace FactorioWpf.ViewModels
             }
         }
 
+        #endregion
+
         /// <summary>
         /// Currently selected crafting station
         /// </summary>
@@ -101,9 +144,10 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// Default constructor
         /// </summary>
-        public AddItemViewModell()
+        public AddItemViewModell(IFactorioLogic logic, Window window)
         {
-
+            this.fLogic = logic;
+            this.currentWindow = window;
         }
 
         #endregion
@@ -111,12 +155,27 @@ namespace FactorioWpf.ViewModels
         #region Command Methods
 
         /// <summary>
+        /// Add path to picture for the item
+        /// </summary>
+        private void AddPicture()
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog()
+            {
+                Filter = "Image files (*.png) | *.png"
+            };
+
+            fileDialog.ShowDialog();
+
+            PicturePath = fileDialog.FileName;
+        }
+
+        /// <summary>
         /// Close the window on cancel click
         /// </summary>
         /// <param name="window"></param>
         private void Cancel()
         {
-            CurrentWindow?.Close();
+            currentWindow?.Close();
         }
 
         /// <summary>
@@ -141,7 +200,7 @@ namespace FactorioWpf.ViewModels
                 double time = Convert.ToDouble(TxtItemTime);
                 Crafting crafting = (Crafting)Enum.Parse(typeof(Crafting), CraftingSelection);
 
-                Logic.AddItem(name, output, time, crafting);
+                fLogic.AddItem(name, output, time, crafting, PicturePath);
             }
             catch (Exception ex)
             {
@@ -151,7 +210,7 @@ namespace FactorioWpf.ViewModels
                 return;
             }
 
-            CurrentWindow?.Close();
+            currentWindow?.Close();
         }
 
         #endregion

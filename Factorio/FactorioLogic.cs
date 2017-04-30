@@ -129,7 +129,7 @@ namespace Factorio
         /// <param name="time"></param>
         /// <param name="crafting"></param>
         /// <exception cref="FactorioException"></exception>
-        public void AddItem(string name, int output, double time, Crafting crafting)
+        public void AddItem(string name, int output, double time, Crafting crafting, string path)
         {
             // If item already exists throw exception
             if (this.Items.Any(i => i.Name == name))
@@ -138,7 +138,7 @@ namespace Factorio
             }
 
             // Add item and save
-            this.Items.Add(new FactorioItem(name, output, time, crafting));
+            this.Items.Add(new FactorioItem(name, output, time, crafting, path));
             this.SaveItems();
         }
 

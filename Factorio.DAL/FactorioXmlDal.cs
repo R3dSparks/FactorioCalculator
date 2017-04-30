@@ -101,8 +101,10 @@ namespace Factorio.DAL
         public void SaveItems(ObservableCollection<FactorioItem> items, string path)
         {
 
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
+            XmlWriterSettings settings = new XmlWriterSettings()
+            {
+                Indent = true
+            };
 
             XmlWriter writer = XmlWriter.Create(path, settings);
 
@@ -130,7 +132,6 @@ namespace Factorio.DAL
 
         #region Private Methods
 
-
         /// <summary>
         /// create the file 
         /// </summary>
@@ -151,7 +152,6 @@ namespace Factorio.DAL
 
             writer.Close();
         }
-
 
         /// <summary>
         /// read an item

@@ -145,4 +145,5 @@
     <Crafting item="Transport belt" quantity="1" />
     <Crafting item="Inserter" quantity="1" />
   </Item>
+  <Item name="Random" output="1" time="1" crafting="AssemblingMachine1" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\alien-artifact-goo.png" />
 </Items>

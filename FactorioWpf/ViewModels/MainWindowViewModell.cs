@@ -81,6 +81,7 @@ namespace FactorioWpf.ViewModels
 
         #endregion
 
+        #region Command Methods
 
         /// <summary>
         /// Opens the Add Item dialog
@@ -99,6 +100,7 @@ namespace FactorioWpf.ViewModels
             fLogic.RemoveItem(SelectedItem);
         }
 
+        #endregion
 
     }
 }

@@ -18,16 +18,7 @@ namespace FactorioWpf
         {
             InitializeComponent();
 
-            // Add FactorioLogic to the window view modell
-            foreach(var x in this.Resources.Values)
-            {
-                if (x is AddItemViewModell)
-                {
-                    ((AddItemViewModell)x).Logic = logic;
-                    ((AddItemViewModell)x).CurrentWindow = this.AddItemWindowInstance;
-                }
-                    
-            }
+            this.DataContext = new AddItemViewModell(logic, this);
         }
 
     }

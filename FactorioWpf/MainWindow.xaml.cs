@@ -19,7 +19,7 @@ namespace FactorioWpf
         }
 
         /// <summary>
-        /// Close every window from this application if the main window is closed
+        /// Close every window from this application if this window is closed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

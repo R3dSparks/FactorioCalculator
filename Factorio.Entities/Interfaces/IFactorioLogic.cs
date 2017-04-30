@@ -46,7 +46,7 @@ namespace Factorio.Entities
         /// <param name="arg4"></param>
         /// <exception cref="FactorioException"></exception>
         /// <exception cref="InvalidCastException"></exception>
-        void AddItem(string arg1, int arg2, double arg3, Crafting arg4);
+        void AddItem(string name, int output, double time, Crafting crafting, string path);
 
         /// <summary>
         /// Remove an item from Items

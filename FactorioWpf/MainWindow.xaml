@@ -35,10 +35,10 @@
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem 
-                            Tag="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" 
                             Header="Delete"
+                            Tag="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"                             
                             Command="{Binding ListBoxItemDelete, Mode=OneWay}"/>
-                    </ContextMenu>
+                    </ContextMenu>  
                 </ListBox.ContextMenu>
 
                 <ListBox.ItemContainerStyle>

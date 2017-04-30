@@ -23,6 +23,7 @@ namespace Factorio.DAL
         public static readonly string XmlItemAttributeOutput = "output";
         public static readonly string XmlItemAttributeTime = "time";
         public static readonly string XmlItemAttributeCraftingStation = "crafting";
+        public static readonly string XmlItemAttributePicture = "picture";
 
         public static readonly string XmlCraftingElement = "Crafting";
         public static readonly string XmlCraftingAttributeItem = "item";
@@ -41,6 +42,10 @@ namespace Factorio.DAL
             item.CraftingOutput = FactorioXmlHelper.ReadAttribute<int>(reader, FactorioXmlHelper.XmlItemAttributeOutput);
             item.CraftingTime = FactorioXmlHelper.ReadAttribute<double>(reader, FactorioXmlHelper.XmlItemAttributeTime);
             item.DefaultCraftingStation = FactorioXmlHelper.ReadAttribute(reader, FactorioXmlHelper.XmlItemAttributeCraftingStation);
+
+            if(reader.GetAttribute(FactorioXmlHelper.XmlItemAttributePicture) != null)
+                item.PicturePath = FactorioXmlHelper.ReadAttribute<string>(reader, FactorioXmlHelper.XmlItemAttributePicture);
+
             item.Productivity = item.CraftingOutput / item.CraftingTime;
             return item;
         }
@@ -143,6 +148,9 @@ namespace Factorio.DAL
             writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeOutput, item.CraftingOutput.ToString());
             writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeTime, item.CraftingTime.ToString());
             writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeCraftingStation, item.DefaultCraftingStation.ToString());
+
+            if(item.PicturePath != null)
+                writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributePicture, item.PicturePath);
 
             if (item.Recipe != null)
             {

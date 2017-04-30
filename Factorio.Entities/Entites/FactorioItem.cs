@@ -14,31 +14,40 @@ namespace Factorio.Entities
 
         #region Properties
 
-
         /// <summary>
         /// name of the item
         /// </summary>
         public string Name { get; set; }
+
         /// <summary>
         /// Profuctivity means items per second
         /// </summary>
         public double Productivity { get; set; }
+
         /// <summary>
         /// The amount which is crafted with one craft
         /// </summary>
         public int CraftingOutput { get; set; }
+
         /// <summary>
         /// How long it takes to craft it
         /// </summary>
         public double CraftingTime { get; set; }
+
         /// <summary>
         /// Which <see cref="FactorioItem"/> are needed to craft this item
         /// </summary>
         public Dictionary<FactorioItem, int> Recipe { get; private set; }
+
         /// <summary>
         /// Where this item is crafted
         /// </summary>
         public Crafting DefaultCraftingStation { get; set; }
+
+        /// <summary>
+        /// Path to the item picture
+        /// </summary>
+        public string PicturePath { get; set; }
 
         #endregion
 
@@ -53,20 +62,20 @@ namespace Factorio.Entities
 
         }
 
-
         /// <summary>
-        /// create a <see cref="FactorioItem"/> with a name, craft amount and a crafting time
+        /// Create a <see cref="FactorioItem"/> with a name, craft amount and a crafting time
         /// </summary>
         /// <param name="name"></param>
         /// <param name="output"></param>
         /// <param name="time"></param>
-        public FactorioItem(string name, int output, double time, Crafting crafting = Crafting.AssemblingMachine1)
+        public FactorioItem(string name, int output, double time, Crafting crafting = Crafting.AssemblingMachine1, string path = null)
         {
             Name = name;
             CraftingOutput = output;
             CraftingTime = time;
             Productivity = output / time;
             DefaultCraftingStation = crafting;
+            PicturePath = path;
         }
 
 
