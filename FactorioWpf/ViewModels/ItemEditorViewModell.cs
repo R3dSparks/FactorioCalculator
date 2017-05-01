@@ -6,14 +6,14 @@ using System.Windows.Input;
 
 namespace FactorioWpf.ViewModels
 {
-    public class AddItemViewModell : BaseViewModell
+    public class ItemEditorViewModell : BaseViewModell
     {
         #region Private Variables
 
         /// <summary>
         /// Names of <see cref="Crafting"/>
         /// </summary>
-        private string[] craftingItemCrafting;
+        private string[] comboBoxItemCrafting;
 
         /// <summary>
         /// Logic for interaction with business layer
@@ -24,6 +24,16 @@ namespace FactorioWpf.ViewModels
         /// Window this view modell is displayed in
         /// </summary>
         private Window currentWindow;
+
+        /// <summary>
+        /// Item id if item is edited
+        /// </summary>
+        private int itemId;
+
+        /// <summary>
+        /// Wether editor is in editing or creating mode
+        /// </summary>
+        private bool editing = false;
 
         #endregion
 
@@ -97,6 +107,11 @@ namespace FactorioWpf.ViewModels
         #region Visual Properties
 
         /// <summary>
+        /// Window title
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
         /// Path to the item picture
         /// </summary>
         public string PicturePath { get; set; }
@@ -119,14 +134,14 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// ComboBox for selecting crafting station
         /// </summary>
-        public string[] CraftingItemCrafting
+        public string[] ComboBoxItemCrafting
         {
             get
             {
-                if (craftingItemCrafting == null)
-                    craftingItemCrafting = Enum.GetNames(typeof(Crafting));
+                if (comboBoxItemCrafting == null)
+                    comboBoxItemCrafting = Enum.GetNames(typeof(Crafting));
 
-                return craftingItemCrafting;
+                return comboBoxItemCrafting;
             }
         }
 
@@ -135,7 +150,7 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// Currently selected crafting station
         /// </summary>
-        public string CraftingSelection { get; set; } = "AssemblingMachine1";
+        public string CraftingSelection { get; set; } = Crafting.AssemblingMachine1.ToString();
 
         #endregion
 
@@ -144,10 +159,19 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// Default constructor
         /// </summary>
-        public AddItemViewModell(IFactorioLogic logic, Window window)
+        public ItemEditorViewModell(IFactorioLogic logic, Window window)
         {
             this.fLogic = logic;
             this.currentWindow = window;
+        }
+
+        public ItemEditorViewModell(IFactorioLogic logic, Window window, int id)
+        {
+            this.fLogic = logic;
+            this.currentWindow = window;
+
+            this.editing = true;
+            this.itemId = id;
         }
 
         #endregion
@@ -172,7 +196,6 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// Close the window on cancel click
         /// </summary>
-        /// <param name="window"></param>
         private void Cancel()
         {
             currentWindow?.Close();
@@ -181,14 +204,13 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// Try creating a new item. Closing the window if successfull, else show error message.
         /// </summary>
-        /// <param name="window">The current window</param>
         private void CreateItem()
         {
             try
             {
                 // Check if entries are existing
                 if (
-                    TxtItemName == "" || string.IsNullOrWhiteSpace(TxtItemName) || 
+                    TxtItemName == "" || string.IsNullOrWhiteSpace(TxtItemName) ||
                     TxtItemOutput == null || TxtItemOutput == "" ||
                     TxtItemTime == null || TxtItemTime == ""
                   )
@@ -200,7 +222,10 @@ namespace FactorioWpf.ViewModels
                 double time = Convert.ToDouble(TxtItemTime);
                 Crafting crafting = (Crafting)Enum.Parse(typeof(Crafting), CraftingSelection);
 
-                fLogic.AddItem(name, output, time, crafting, PicturePath);
+                if(editing)
+                    fLogic.EditItem(itemId, name, output, time, crafting, PicturePath);
+                else
+                    fLogic.AddItem(name, output, time, crafting, PicturePath);
             }
             catch (Exception ex)
             {

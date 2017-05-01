@@ -17,11 +17,24 @@ namespace FactorioWpf.ViewModels
 
         private RelayCommand listBoxItemDelete;
 
+        private RelayCommand listBoxItemEdit;
+
         private RelayCommand openAddItemDialog;
 
         #endregion
 
         #region Public Properties
+
+        public ICommand ListBoxItemEdit
+        {
+            get
+            {
+                if (listBoxItemEdit == null)
+                    listBoxItemEdit = new RelayCommand(EditItem);
+
+                return listBoxItemEdit;
+            }
+        }
 
         /// <summary>
         /// Delete item from the item list
@@ -88,8 +101,30 @@ namespace FactorioWpf.ViewModels
         /// </summary>
         private void OpenAddItem()
         {
-            AddItemWindow addItemWindow = new AddItemWindow(fLogic);
+            ItemEditorWindow addItemWindow = new ItemEditorWindow(fLogic);
+
+            ((ItemEditorViewModell)addItemWindow.DataContext).Title = "Add new item";
+
             addItemWindow.ShowDialog();
+        }
+
+        /// <summary>
+        /// Edit existing item
+        /// </summary>
+        private void EditItem()
+        {
+            ItemEditorWindow editor = new ItemEditorWindow(fLogic, SelectedItem.Id);
+
+            var editorViewModell = (ItemEditorViewModell)editor.DataContext;
+
+            editorViewModell.Title = "Edit item";
+            editorViewModell.TxtItemName = SelectedItem.Name;
+            editorViewModell.TxtItemOutput = SelectedItem.CraftingOutput.ToString();
+            editorViewModell.TxtItemTime = SelectedItem.CraftingTime.ToString();
+            editorViewModell.CraftingSelection = SelectedItem.DefaultCraftingStation.ToString();
+            editorViewModell.PicturePath = SelectedItem.PicturePath;
+
+            editor.ShowDialog();
         }
 
         /// <summary>

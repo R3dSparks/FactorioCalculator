@@ -63,12 +63,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\PathToPictureConverter.cs" />
-    <Compile Include="ViewModels\AddItemViewModell.cs" />
+    <Compile Include="ViewModels\ItemEditorViewModell.cs" />
     <Compile Include="ViewModels\Base\BaseViewModell.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\MainWindowViewModell.cs" />
-    <Compile Include="Windows\AddItemWindow.xaml.cs">
-      <DependentUpon>AddItemWindow.xaml</DependentUpon>
+    <Compile Include="Windows\ItemEditorWindow.xaml.cs">
+      <DependentUpon>ItemEditorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ErrorMessages\ErrorMessage.xaml.cs">
       <DependentUpon>ErrorMessage.xaml</DependentUpon>
@@ -85,7 +85,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Windows\AddItemWindow.xaml">
+    <Page Include="Windows\ItemEditorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

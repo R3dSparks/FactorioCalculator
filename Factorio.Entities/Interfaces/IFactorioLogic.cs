@@ -38,6 +38,13 @@ namespace Factorio.Entities
         #region Public Methods
 
         /// <summary>
+        /// Get the id of an item
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        int GetItemId(string name);
+
+        /// <summary>
         /// Add an item to Items from raw input
         /// </summary>
         /// <param name="arg1"></param>
@@ -47,6 +54,16 @@ namespace Factorio.Entities
         /// <exception cref="FactorioException"></exception>
         /// <exception cref="InvalidCastException"></exception>
         void AddItem(string name, int output, double time, Crafting crafting, string path);
+
+        /// <summary>
+        /// Edit an existing item
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="output"></param>
+        /// <param name="time"></param>
+        /// <param name="crafting"></param>
+        /// <param name="path"></param>
+        void EditItem(int id, string name, int output, double time, Crafting crafting, string path);
 
         /// <summary>
         /// Remove an item from Items

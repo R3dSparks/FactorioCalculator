@@ -11,8 +11,11 @@ namespace Factorio.Entities
     /// </summary>
     public class FactorioItem
     {
+        private static int idCounter = 0;
 
         #region Properties
+
+        public int Id { get; private set; }
 
         /// <summary>
         /// name of the item
@@ -53,13 +56,24 @@ namespace Factorio.Entities
 
         #region Constructors
 
-
         /// <summary>
-        /// default constructor
+        /// Default constructor
         /// </summary>
         public FactorioItem()
         {
+            Id = idCounter++;
+        }
 
+        /// <summary>
+        /// Initialize Factorio item with id
+        /// </summary>
+        /// <param name="id"></param>
+        public FactorioItem(int id)
+        {
+            Id = id;
+
+            if (Id >= idCounter)
+                idCounter = Id + 1;
         }
 
         /// <summary>
@@ -70,6 +84,18 @@ namespace Factorio.Entities
         /// <param name="time"></param>
         public FactorioItem(string name, int output, double time, Crafting crafting = Crafting.AssemblingMachine1, string path = null)
         {
+            Id = idCounter++;
+            Name = name;
+            CraftingOutput = output;
+            CraftingTime = time;
+            Productivity = output / time;
+            DefaultCraftingStation = crafting;
+            PicturePath = path;
+        }
+
+        public FactorioItem(int id, string name, int output, double time, Crafting crafting = Crafting.AssemblingMachine1, string path = null)
+        {
+            Id = id;
             Name = name;
             CraftingOutput = output;
             CraftingTime = time;

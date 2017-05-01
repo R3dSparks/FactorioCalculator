@@ -121,6 +121,26 @@ namespace Factorio
             this.SaveItems();
         }
 
+        public int GetItemId(string name)
+        {
+            return this.Items.First(item => item.Name == name).Id;
+        }
+
+        /// <summary>
+        /// Edit an existing item and save Items list to xml file
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="output"></param>
+        /// <param name="time"></param>
+        /// <param name="crafting"></param>
+        /// <param name="path"></param>
+        public void EditItem(int id, string name, int output, double time, Crafting crafting, string path)
+        {
+            this.Items[id] = new FactorioItem(id, name, output, time, crafting, path);
+
+            this.SaveItems();
+        }
+
         /// <summary>
         /// Add a new item to the Items list and save Items list to xml file
         /// </summary>

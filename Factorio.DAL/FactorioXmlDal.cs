@@ -53,7 +53,6 @@ namespace Factorio.DAL
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(path));
                     FactorioXmlHelper.CreateXml(path);
-                    //throw new FactorioException(DiagnosticEvents.DalXmlRead, String.Format("The file with the path '{0}' does not exist.", path));
                 }
 
                 reader = XmlReader.Create(path);
@@ -64,11 +63,11 @@ namespace Factorio.DAL
                 {
                     if (reader.Name == FactorioXmlHelper.XmlItemElement && reader.NodeType != XmlNodeType.EndElement)
                     {
-                        readItemElement(reader, out currentItem, knownItems, unknownItems);
+                        this.readItemElement(reader, out currentItem, knownItems, unknownItems);
                     }
                     else if (reader.Name == FactorioXmlHelper.XmlCraftingElement)
                     {
-                        readCraftingElement(reader, currentItem, knownItems, unknownItems);
+                        this.readCraftingElement(reader, currentItem, knownItems, unknownItems);
                     }
                 }
             }
@@ -162,7 +161,7 @@ namespace Factorio.DAL
         /// <param name="unknownItems">all unknown items</param>
         private void readItemElement(XmlReader reader, out FactorioItem currentItem, List<FactorioItem> knownItems, List<FactorioItem> unknownItems)
         {
-            var newItem = new FactorioItem().ReadXml(reader);
+            var newItem = FactorioXmlHelper.ReadXml(reader);
 
             // check if this item is in the unknown list
             var item = unknownItems.Where(x => x.Name == newItem.Name).FirstOrDefault();
@@ -197,20 +196,21 @@ namespace Factorio.DAL
             if (currentItem != null)
             {
                 // get the values
-                var name = FactorioXmlHelper.ReadAttribute<string>(reader, FactorioXmlHelper.XmlCraftingAttributeItem);
+                var id = FactorioXmlHelper.ReadAttribute<int>(reader, FactorioXmlHelper.XmlCraftingAttributeId);
                 var amount = FactorioXmlHelper.ReadAttribute<int>(reader, FactorioXmlHelper.XmlCraftingAttributeQuantity);
 
                 // check if this item already exists in the known list
-                var item = knownItems.Where(x => x.Name == name).FirstOrDefault();
+                var item = knownItems.Where(x => x.Id == id).FirstOrDefault();
+
                 if (item == null)
                 {
                     // check if this item already exists in the unknown list
-                    item = unknownItems.Where(x => x.Name == name).FirstOrDefault();
+                    item = unknownItems.Where(x => x.Id == id).FirstOrDefault();
+
                     if (item == null)
                     {
                         // if not create a new one and add it to the unknown list
-                        item = new FactorioItem();
-                        item.Name = name;
+                        item = new FactorioItem(id);
                         unknownItems.Add(item);
                     }
                 }

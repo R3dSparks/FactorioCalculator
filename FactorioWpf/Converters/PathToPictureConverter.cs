@@ -15,7 +15,7 @@ namespace FactorioWpf.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value != null)
+            if (string.IsNullOrEmpty(value as string) == false)
                 return new BitmapImage(new Uri(value as string));
 
             return null;

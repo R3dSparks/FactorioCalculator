@@ -19,6 +19,7 @@ namespace Factorio.DAL
         public static readonly string XmlMainElement = "Items";
 
         public static readonly string XmlItemElement = "Item";
+        public static readonly string XmlItemAttributeId = "id";
         public static readonly string XmlItemAttributeName = "name";
         public static readonly string XmlItemAttributeOutput = "output";
         public static readonly string XmlItemAttributeTime = "time";
@@ -26,7 +27,7 @@ namespace Factorio.DAL
         public static readonly string XmlItemAttributePicture = "picture";
 
         public static readonly string XmlCraftingElement = "Crafting";
-        public static readonly string XmlCraftingAttributeItem = "item";
+        public static readonly string XmlCraftingAttributeId = "id";
         public static readonly string XmlCraftingAttributeQuantity = "quantity";
         #endregion
 
@@ -35,15 +36,24 @@ namespace Factorio.DAL
         /// <summary>
         /// Fill this object with the information from the <paramref name="reader"/>.
         /// </summary>
-        /// <param name="reader">contains the information for this object</param>
-        public static FactorioItem ReadXml(this FactorioItem item, XmlReader reader)
+        /// <param name="reader">Contains the information for this object</param>
+        public static FactorioItem ReadXml(XmlReader reader)
         {
+            FactorioItem item;
+
+            if (readAttributeValue(reader, FactorioXmlHelper.XmlItemAttributeId) == null)
+                item = new FactorioItem();
+            else
+                item = new FactorioItem(FactorioXmlHelper.ReadAttribute<int>(reader, FactorioXmlHelper.XmlItemAttributeId));
+
+
+
             item.Name = FactorioXmlHelper.ReadAttribute<string>(reader, FactorioXmlHelper.XmlItemAttributeName);
             item.CraftingOutput = FactorioXmlHelper.ReadAttribute<int>(reader, FactorioXmlHelper.XmlItemAttributeOutput);
             item.CraftingTime = FactorioXmlHelper.ReadAttribute<double>(reader, FactorioXmlHelper.XmlItemAttributeTime);
             item.DefaultCraftingStation = FactorioXmlHelper.ReadAttribute(reader, FactorioXmlHelper.XmlItemAttributeCraftingStation);
 
-            if(reader.GetAttribute(FactorioXmlHelper.XmlItemAttributePicture) != null)
+            if (reader.GetAttribute(FactorioXmlHelper.XmlItemAttributePicture) != null)
                 item.PicturePath = FactorioXmlHelper.ReadAttribute<string>(reader, FactorioXmlHelper.XmlItemAttributePicture);
 
             item.Productivity = item.CraftingOutput / item.CraftingTime;
@@ -52,12 +62,12 @@ namespace Factorio.DAL
 
 
         /// <summary>
-        /// read an attribute from a <see cref="XmlReader"/> and convert it into the type <paramref name="T"/>
+        /// Read an attribute from a <see cref="XmlReader"/> and convert it into the type <paramref name="T"/>
         /// </summary>
-        /// <typeparam name="T">convert the read item into this type</typeparam>
-        /// <param name="reader">this reader contains the attribute</param>
-        /// <param name="attributeName">read the attribute with this name</param>
-        /// <returns>returns the read item or throws an exception if someting isn't right</returns>
+        /// <typeparam name="T">Convert the read item into this type</typeparam>
+        /// <param name="reader">This reader contains the attribute</param>
+        /// <param name="attributeName">Read the attribute with this name</param>
+        /// <returns>Returns the read item or throws an exception if someting isn't right</returns>
         /// <exception cref="FactorioException"></exception>
         public static T ReadAttribute<T>(XmlReader reader, string attributeName)
         {
@@ -66,6 +76,7 @@ namespace Factorio.DAL
 
             if (FactorioXmlHelper.CanChangeType(val, typeof(T)) == false)
                 throw new FactorioException(DiagnosticEvents.DalXmlReadAttribute, String.Format("The read information from the XmlReader cannot be Converted to the type '{0}'. The value is '{1}'", typeof(T), val));
+                
 
             return (T)Convert.ChangeType(val, typeof(T));
 
@@ -144,6 +155,7 @@ namespace Factorio.DAL
         /// <param name="writer"></param>
         public static void WriteXml(this FactorioItem item, XmlWriter writer)
         {
+            writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeId, item.Id.ToString());
             writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeName, item.Name);
             writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeOutput, item.CraftingOutput.ToString());
             writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeTime, item.CraftingTime.ToString());
@@ -157,7 +169,7 @@ namespace Factorio.DAL
                 foreach (var craft in item.Recipe)
                 {
                     writer.WriteStartElement(FactorioXmlHelper.XmlCraftingElement);
-                    writer.WriteAttributeString(FactorioXmlHelper.XmlCraftingAttributeItem, craft.Key.Name);
+                    writer.WriteAttributeString(FactorioXmlHelper.XmlCraftingAttributeId, craft.Key.Id.ToString());
                     writer.WriteAttributeString(FactorioXmlHelper.XmlCraftingAttributeQuantity, craft.Value.ToString());
                     writer.WriteEndElement();
                 }
