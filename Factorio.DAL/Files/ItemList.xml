@@ -2,4 +2,5 @@
 <Items>
   <Item id="0" name="Iron plate" output="1" time="3,5" crafting="StoneFurnace" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\iron-plate.png" />
   <Item id="1" name="Copper plate" output="1" time="3,5" crafting="StoneFurnace" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\copper-plate.png" />
+  <Item id="2" name="Iron gear wheel" output="1" time="0,5" crafting="AssemblingMachine1" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\iron-gear-wheel.png" />
 </Items>

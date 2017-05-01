@@ -40,11 +40,14 @@
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem 
+                            Header="Details"
+                            Command="{Binding OpenListBoxItemDetail, Mode=OneWay}"/>
+                        <MenuItem 
                             Header="Edit"
-                            Command="{Binding ListBoxItemEdit, Mode=OneWay}"/>
+                            Command="{Binding OpenListBoxItemEdit, Mode=OneWay}"/>
                         <MenuItem 
                             Header="Delete"
-                            Command="{Binding ListBoxItemDelete, Mode=OneWay}"/>
+                            Command="{Binding DeleteListBoxItem, Mode=OneWay}"/>
                     </ContextMenu>
                 </ListBox.ContextMenu>
 

@@ -1,4 +1,5 @@
 ﻿using Factorio.Entities;
+using FactorioWpf.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,38 +16,40 @@ namespace FactorioWpf.ViewModels
 
         #region Commands
 
-        private RelayCommand listBoxItemDelete;
+        private RelayCommand m_deletelistBoxItem;
 
-        private RelayCommand listBoxItemEdit;
+        private RelayCommand m_openlistBoxItemEdit;
 
-        private RelayCommand openAddItemDialog;
+        private RelayCommand m_openAddItemDialog;
+
+        private RelayCommand m_openListBoxItemDetail;
 
         #endregion
 
         #region Public Properties
 
-        public ICommand ListBoxItemEdit
+        public ICommand OpenListBoxItemEdit
         {
             get
             {
-                if (listBoxItemEdit == null)
-                    listBoxItemEdit = new RelayCommand(EditItem);
+                if (m_openlistBoxItemEdit == null)
+                    m_openlistBoxItemEdit = new RelayCommand(EditItem);
 
-                return listBoxItemEdit;
+                return m_openlistBoxItemEdit;
             }
         }
 
         /// <summary>
         /// Delete item from the item list
         /// </summary>
-        public ICommand ListBoxItemDelete
+        public ICommand DeleteListBoxItem
         {
             get
             {
-                if (listBoxItemDelete == null)
-                    listBoxItemDelete = new RelayCommand(DeleteItem);
+                if (m_deletelistBoxItem == null)
+                    m_deletelistBoxItem = new RelayCommand(DeleteItem);
 
-                return listBoxItemDelete;
+                return m_deletelistBoxItem;
             }
         }
 
@@ -57,10 +60,21 @@ namespace FactorioWpf.ViewModels
         {
             get
             {
-                if (openAddItemDialog == null)
-                    openAddItemDialog = new RelayCommand(OpenAddItem);
+                if (m_openAddItemDialog == null)
+                    m_openAddItemDialog = new RelayCommand(OpenAddItem);
 
-                return openAddItemDialog;
+                return m_openAddItemDialog;
+            }
+        }
+
+        public ICommand OpenListBoxItemDetail
+        {
+            get
+            {
+                if (m_openListBoxItemDetail == null)
+                    m_openListBoxItemDetail = new RelayCommand(ItemDetail);
+
+                return m_openListBoxItemDetail;
             }
         }
 
@@ -95,6 +109,13 @@ namespace FactorioWpf.ViewModels
         #endregion
 
         #region Command Methods
+
+        private void ItemDetail()
+        {
+            ItemDetailWindow itemDetailWindow = new ItemDetailWindow(SelectedItem);
+
+            itemDetailWindow.Show();
+        }
 
         /// <summary>
         /// Opens the Add Item dialog
