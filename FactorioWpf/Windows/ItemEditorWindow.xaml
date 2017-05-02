@@ -47,9 +47,7 @@
                      Margin="0 3 0 3"/>
             <ComboBox Grid.Column="1" Grid.Row="3" 
                       ItemsSource="{Binding ComboBoxItemCrafting}" 
-                      SelectedItem="{Binding CraftingSelection, Mode=TwoWay}"
-                      SelectedIndex="0"   
-                      Name="AddItemCrafting"
+                      SelectedItem="{Binding SelectedCrafting, Mode=TwoWay}"
                       Margin="0 3 0 3" />
 
         </Grid>
@@ -65,13 +63,62 @@
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
 
-            <Button Height="25" Margin="3 0 3 0" Grid.Column="0" Content="Add Picture"
+            <Button Height="25" Grid.Column="0" Content="Add Picture"
                     Command="{Binding AddItemPicture_Click}"/>
 
             <Image Grid.Column="1" 
                    Source="{Binding Path=PicturePath, Converter={StaticResource PathToPictureConverter}, Mode=OneWay}" />
 
+        </Grid>
 
+        <Grid>
+
+            <Expander Header="Recipe">
+                <StackPanel>
+                    
+                    <ListBox BorderThickness="0">
+
+                    </ListBox>
+
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="4*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" Content="+" />
+
+                        <TextBox Margin="3 0 3 0" Grid.Column="1"
+                                 HorizontalContentAlignment="Right"/>
+
+                        <TextBlock Grid.Column="2" Text="x" VerticalAlignment="Bottom" FontSize="15" />
+
+                        <ComboBox Grid.Column="3" 
+                                  ItemsSource="{Binding ComboBoxRecipeItems}"
+                                  DisplayMemberPath="Name"
+                                  SelectedItem="{Binding SelectedRecipeItem, Mode=TwoWay}" >
+
+                            <Grid>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                                                
+                            </Grid>
+                            
+                        </ComboBox>
+
+
+
+                    </Grid>
+                    
+
+                </StackPanel>
+            </Expander>
 
         </Grid>
         
@@ -86,12 +133,12 @@
                     Command="{Binding AddItemOk_Click, Mode=OneWay}"
                     CommandParameter="{Binding ElementName=AddItemWindowInstance}"
                     Content="Ok" 
-                    Margin="3 3 3 3" />
+                    Margin="0 3 3 3" />
             <Button Grid.Column="1" 
                     Command="{Binding AddItemCancel_Click, Mode=OneWay}" 
                     CommandParameter="{Binding ElementName=AddItemWindowInstance}"
                     Content="Cancel" 
-                    Margin="3 3 3 3"/>
+                    Margin="3 3 0 3"/>
 
         </Grid>
 

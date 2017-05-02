@@ -17,8 +17,10 @@ namespace FactorioWpf
         {
             InitializeComponent();
 
+            // Get path to AppData
             string itemListPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
+            // Get path to ItemList.xml
             itemListPath = Path.Combine(itemListPath, @"FactorioCalculator\Data\ItemList.xml");
 
             this.DataContext = new MainWindowViewModell(new FactorioLogic(itemListPath));

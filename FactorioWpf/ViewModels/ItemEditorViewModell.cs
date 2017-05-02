@@ -1,6 +1,7 @@
 ﻿using Factorio.Entities;
 using Microsoft.Win32;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -13,27 +14,27 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// Names of <see cref="Crafting"/>
         /// </summary>
-        private string[] comboBoxItemCrafting;
+        private string[] m_comboBoxItemCrafting;
 
         /// <summary>
         /// Logic for interaction with business layer
         /// </summary>
-        private IFactorioLogic fLogic;
+        private IFactorioLogic m_fLogic;
 
         /// <summary>
         /// Window this view modell is displayed in
         /// </summary>
-        private Window currentWindow;
+        private Window m_currentWindow;
 
         /// <summary>
         /// Item id if item is edited
         /// </summary>
-        private int itemId;
+        private int m_itemId;
 
         /// <summary>
         /// Wether editor is in editing or creating mode
         /// </summary>
-        private bool editing = false;
+        private bool m_editing = false;
 
         #endregion
 
@@ -42,17 +43,22 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// Command for Ok button
         /// </summary>
-        private RelayCommand addItemOk_Click;
+        private RelayCommand m_addItemOk_Click;
 
         /// <summary>
         /// Command for Cancel button
         /// </summary>
-        private RelayCommand addItemCancel_Click;
+        private RelayCommand m_addItemCancel_Click;
 
         /// <summary>
         /// Command for Add Picture button
         /// </summary>
-        private RelayCommand addItemPicture_Click;
+        private RelayCommand m_addItemPicture_Click;
+
+        /// <summary>
+        /// Command for Recipe button
+        /// </summary>
+        private RelayCommand m_editItemRecipe_Click;
 
         #endregion
 
@@ -61,16 +67,31 @@ namespace FactorioWpf.ViewModels
         #region ICommands
 
         /// <summary>
+        /// ICommand binded to the Recipe button
+        /// </summary>
+        public ICommand AddItemRecipe_Click
+        {
+            get
+            {
+                if (m_editItemRecipe_Click == null)
+                    m_editItemRecipe_Click = new RelayCommand(AddRecipeItem);
+
+                return m_editItemRecipe_Click;
+
+            }
+        }
+
+        /// <summary>
         /// ICommand binded to the Add Picture button
         /// </summary>
         public ICommand AddItemPicture_Click
         {
             get
             {
-                if (addItemPicture_Click == null)
-                    addItemPicture_Click = new RelayCommand(AddPicture);
+                if (m_addItemPicture_Click == null)
+                    m_addItemPicture_Click = new RelayCommand(AddPicture);
 
-                return addItemPicture_Click;
+                return m_addItemPicture_Click;
             }
         }
 
@@ -81,10 +102,10 @@ namespace FactorioWpf.ViewModels
         {
             get
             {
-                if (addItemOk_Click == null)
-                    addItemOk_Click = new RelayCommand(CreateItem);
+                if (m_addItemOk_Click == null)
+                    m_addItemOk_Click = new RelayCommand(CreateItem);
 
-                return addItemOk_Click;
+                return m_addItemOk_Click;
             }
         }
 
@@ -95,10 +116,10 @@ namespace FactorioWpf.ViewModels
         {
             get
             {
-                if (addItemCancel_Click == null)
-                    addItemCancel_Click = new RelayCommand(Cancel);
+                if (m_addItemCancel_Click == null)
+                    m_addItemCancel_Click = new RelayCommand(Cancel);
 
-                return addItemCancel_Click;
+                return m_addItemCancel_Click;
             }
         }
 
@@ -138,10 +159,21 @@ namespace FactorioWpf.ViewModels
         {
             get
             {
-                if (comboBoxItemCrafting == null)
-                    comboBoxItemCrafting = Enum.GetNames(typeof(Crafting));
+                if (m_comboBoxItemCrafting == null)
+                    m_comboBoxItemCrafting = Enum.GetNames(typeof(Crafting));
 
-                return comboBoxItemCrafting;
+                return m_comboBoxItemCrafting;
+            }
+        }
+
+        /// <summary>
+        /// ComboBox for selecting a crafting item
+        /// </summary>
+        public ObservableCollection<FactorioItem> ComboBoxRecipeItems
+        {
+            get
+            {
+                return m_fLogic.Items;
             }
         }
 
@@ -150,7 +182,9 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// Currently selected crafting station
         /// </summary>
-        public string CraftingSelection { get; set; } = Crafting.AssemblingMachine1.ToString();
+        public string SelectedCrafting { get; set; } = Crafting.AssemblingMachine1.ToString();
+
+        public FactorioItem SelectedRecipeItem { get; set; }
 
         #endregion
 
@@ -161,22 +195,39 @@ namespace FactorioWpf.ViewModels
         /// </summary>
         public ItemEditorViewModell(IFactorioLogic logic, Window window)
         {
-            this.fLogic = logic;
-            this.currentWindow = window;
+            init(logic, window);
         }
 
         public ItemEditorViewModell(IFactorioLogic logic, Window window, int id)
         {
-            this.fLogic = logic;
-            this.currentWindow = window;
+            init(logic, window);
 
-            this.editing = true;
-            this.itemId = id;
+            this.m_editing = true;
+            this.m_itemId = id;           
+        }
+        
+        /// <summary>
+        /// Initializer for constructors
+        /// </summary>
+        /// <param name="logic"></param>
+        /// <param name="window"></param>
+        private void init(IFactorioLogic logic, Window window)
+        {
+            this.m_fLogic = logic;
+            this.m_currentWindow = window;
+
+            // Select default recipe item
+            SelectedRecipeItem = m_fLogic.Items[0];
         }
 
         #endregion
 
         #region Command Methods
+
+        private void AddRecipeItem()
+        {
+
+        }
 
         /// <summary>
         /// Add path to picture for the item
@@ -190,7 +241,8 @@ namespace FactorioWpf.ViewModels
 
             fileDialog.ShowDialog();
 
-            PicturePath = fileDialog.FileName;
+            if(string.IsNullOrEmpty(fileDialog.FileName) == false)
+                PicturePath = fileDialog.FileName;
         }
 
         /// <summary>
@@ -198,7 +250,7 @@ namespace FactorioWpf.ViewModels
         /// </summary>
         private void Cancel()
         {
-            currentWindow?.Close();
+            m_currentWindow?.Close();
         }
 
         /// <summary>
@@ -220,12 +272,12 @@ namespace FactorioWpf.ViewModels
                 string name = TxtItemName;
                 int output = Convert.ToInt32(TxtItemOutput);
                 double time = Convert.ToDouble(TxtItemTime);
-                Crafting crafting = (Crafting)Enum.Parse(typeof(Crafting), CraftingSelection);
+                Crafting crafting = (Crafting)Enum.Parse(typeof(Crafting), SelectedCrafting);
 
-                if(editing)
-                    fLogic.EditItem(itemId, name, output, time, crafting, PicturePath);
+                if(m_editing)
+                    m_fLogic.EditItem(m_itemId, name, output, time, crafting, PicturePath);
                 else
-                    fLogic.AddItem(name, output, time, crafting, PicturePath);
+                    m_fLogic.AddItem(name, output, time, crafting, PicturePath);
             }
             catch (Exception ex)
             {
@@ -235,7 +287,7 @@ namespace FactorioWpf.ViewModels
                 return;
             }
 
-            currentWindow?.Close();
+            m_currentWindow?.Close();
         }
 
         #endregion

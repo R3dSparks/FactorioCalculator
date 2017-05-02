@@ -142,7 +142,7 @@ namespace FactorioWpf.ViewModels
             editorViewModell.TxtItemName = SelectedItem.Name;
             editorViewModell.TxtItemOutput = SelectedItem.CraftingOutput.ToString();
             editorViewModell.TxtItemTime = SelectedItem.CraftingTime.ToString();
-            editorViewModell.CraftingSelection = SelectedItem.DefaultCraftingStation.ToString();
+            editorViewModell.SelectedCrafting = SelectedItem.DefaultCraftingStation.ToString();
             editorViewModell.PicturePath = SelectedItem.PicturePath;
 
             editor.ShowDialog();
