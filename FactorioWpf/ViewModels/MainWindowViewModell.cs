@@ -134,7 +134,7 @@ namespace FactorioWpf.ViewModels
         /// </summary>
         private void EditItem()
         {
-            ItemEditorWindow editor = new ItemEditorWindow(fLogic, SelectedItem.Id);
+            ItemEditorWindow editor = new ItemEditorWindow(fLogic, SelectedItem);
 
             var editorViewModell = (ItemEditorViewModell)editor.DataContext;
 

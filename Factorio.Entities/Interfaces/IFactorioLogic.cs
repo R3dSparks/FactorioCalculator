@@ -37,6 +37,8 @@ namespace Factorio.Entities
 
         #region Public Methods
 
+        void AddRecipe(FactorioItem item, int quanity, FactorioItem recipeItem);
+
         /// <summary>
         /// Get the id of an item
         /// </summary>
@@ -63,7 +65,7 @@ namespace Factorio.Entities
         /// <param name="time"></param>
         /// <param name="crafting"></param>
         /// <param name="path"></param>
-        void EditItem(int id, string name, int output, double time, Crafting crafting, string path);
+        void EditItem(FactorioItem item, string name, int output, double time, Crafting crafting, string path);
 
         /// <summary>
         /// Remove an item from Items

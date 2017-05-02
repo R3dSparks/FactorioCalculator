@@ -32,7 +32,17 @@ namespace FactorioWpf.ViewModels
         /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
-            action();
+            try
+            {
+                action();
+            }
+            catch (Exception ex)
+            {
+                // Show error message with information about the error
+                ErrorMessage errorMessage = new ErrorMessage(ex);
+                errorMessage.ShowDialog();
+            }
+            
         }
     }
 }

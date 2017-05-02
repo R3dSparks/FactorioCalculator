@@ -21,11 +21,11 @@ namespace FactorioWpf
             this.DataContext = new ItemEditorViewModell(logic, this);
         }
 
-        public ItemEditorWindow(IFactorioLogic logic, int id)
+        public ItemEditorWindow(IFactorioLogic logic, FactorioItem item)
         {
             InitializeComponent();
 
-            this.DataContext = new ItemEditorViewModell(logic, this, id);
+            this.DataContext = new ItemEditorViewModell(logic, this, item);
         }
 
     }

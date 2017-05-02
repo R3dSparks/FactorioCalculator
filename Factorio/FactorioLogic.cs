@@ -111,8 +111,13 @@ namespace Factorio
 
         #region Public Methods
 
+        public void AddRecipe(FactorioItem item, int quantity, FactorioItem recipeItem)
+        {
+            item.AddRecipeItem(recipeItem, quantity);
+        }
+
         /// <summary>
-        /// 
+        /// Remove an item and save Items list to xml file
         /// </summary>
         /// <param name="item"></param>
         public void RemoveItem(FactorioItem item)
@@ -134,9 +139,14 @@ namespace Factorio
         /// <param name="time"></param>
         /// <param name="crafting"></param>
         /// <param name="path"></param>
-        public void EditItem(int id, string name, int output, double time, Crafting crafting, string path)
+        public void EditItem(FactorioItem item, string name, int output, double time, Crafting crafting, string path)
         {
-            this.Items[id] = new FactorioItem(id, name, output, time, crafting, path);
+            int index = Items.IndexOf(item);
+            Dictionary<FactorioItem, int> recipe = item.Recipe;
+
+            Items[index] = new FactorioItem(item.Id, name, output, time, crafting, path);
+            Items[index].Recipe = recipe;
+
 
             this.SaveItems();
         }

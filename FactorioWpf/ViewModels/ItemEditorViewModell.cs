@@ -29,7 +29,7 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// Item id if item is edited
         /// </summary>
-        private int m_itemId;
+        private FactorioItem m_item;
 
         /// <summary>
         /// Wether editor is in editing or creating mode
@@ -127,6 +127,8 @@ namespace FactorioWpf.ViewModels
 
         #region Visual Properties
 
+        public string TxtRecipeQuantity { get; set; }
+
         /// <summary>
         /// Window title
         /// </summary>
@@ -173,11 +175,26 @@ namespace FactorioWpf.ViewModels
         {
             get
             {
-                return m_fLogic.Items;
+                // If no items are added yet, don't return list, because Xaml crashes
+                if(m_fLogic.Items.Count > 0)
+                    return m_fLogic.Items;
+
+                return null;
             }
         }
 
         #endregion
+
+        /// <summary>
+        /// Current item
+        /// </summary>
+        public FactorioItem Item
+        {
+            get
+            {
+                return m_item;
+            }
+        }
 
         /// <summary>
         /// Currently selected crafting station
@@ -198,12 +215,12 @@ namespace FactorioWpf.ViewModels
             init(logic, window);
         }
 
-        public ItemEditorViewModell(IFactorioLogic logic, Window window, int id)
+        public ItemEditorViewModell(IFactorioLogic logic, Window window, FactorioItem item)
         {
             init(logic, window);
 
             this.m_editing = true;
-            this.m_itemId = id;           
+            this.m_item = item;           
         }
         
         /// <summary>
@@ -217,7 +234,8 @@ namespace FactorioWpf.ViewModels
             this.m_currentWindow = window;
 
             // Select default recipe item
-            SelectedRecipeItem = m_fLogic.Items[0];
+            if(m_fLogic.Items.Count > 0)
+                SelectedRecipeItem = m_fLogic.Items[0];
         }
 
         #endregion
@@ -226,7 +244,9 @@ namespace FactorioWpf.ViewModels
 
         private void AddRecipeItem()
         {
+            int quantity = Convert.ToInt32(TxtRecipeQuantity);
 
+            m_fLogic.AddRecipe(Item, quantity, SelectedRecipeItem);
         }
 
         /// <summary>
@@ -258,34 +278,26 @@ namespace FactorioWpf.ViewModels
         /// </summary>
         private void CreateItem()
         {
-            try
-            {
-                // Check if entries are existing
-                if (
-                    TxtItemName == "" || string.IsNullOrWhiteSpace(TxtItemName) ||
-                    TxtItemOutput == null || TxtItemOutput == "" ||
-                    TxtItemTime == null || TxtItemTime == ""
-                  )
-                    throw new ArgumentNullException("Enter a value.");
 
-                // Convert entries
-                string name = TxtItemName;
-                int output = Convert.ToInt32(TxtItemOutput);
-                double time = Convert.ToDouble(TxtItemTime);
-                Crafting crafting = (Crafting)Enum.Parse(typeof(Crafting), SelectedCrafting);
+            // Check if entries are existing
+            if (
+                TxtItemName == "" || string.IsNullOrWhiteSpace(TxtItemName) ||
+                TxtItemOutput == null || TxtItemOutput == "" ||
+                TxtItemTime == null || TxtItemTime == ""
+              )
+                throw new ArgumentNullException("Enter a value.");
 
-                if(m_editing)
-                    m_fLogic.EditItem(m_itemId, name, output, time, crafting, PicturePath);
-                else
-                    m_fLogic.AddItem(name, output, time, crafting, PicturePath);
-            }
-            catch (Exception ex)
-            {
-                // Show error message with information about the error
-                ErrorMessage errorMessage = new ErrorMessage(ex);
-                errorMessage.ShowDialog();
-                return;
-            }
+            // Convert entries
+            string name = TxtItemName;
+            int output = Convert.ToInt32(TxtItemOutput);
+            double time = Convert.ToDouble(TxtItemTime);
+            Crafting crafting = (Crafting)Enum.Parse(typeof(Crafting), SelectedCrafting);
+
+            if(m_editing)
+                m_fLogic.EditItem(m_item, name, output, time, crafting, PicturePath);
+            else
+                m_fLogic.AddItem(name, output, time, crafting, PicturePath);
+
 
             m_currentWindow?.Close();
         }

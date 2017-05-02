@@ -24,7 +24,8 @@ namespace Factorio.Entities
 
         #region Factorio Logic
 
-        public static int ItemAlreadyExists = Base + 4;
+        public static int ItemDoesNotExist = Base + 4;
+        public static int ItemAlreadyExists = Base + 5;
 
         #endregion
     }

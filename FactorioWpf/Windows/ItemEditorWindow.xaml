@@ -23,6 +23,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="3*"/>
@@ -76,8 +77,26 @@
             <Expander Header="Recipe">
                 <StackPanel>
                     
-                    <ListBox BorderThickness="0">
+                    <ListBox BorderThickness="0" ItemsSource="{Binding Item.Recipe}" >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
 
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="{Binding Value}" />
+                                    <TextBlock Grid.Column="1" Text="x" />
+                                    <Image Grid.Column="2" Source="{Binding Key.PicturePath, Converter={StaticResource PathToPictureConverter}}" />
+                                    <TextBlock Grid.Column="3" Text="{Binding Key.Name}" />
+
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
 
                     <Grid>
@@ -89,26 +108,35 @@
                             <ColumnDefinition Width="4*" />
                         </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="0" Content="+" />
+                        <Button Grid.Column="0" Content="+" Command="{Binding AddItemRecipe_Click}"/>
 
                         <TextBox Margin="3 0 3 0" Grid.Column="1"
-                                 HorizontalContentAlignment="Right"/>
+                                 HorizontalContentAlignment="Right"
+                                 Text="{Binding TxtRecipeQuantity}"/>
 
                         <TextBlock Grid.Column="2" Text="x" VerticalAlignment="Bottom" FontSize="15" />
 
                         <ComboBox Grid.Column="3" 
                                   ItemsSource="{Binding ComboBoxRecipeItems}"
-                                  DisplayMemberPath="Name"
                                   SelectedItem="{Binding SelectedRecipeItem, Mode=TwoWay}" >
 
-                            <Grid>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                                                
-                            </Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image Height="20" Margin="2 0 2 0" Grid.Column="0" Source="{Binding PicturePath, Converter={StaticResource PathToPictureConverter}}"/>
+                                        <TextBlock Margin="5 0 0 0" Grid.Column="1" Text="{Binding Name}" />
+
+                                    </Grid>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                            
+                            
                             
                         </ComboBox>
 
