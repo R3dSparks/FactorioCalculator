@@ -41,6 +41,11 @@ namespace FactorioWpf.ViewModels
         #region Commands
 
         /// <summary>
+        /// Command for ContextMenu Delete on recipe item
+        /// </summary>
+        private RelayCommand m_deleteRecipeItem_Click;
+
+        /// <summary>
         /// Command for Ok button
         /// </summary>
         private RelayCommand m_addItemOk_Click;
@@ -65,6 +70,21 @@ namespace FactorioWpf.ViewModels
         #region Public Properties
 
         #region ICommands
+
+        /// <summary>
+        /// ICommand binded to the ContextMenu delete button on recipe
+        /// </summary>
+        public ICommand DeleteRecipeItem_Click
+        {
+            get
+            {
+                if (m_deleteRecipeItem_Click == null)
+                    m_deleteRecipeItem_Click = new RelayCommand(DeleteRecipeItem);
+
+                return m_deleteRecipeItem_Click;
+
+            }
+        }
 
         /// <summary>
         /// ICommand binded to the Recipe button
@@ -241,6 +261,11 @@ namespace FactorioWpf.ViewModels
         #endregion
 
         #region Command Methods
+
+        private void DeleteRecipeItem()
+        {
+
+        }
 
         private void AddRecipeItem()
         {

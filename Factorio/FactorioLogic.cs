@@ -141,15 +141,7 @@ namespace Factorio
         /// <param name="path"></param>
         public void EditItem(FactorioItem item, string name, int output, double time, Crafting crafting, string path)
         {
-            int index = Items.IndexOf(item);
-            Dictionary<FactorioItem, int> recipe = item.Recipe;
-
-            FactorioItem trigger = new FactorioItem(item.Id, name, output, time, crafting, path)
-            {
-                Recipe = recipe
-            };
-
-            Items[index] = trigger;
+            item.Name = name;
 
 
             this.SaveItems();

@@ -78,6 +78,13 @@
                 <StackPanel>
                     
                     <ListBox BorderThickness="0" ItemsSource="{Binding Item.Recipe}" >
+
+                        <ListBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Delete" Command="{Binding DeleteRecipeItem_Click}" />
+                            </ContextMenu>                            
+                        </ListBox.ContextMenu>
+                        
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid>

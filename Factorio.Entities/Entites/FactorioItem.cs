@@ -1,19 +1,18 @@
-﻿using Factorio.Entities.Helpers;
-using PropertyChanged;
-using System;
+﻿using PropertyChanged;
 using System.Collections.Generic;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
+using System.ComponentModel;
 
 namespace Factorio.Entities
 {
     /// <summary>
     /// This object represents one item in factorio
     /// </summary>
-    public class FactorioItem
+    [ImplementPropertyChanged]
+    public class FactorioItem : INotifyPropertyChanged
     {
         private static int idCounter = 0;
+
+        public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
         #region Properties
 
@@ -42,7 +41,7 @@ namespace Factorio.Entities
         /// <summary>
         /// Which <see cref="FactorioItem"/> are needed to craft this item
         /// </summary>
-        public ObservableDictionary<FactorioItem, int> Recipe { get; set; }
+        public Dictionary<FactorioItem, int> Recipe { get; set; }
 
         /// <summary>
         /// Where this item is crafted
