@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using Factorio.Entities.Helpers;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Xml;
@@ -10,7 +11,6 @@ namespace Factorio.Entities
     /// <summary>
     /// This object represents one item in factorio
     /// </summary>
-    [ImplementPropertyChanged]
     public class FactorioItem
     {
         private static int idCounter = 0;
@@ -42,7 +42,7 @@ namespace Factorio.Entities
         /// <summary>
         /// Which <see cref="FactorioItem"/> are needed to craft this item
         /// </summary>
-        public Dictionary<FactorioItem, int> Recipe { get; set; }
+        public ObservableDictionary<FactorioItem, int> Recipe { get; set; }
 
         /// <summary>
         /// Where this item is crafted

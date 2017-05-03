@@ -144,8 +144,12 @@ namespace Factorio
             int index = Items.IndexOf(item);
             Dictionary<FactorioItem, int> recipe = item.Recipe;
 
-            Items[index] = new FactorioItem(item.Id, name, output, time, crafting, path);
-            Items[index].Recipe = recipe;
+            FactorioItem trigger = new FactorioItem(item.Id, name, output, time, crafting, path)
+            {
+                Recipe = recipe
+            };
+
+            Items[index] = trigger;
 
 
             this.SaveItems();
