@@ -111,6 +111,13 @@ namespace Factorio
 
         #region Public Methods
 
+
+        public void RemoveRecipe(FactorioItem item, FactorioItem recipeItem)
+        {
+            item.RemoveRecipeItem(recipeItem);
+        }
+
+
         public void AddRecipe(FactorioItem item, int quantity, FactorioItem recipeItem)
         {
             item.AddRecipeItem(recipeItem, quantity);

@@ -37,6 +37,19 @@ namespace Factorio.Entities
 
         #region Public Methods
 
+        /// <summary>
+        /// Remove an item from a recipe
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="recipeItem"></param>
+        void RemoveRecipe(FactorioItem item, FactorioItem recipeItem);
+
+        /// <summary>
+        /// Add an item to a recipe
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="quanity"></param>
+        /// <param name="recipeItem"></param>
         void AddRecipe(FactorioItem item, int quanity, FactorioItem recipeItem);
 
         /// <summary>

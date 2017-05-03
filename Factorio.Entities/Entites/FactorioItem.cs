@@ -127,7 +127,13 @@ namespace Factorio.Entities
             }
 
         }
-        #endregion
+
+        public void RemoveRecipeItem(FactorioItem item)
+        {
+            Recipe.Remove(item);
+        }
+
+        #endregion 
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Factorio.Entities;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -221,7 +222,9 @@ namespace FactorioWpf.ViewModels
         /// </summary>
         public string SelectedCrafting { get; set; } = Crafting.AssemblingMachine1.ToString();
 
-        public FactorioItem SelectedRecipeItem { get; set; }
+        public KeyValuePair<FactorioItem, int> SelectedRecipe { get; set; }
+
+        public FactorioItem SelectedComboBoxRecipeItem { get; set; }
 
         #endregion
 
@@ -255,7 +258,7 @@ namespace FactorioWpf.ViewModels
 
             // Select default recipe item
             if(m_fLogic.Items.Count > 0)
-                SelectedRecipeItem = m_fLogic.Items[0];
+                SelectedComboBoxRecipeItem = m_fLogic.Items[0];
         }
 
         #endregion
@@ -264,14 +267,14 @@ namespace FactorioWpf.ViewModels
 
         private void DeleteRecipeItem()
         {
-
+            m_fLogic.RemoveRecipe(Item, SelectedRecipe.Key);
         }
 
         private void AddRecipeItem()
         {
             int quantity = Convert.ToInt32(TxtRecipeQuantity);
 
-            m_fLogic.AddRecipe(Item, quantity, SelectedRecipeItem);
+            m_fLogic.AddRecipe(Item, quantity, SelectedComboBoxRecipeItem);
         }
 
         /// <summary>

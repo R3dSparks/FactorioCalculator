@@ -77,7 +77,9 @@
             <Expander Header="Recipe">
                 <StackPanel>
                     
-                    <ListBox BorderThickness="0" ItemsSource="{Binding Item.Recipe}" >
+                    <ListBox BorderThickness="0" BorderBrush="White"
+                             ItemsSource="{Binding Item.Recipe}"
+                             SelectedItem="{Binding SelectedRecipe}">
 
                         <ListBox.ContextMenu>
                             <ContextMenu>
@@ -125,7 +127,7 @@
 
                         <ComboBox Grid.Column="3" 
                                   ItemsSource="{Binding ComboBoxRecipeItems}"
-                                  SelectedItem="{Binding SelectedRecipeItem, Mode=TwoWay}" >
+                                  SelectedItem="{Binding SelectedComboBoxRecipeItem, Mode=TwoWay}" >
 
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
