@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using Factorio.Entities.Helper;
+using PropertyChanged;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -10,7 +11,15 @@ namespace Factorio.Entities
     [ImplementPropertyChanged]
     public class FactorioItem : INotifyPropertyChanged
     {
+        #region Private Variables
+
         private static int idCounter = 0;
+
+        private ObservableDictionary<FactorioItem, int> m_recipe;
+
+        #endregion
+
+
 
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
@@ -41,7 +50,16 @@ namespace Factorio.Entities
         /// <summary>
         /// Which <see cref="FactorioItem"/> are needed to craft this item
         /// </summary>
-        public Dictionary<FactorioItem, int> Recipe { get; set; }
+        public ObservableDictionary<FactorioItem, int> Recipe
+        {
+            get
+            {
+                if (m_recipe == null)
+                    m_recipe = new ObservableDictionary<FactorioItem, int>();
+
+                return m_recipe;
+            }
+        }
 
         /// <summary>
         /// Where this item is crafted
@@ -83,7 +101,7 @@ namespace Factorio.Entities
         /// <param name="name"></param>
         /// <param name="output"></param>
         /// <param name="time"></param>
-        public FactorioItem(string name, int output, double time, Crafting crafting = Crafting.AssemblingMachine1, string path = null)
+        public FactorioItem(string name, int output, double time, Crafting crafting = Crafting.AssemblingMachine, string path = null)
         {
             Id = idCounter++;
             Name = name;
@@ -94,7 +112,7 @@ namespace Factorio.Entities
             PicturePath = path;
         }
 
-        public FactorioItem(int id, string name, int output, double time, Crafting crafting = Crafting.AssemblingMachine1, string path = null)
+        public FactorioItem(int id, string name, int output, double time, Crafting crafting = Crafting.AssemblingMachine, string path = null)
         {
             Id = id;
             Name = name;
@@ -118,19 +136,43 @@ namespace Factorio.Entities
         /// <param name="quantity">the amount which is needed for the craft</param>
         public void AddRecipeItem(FactorioItem item, int quantity)
         {
-            if (Recipe == null)
-                Recipe = new Dictionary<FactorioItem, int>();
-
             if (!Recipe.ContainsKey(item))
             {
                 Recipe.Add(item, quantity);
             }
-
         }
 
+        /// <summary>
+        /// Remove an item from the recipe
+        /// </summary>
+        /// <param name="item"></param>
         public void RemoveRecipeItem(FactorioItem item)
         {
             Recipe.Remove(item);
+        }
+
+        /// <summary>
+        /// Get copy of this item
+        /// </summary>
+        /// <returns></returns>
+        public FactorioItem GetCopy()
+        {
+            FactorioItem copyItem = new FactorioItem(this.Id)
+            {
+                Name = this.Name,
+                CraftingOutput = this.CraftingOutput,
+                CraftingTime = this.CraftingTime,
+                Productivity = this.Productivity,
+                DefaultCraftingStation = this.DefaultCraftingStation,
+                PicturePath = this.PicturePath
+            };
+
+            foreach (var recipeItem in this.Recipe)
+            {
+                copyItem.AddRecipeItem(recipeItem.Key, recipeItem.Value);
+            }
+
+            return copyItem;
         }
 
         #endregion 

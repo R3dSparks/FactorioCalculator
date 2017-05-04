@@ -94,7 +94,7 @@ namespace Factorio.DAL
             Crafting crafting = default(Crafting);
 
             if (Enum.TryParse(val, out crafting) == false)
-                throw new FactorioException(DiagnosticEvents.DalXmlReadAttribute);
+                return default(Crafting);
             else
                 return crafting;
         }

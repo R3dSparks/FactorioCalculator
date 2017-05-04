@@ -90,7 +90,11 @@ namespace Factorio.Entities.Helper
         /// <param name="value"></param>
         public void Add(TKey key, TValue value)
         {
-            m_content.Add(new KeyValuePair<TKey, TValue>(key, value));
+            var keyValuePair = new KeyValuePair<TKey, TValue>(key, value);
+
+            m_content.Add(keyValuePair);
+
+            CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, keyValuePair));
         }
 
         /// <summary>
@@ -100,6 +104,8 @@ namespace Factorio.Entities.Helper
         public void Add(KeyValuePair<TKey, TValue> item)
         {
             m_content.Add(item);
+
+            CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
         }
         
         /// <summary>
@@ -158,7 +164,13 @@ namespace Factorio.Entities.Helper
         {
             var keyValuePair = m_content.Find(x => x.Key.Equals(key));
 
-            return m_content.Remove(keyValuePair);
+            int index = m_content.IndexOf(keyValuePair);
+
+            bool success = m_content.Remove(keyValuePair);
+
+            CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, keyValuePair, index));
+
+            return success;
         }
 
         /// <summary>
@@ -168,7 +180,13 @@ namespace Factorio.Entities.Helper
         /// <returns></returns>
         public bool Remove(KeyValuePair<TKey, TValue> item)
         {
-            return m_content.Remove(item);
+            int index = m_content.IndexOf(item);
+
+            bool success = m_content.Remove(item);
+
+            CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index));
+
+            return success;
         }
 
         /// <summary>
@@ -196,22 +214,23 @@ namespace Factorio.Entities.Helper
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            foreach (var keyValuePair in m_content)
+            {
+                yield return keyValuePair;
+            }
         }
 
         #endregion
 
-
         #region INotifyCollectionChanged
 
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
+        public event NotifyCollectionChangedEventHandler CollectionChanged = (sender, e) => { };
 
         #endregion
 
-
         #region INotifyPropertyChanged
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
         #endregion
 

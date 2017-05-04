@@ -12,6 +12,8 @@ namespace FactorioWpf.ViewModels
     {
         #region Private Variables
 
+        private FactorioItem m_itemCopy;
+
         /// <summary>
         /// Names of <see cref="Crafting"/>
         /// </summary>
@@ -31,11 +33,6 @@ namespace FactorioWpf.ViewModels
         /// Item id if item is edited
         /// </summary>
         private FactorioItem m_item;
-
-        /// <summary>
-        /// Wether editor is in editing or creating mode
-        /// </summary>
-        private bool m_editing = false;
 
         #endregion
 
@@ -124,7 +121,7 @@ namespace FactorioWpf.ViewModels
             get
             {
                 if (m_addItemOk_Click == null)
-                    m_addItemOk_Click = new RelayCommand(CreateItem);
+                    m_addItemOk_Click = new RelayCommand(Ok_Click);
 
                 return m_addItemOk_Click;
             }
@@ -138,7 +135,7 @@ namespace FactorioWpf.ViewModels
             get
             {
                 if (m_addItemCancel_Click == null)
-                    m_addItemCancel_Click = new RelayCommand(Cancel);
+                    m_addItemCancel_Click = new RelayCommand(Cancel_Click);
 
                 return m_addItemCancel_Click;
             }
@@ -213,14 +210,14 @@ namespace FactorioWpf.ViewModels
         {
             get
             {
-                return m_item;
+                return m_itemCopy;
             }
         }
 
         /// <summary>
         /// Currently selected crafting station
         /// </summary>
-        public string SelectedCrafting { get; set; } = Crafting.AssemblingMachine1.ToString();
+        public string SelectedCrafting { get; set; } = Crafting.AssemblingMachine.ToString();
 
         public KeyValuePair<FactorioItem, int> SelectedRecipe { get; set; }
 
@@ -236,14 +233,16 @@ namespace FactorioWpf.ViewModels
         public ItemEditorViewModell(IFactorioLogic logic, Window window)
         {
             init(logic, window);
+
+            m_itemCopy = new FactorioItem();
         }
 
         public ItemEditorViewModell(IFactorioLogic logic, Window window, FactorioItem item)
         {
             init(logic, window);
 
-            this.m_editing = true;
-            this.m_item = item;           
+            this.m_item = item;
+            this.m_itemCopy = item.GetCopy();           
         }
         
         /// <summary>
@@ -267,14 +266,14 @@ namespace FactorioWpf.ViewModels
 
         private void DeleteRecipeItem()
         {
-            m_fLogic.RemoveRecipe(Item, SelectedRecipe.Key);
+            m_itemCopy.RemoveRecipeItem(SelectedRecipe.Key);
         }
 
         private void AddRecipeItem()
         {
             int quantity = Convert.ToInt32(TxtRecipeQuantity);
 
-            m_fLogic.AddRecipe(Item, quantity, SelectedComboBoxRecipeItem);
+            m_itemCopy.AddRecipeItem(SelectedComboBoxRecipeItem, quantity);
         }
 
         /// <summary>
@@ -296,7 +295,7 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// Close the window on cancel click
         /// </summary>
-        private void Cancel()
+        private void Cancel_Click()
         {
             m_currentWindow?.Close();
         }
@@ -304,7 +303,7 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// Try creating a new item. Closing the window if successfull, else show error message.
         /// </summary>
-        private void CreateItem()
+        private void Ok_Click()
         {
 
             // Check if entries are existing
@@ -321,11 +320,21 @@ namespace FactorioWpf.ViewModels
             double time = Convert.ToDouble(TxtItemTime);
             Crafting crafting = (Crafting)Enum.Parse(typeof(Crafting), SelectedCrafting);
 
-            if(m_editing)
-                m_fLogic.EditItem(m_item, name, output, time, crafting, PicturePath);
-            else
-                m_fLogic.AddItem(name, output, time, crafting, PicturePath);
+            m_itemCopy.Name = name;
+            m_itemCopy.CraftingOutput = output;
+            m_itemCopy.CraftingTime = time;
+            m_itemCopy.DefaultCraftingStation = crafting;
+            m_itemCopy.PicturePath = this.PicturePath;
 
+
+            if (m_item != null)
+                // If a reference item is set replace it with item copy
+                m_fLogic.Items[m_fLogic.Items.IndexOf(m_item)] = m_itemCopy;
+            else
+                // Else add item as new entry to the list
+                m_fLogic.Items.Add(m_itemCopy);         
+
+            m_fLogic.SaveItems();
 
             m_currentWindow?.Close();
         }

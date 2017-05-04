@@ -7,23 +7,19 @@ namespace Factorio.Entities
     public enum Crafting
     {
         /// <summary>
-        /// crafted in an assembling machine
+        /// Crafted in an assembling machine
         /// </summary>
-        AssemblingMachine1,
-        AssemblingMachine2,
-        AssemblingMachine3,
+        AssemblingMachine,
         /// <summary>
-        /// crafted in a furnace
+        /// Crafted in a furnace
         /// </summary>
-        StoneFurnace,
-        SteelFurnace,
-        ElectricFurnace,
+        Furnace,
         /// <summary>
-        /// crafted in a chemical plant
+        /// Crafted in a chemical plant
         /// </summary>
         ChemicalPlant,
         /// <summary>
-        /// crafted in a refinery
+        /// Crafted in a refinery
         /// </summary>
         Refinery
     }
