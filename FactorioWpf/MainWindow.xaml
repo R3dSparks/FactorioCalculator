@@ -24,6 +24,10 @@
             <MenuItem Header="Items">
                 <MenuItem Header="Add" Command="{Binding OpenAddItemDialog, Mode=OneWay}" />
             </MenuItem>
+            <MenuItem Header="Production">
+                <MenuItem Header="New" />
+                <MenuItem Header="Open" />
+            </MenuItem>
         </Menu>
 
         <Grid Grid.Row="1">

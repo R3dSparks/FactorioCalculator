@@ -79,7 +79,7 @@
                     
                     <ListBox BorderThickness="0" BorderBrush="White"
                              ItemsSource="{Binding Item.Recipe}"
-                             SelectedItem="{Binding SelectedRecipe}"
+                             SelectedItem="{Binding SelectedRecipeItem}"
                              HorizontalContentAlignment="Right">
 
                         <ListBox.ContextMenu>

@@ -1,8 +1,10 @@
 ﻿using Factorio.Entities;
+using Factorio.Entities.Helper;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -189,13 +191,14 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// ComboBox for selecting a crafting item
         /// </summary>
-        public ObservableCollection<FactorioItem> ComboBoxRecipeItems
+        public List<FactorioItem> ComboBoxRecipeItems
         {
             get
             {
                 // If no items are added yet, don't return list, because Xaml crashes
                 if(m_fLogic.Items.Count > 0)
-                    return m_fLogic.Items;
+                    // Get all items without the item that is edited
+                    return m_fLogic.Items.Where(x => x.Id != m_itemCopy.Id).ToList();
 
                 return null;
             }
@@ -219,7 +222,7 @@ namespace FactorioWpf.ViewModels
         /// </summary>
         public string SelectedCrafting { get; set; } = Crafting.AssemblingMachine.ToString();
 
-        public KeyValuePair<FactorioItem, int> SelectedRecipe { get; set; }
+        public KeyValuePair<FactorioItem, int> SelectedRecipeItem { get; set; }
 
         public FactorioItem SelectedComboBoxRecipeItem { get; set; }
 
@@ -266,7 +269,7 @@ namespace FactorioWpf.ViewModels
 
         private void DeleteRecipeItem()
         {
-            m_itemCopy.RemoveRecipeItem(SelectedRecipe.Key);
+            m_itemCopy.RemoveRecipeItem(SelectedRecipeItem.Key);
         }
 
         private void AddRecipeItem()
