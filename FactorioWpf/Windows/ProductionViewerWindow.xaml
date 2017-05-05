@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="ProductionViewerWindow" Height="300" Width="300">
     <Grid>
-        
+        <Canvas>
+            
+        </Canvas>
     </Grid>
 </Window>

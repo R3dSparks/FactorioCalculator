@@ -161,7 +161,7 @@ namespace FactorioTest
                 return;
             }
 
-            Assembly assembly = new Assembly(logic.Items.FirstOrDefault(x => x.Name == itemName));
+            FactorioAssembly assembly = new FactorioAssembly(logic.Items.FirstOrDefault(x => x.Name == itemName));
 
             WriteLine("Get production chain for Assembly machine quantity or items per second?(1/2)...");
 

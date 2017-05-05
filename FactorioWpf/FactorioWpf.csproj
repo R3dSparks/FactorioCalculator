@@ -69,6 +69,7 @@
     <Compile Include="ViewModels\Base\BaseViewModell.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\MainWindowViewModell.cs" />
+    <Compile Include="ViewModels\ProductionViewerViewModell.cs" />
     <Compile Include="Windows\ItemDetailWindow.xaml.cs">
       <DependentUpon>ItemDetailWindow.xaml</DependentUpon>
     </Compile>

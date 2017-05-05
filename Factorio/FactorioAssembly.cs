@@ -7,18 +7,34 @@ using Factorio.DAL;
 
 namespace Factorio
 {
-    public class Assembly
+    public class FactorioAssembly
     {
 
+        #region Private Variables
 
-        #region Properties
+        private List<FactorioAssembly> m_subAssembly;
 
+        #endregion
+
+        #region Public Properties
 
         public FactorioItem AssemblyItem { get; private set; }
 
         public double Quantity { get; private set; }
-        // Tip: für listen immer eine private variable anlegen und im falle wenn diese null ist, eine neue leere liste anzulegen.
-        public List<Assembly> SubAssembly { get; set; }
+        
+        /// <summary>
+        /// Get list of assemlies that are needed to run this assembly
+        /// </summary>
+        public List<FactorioAssembly> SubAssembly
+        {
+            get
+            {
+                if (m_subAssembly == null)
+                    m_subAssembly = new List<FactorioAssembly>();
+
+                return m_subAssembly;
+            }
+        }
 
         public Crafting CraftingStation { get; set; }
 
@@ -27,7 +43,7 @@ namespace Factorio
         #region Constructors
 
 
-        public Assembly(FactorioItem assemblyItem)
+        public FactorioAssembly(FactorioItem assemblyItem)
         {
             AssemblyItem = assemblyItem;
 
@@ -38,17 +54,15 @@ namespace Factorio
             if (assemblyItem.Recipe == null)
                 return;
 
-            SubAssembly = new List<Assembly>();
-
             foreach (var item in assemblyItem.Recipe)
             {
-                SubAssembly.Add(new Assembly(item.Key, this, item.Value));
+                SubAssembly.Add(new FactorioAssembly(item.Key, this, item.Value));
             }
         }
 
 
 
-        public Assembly(FactorioItem assemblyItem, Assembly topAssembly, int quantity)
+        public FactorioAssembly(FactorioItem assemblyItem, FactorioAssembly topAssembly, int quantity)
         {
             AssemblyItem = assemblyItem;
 
@@ -58,13 +72,11 @@ namespace Factorio
 
             Quantity *= FactorioHelper.CraftingSpeeds[topAssembly.CraftingStation] / FactorioHelper.CraftingSpeeds[CraftingStation];
 
-            SubAssembly = new List<Assembly>();
-
             if (assemblyItem.Recipe != null)
             {
                 foreach (var item in assemblyItem.Recipe)
                 {
-                    SubAssembly.Add(new Assembly(item.Key, this, item.Value));
+                    SubAssembly.Add(new FactorioAssembly(item.Key, this, item.Value));
                 }
             }
         }
