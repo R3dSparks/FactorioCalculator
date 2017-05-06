@@ -68,7 +68,7 @@ namespace Factorio.Entities
         /// <param name="arg4"></param>
         /// <exception cref="FactorioException"></exception>
         /// <exception cref="InvalidCastException"></exception>
-        void AddItem(string name, int output, double time, Crafting crafting, string path);
+        void AddItem(string name, int output, double time, CraftingType crafting, string path);
 
         /// <summary>
         /// Edit an existing item
@@ -78,7 +78,7 @@ namespace Factorio.Entities
         /// <param name="time"></param>
         /// <param name="crafting"></param>
         /// <param name="path"></param>
-        void EditItem(FactorioItem item, string name, int output, double time, Crafting crafting, string path);
+        void EditItem(FactorioItem item, string name, int output, double time, CraftingType crafting, string path);
 
         /// <summary>
         /// Remove an item from Items

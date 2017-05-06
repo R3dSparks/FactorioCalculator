@@ -19,8 +19,6 @@ namespace Factorio.Entities
 
         #endregion
 
-
-
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
         #region Properties
@@ -62,9 +60,9 @@ namespace Factorio.Entities
         }
 
         /// <summary>
-        /// Where this item is crafted
+        /// Where this item is crafted by default
         /// </summary>
-        public Crafting DefaultCraftingStation { get; set; }
+        public CraftingType DefaultCraftingStation { get; set; }
 
         /// <summary>
         /// Path to the item picture
@@ -101,7 +99,7 @@ namespace Factorio.Entities
         /// <param name="name"></param>
         /// <param name="output"></param>
         /// <param name="time"></param>
-        public FactorioItem(string name, int output, double time, Crafting crafting = Crafting.AssemblingMachine, string path = null)
+        public FactorioItem(string name, int output, double time, CraftingType crafting = CraftingType.AssemblingMachine, string path = null)
         {
             Id = idCounter++;
             Name = name;
@@ -112,7 +110,7 @@ namespace Factorio.Entities
             PicturePath = path;
         }
 
-        public FactorioItem(int id, string name, int output, double time, Crafting crafting = Crafting.AssemblingMachine, string path = null)
+        public FactorioItem(int id, string name, int output, double time, CraftingType crafting = CraftingType.AssemblingMachine, string path = null)
         {
             Id = id;
             Name = name;

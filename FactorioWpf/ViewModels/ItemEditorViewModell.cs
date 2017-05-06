@@ -17,7 +17,7 @@ namespace FactorioWpf.ViewModels
         private FactorioItem m_itemCopy;
 
         /// <summary>
-        /// Names of <see cref="Crafting"/>
+        /// Names of <see cref="CraftingType"/>
         /// </summary>
         private string[] m_comboBoxItemCrafting;
 
@@ -182,7 +182,7 @@ namespace FactorioWpf.ViewModels
             get
             {
                 if (m_comboBoxItemCrafting == null)
-                    m_comboBoxItemCrafting = Enum.GetNames(typeof(Crafting));
+                    m_comboBoxItemCrafting = Enum.GetNames(typeof(CraftingType));
 
                 return m_comboBoxItemCrafting;
             }
@@ -220,7 +220,7 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// Currently selected crafting station
         /// </summary>
-        public string SelectedCrafting { get; set; } = Crafting.AssemblingMachine.ToString();
+        public string SelectedCrafting { get; set; } = CraftingType.AssemblingMachine.ToString();
 
         public KeyValuePair<FactorioItem, int> SelectedRecipeItem { get; set; }
 
@@ -321,7 +321,7 @@ namespace FactorioWpf.ViewModels
             string name = TxtItemName;
             int output = Convert.ToInt32(TxtItemOutput);
             double time = Convert.ToDouble(TxtItemTime);
-            Crafting crafting = (Crafting)Enum.Parse(typeof(Crafting), SelectedCrafting);
+            CraftingType crafting = (CraftingType)Enum.Parse(typeof(CraftingType), SelectedCrafting);
 
             m_itemCopy.Name = name;
             m_itemCopy.CraftingOutput = output;

@@ -146,7 +146,7 @@ namespace Factorio
         /// <param name="time"></param>
         /// <param name="crafting"></param>
         /// <param name="path"></param>
-        public void EditItem(FactorioItem item, string name, int output, double time, Crafting crafting, string path)
+        public void EditItem(FactorioItem item, string name, int output, double time, CraftingType crafting, string path)
         {
             item.Name = name;
 
@@ -162,7 +162,7 @@ namespace Factorio
         /// <param name="time"></param>
         /// <param name="crafting"></param>
         /// <exception cref="FactorioException"></exception>
-        public void AddItem(string name, int output, double time, Crafting crafting, string path)
+        public void AddItem(string name, int output, double time, CraftingType crafting, string path)
         {
             // If item already exists throw exception
             if (this.Items.Any(i => i.Name == name))

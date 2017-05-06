@@ -4,7 +4,7 @@ namespace Factorio.Entities
     /// <summary>
     /// Used to define where the item is crafted in
     /// </summary>
-    public enum Crafting
+    public enum CraftingType
     {
         /// <summary>
         /// Crafted in an assembling machine

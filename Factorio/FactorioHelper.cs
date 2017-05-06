@@ -1,18 +1,23 @@
 ﻿using Factorio.Entities;
-using System;
+using Factorio.Entities.Enum;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Factorio
 {
     public static class FactorioHelper
     {
         /// <summary>
-        /// Contains the crafting speeds for <see cref="Crafting"/>
+        /// Default crafting speeds for the different crafting station types
         /// </summary>
-        public static readonly Dictionary<Crafting, double> CraftingSpeeds = new Dictionary<Crafting, double>()
+        public static readonly Dictionary<CraftingType, double> DefaultCraftingSpeeds = new Dictionary<CraftingType, double>()
+        {
+
+        };
+
+        /// <summary>
+        /// Crafting speeds for all crafting stations
+        /// </summary>
+        public static readonly Dictionary<CraftingStation, double> CraftingSpeeds = new Dictionary<CraftingStation, double>()
         {
 
         };

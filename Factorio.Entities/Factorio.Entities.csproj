@@ -46,7 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enum\Crafting.cs" />
+    <Compile Include="Enum\CraftingStation.cs" />
+    <Compile Include="Enum\CraftingType.cs" />
     <Compile Include="Entites\FactorioItem.cs" />
     <Compile Include="Exceptions\DiagnosticEvents.cs" />
     <Compile Include="Exceptions\FactorioException.cs" />

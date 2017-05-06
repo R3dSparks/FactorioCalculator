@@ -84,17 +84,17 @@ namespace Factorio.DAL
         }
 
 
-        public static Crafting ReadAttribute(XmlReader reader, string attributeName)
+        public static CraftingType ReadAttribute(XmlReader reader, string attributeName)
         {
             string val = readAttributeValue(reader, attributeName);
 
             if (val == null)
-                return default(Crafting);
+                return default(CraftingType);
             
-            Crafting crafting = default(Crafting);
+            CraftingType crafting = default(CraftingType);
 
             if (Enum.TryParse(val, out crafting) == false)
-                return default(Crafting);
+                return default(CraftingType);
             else
                 return crafting;
         }
