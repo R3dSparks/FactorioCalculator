@@ -50,6 +50,9 @@
                             Header="Edit"
                             Command="{Binding OpenListBoxItemEdit, Mode=OneWay}"/>
                         <MenuItem 
+                            Header="Production"
+                            Command="{Binding OpenListBoxItemProduction, Mode=OneWay}"/>
+                        <MenuItem 
                             Header="Delete"
                             Command="{Binding DeleteListBoxItem, Mode=OneWay}"/>
                     </ContextMenu>

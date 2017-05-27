@@ -24,9 +24,22 @@ namespace FactorioWpf.ViewModels
 
         private RelayCommand m_openListBoxItemDetail;
 
+        private RelayCommand m_openListBoxItemProduction;
+
         #endregion
 
         #region Public Properties
+
+        public ICommand OpenListBoxItemProduction
+        {
+            get
+            {
+                if (m_openListBoxItemProduction == null)
+                    m_openListBoxItemProduction = new RelayCommand(OpenProductionWindow);
+
+                return m_openListBoxItemProduction;
+            }
+        }
 
         public ICommand OpenListBoxItemEdit
         {
@@ -109,6 +122,13 @@ namespace FactorioWpf.ViewModels
         #endregion
 
         #region Command Methods
+
+        private void OpenProductionWindow()
+        {
+            ProductionViewerWindow productionWindow = new ProductionViewerWindow(fLogic, SelectedItem);
+
+            productionWindow.Show();
+        }
 
         private void ItemDetail()
         {

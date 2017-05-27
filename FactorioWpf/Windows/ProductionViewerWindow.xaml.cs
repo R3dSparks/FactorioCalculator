@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Factorio.Entities;
+using FactorioWpf.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,11 @@ namespace FactorioWpf.Windows
     /// </summary>
     public partial class ProductionViewerWindow : Window
     {
-        public ProductionViewerWindow()
+        public ProductionViewerWindow(IFactorioLogic logic, FactorioItem item)
         {
             InitializeComponent();
+
+            this.DataContext = new ProductionViewerViewModell(logic, item);
         }
     }
 }
