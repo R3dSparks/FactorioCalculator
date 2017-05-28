@@ -11,8 +11,9 @@
     <Window.Resources>
         <Converters:PathToPictureConverter x:Key="PathToPictureConverter"/>
     </Window.Resources>
-    
+
     <Grid>
+        
         <ItemsControl ItemsSource="{Binding Images}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -27,9 +28,27 @@
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Image Source="{Binding Path=ImagePath, Converter={StaticResource PathToPictureConverter}}" />
+                    <Image Source="{Binding Path=ImagePath, Converter={StaticResource PathToPictureConverter}}" 
+                           Width="{Binding Width}" Height="{Binding Height}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        
+        <ItemsControl ItemsSource="{Binding Lines}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Line X1="{Binding Left1}" Y1="{Binding Top1}" 
+                          X2="{Binding Left2}" Y2="{Binding Top2}"
+                          Stroke="Black" StrokeThickness="1" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        
     </Grid>
+    
 </Window>

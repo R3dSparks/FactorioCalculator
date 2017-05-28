@@ -8,9 +8,17 @@ namespace FactorioWpf.Helper
 {
     public class ImageHelper
     {
+        public static int sWidth = 30;
+
+        public static int sHeight = 30;
+
         public int Left { get; set; }
 
         public int Top { get; set; }
+
+        public int Width { get { return sWidth; } }
+
+        public int Height { get { return sHeight; } }
 
         public string ImagePath { get; set; }
 
