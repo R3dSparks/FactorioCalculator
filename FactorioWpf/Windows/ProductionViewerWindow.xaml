@@ -7,30 +7,29 @@
         xmlns:Converters="clr-namespace:FactorioWpf.Converters" x:Class="FactorioWpf.Windows.ProductionViewerWindow"
         mc:Ignorable="d"
         Title="ProductionViewerWindow" Height="300" Width="300">
+    
     <Window.Resources>
         <Converters:PathToPictureConverter x:Key="PathToPictureConverter"/>
     </Window.Resources>
+    
     <Grid>
-        <Canvas>
-            <ItemsControl ItemsSource="{Binding Images}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="{x:Type ContentPresenter}">
-                        <Setter Property="Canvas.Left" Value="10"/>
-                        <Setter Property="Canvas.Top" Value="10"/>
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Rectangle Width="100" Height="100" Fill="Black" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </Canvas>
-        
+        <ItemsControl ItemsSource="{Binding Images}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Left" Value="{Binding Path=Left}"/>
+                    <Setter Property="Canvas.Top" Value="{Binding Path=Top}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding Path=ImagePath, Converter={StaticResource PathToPictureConverter}}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>

@@ -17,7 +17,7 @@ namespace FactorioWpf.Helper
         public ImageHelper(int left, int top, string path)
         {
             Left = left;
-            Top = left;
+            Top = top;
             ImagePath = path;
         }
 

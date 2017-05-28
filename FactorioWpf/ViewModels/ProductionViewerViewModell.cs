@@ -22,7 +22,7 @@ namespace FactorioWpf.ViewModels
 
         #region Public Properties
 
-        List<ImageHelper> Images
+        public List<ImageHelper> Images
         {
             get
             {
@@ -46,14 +46,24 @@ namespace FactorioWpf.ViewModels
 
             m_factorioAssembly = new FactorioAssembly(item);
 
-            Images.Add(new ImageHelper(
-                    10,
-                    10,
-                    m_factorioAssembly.AssemblyItem.PicturePath
-                ));
+            getAssembly(m_factorioAssembly, 0, 0);
         }
 
         #endregion
+
+        private void getAssembly(FactorioAssembly assembly, int layer, int pos)
+        {
+            Images.Add(new ImageHelper(pos * 50, layer * 70, assembly.AssemblyItem.PicturePath));
+
+            int nextPos = pos;
+
+            foreach (FactorioAssembly subAssembly in assembly.SubAssembly)
+            {
+                getAssembly(subAssembly, layer + 1, nextPos);
+
+                nextPos++;
+            }
+        }
 
     }
 }
