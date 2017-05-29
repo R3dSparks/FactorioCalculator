@@ -21,6 +21,10 @@ namespace Factorio.Entities
         /// <summary>
         /// Crafted in a refinery
         /// </summary>
-        Refinery
+        Refinery,
+        /// <summary>
+        /// Mined by a drill
+        /// </summary>
+        Drill
     }
 }

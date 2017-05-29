@@ -6,6 +6,7 @@ using System.Xml;
 using Factorio.Entities;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Xml.Linq;
 
 namespace Factorio.DAL
 {
@@ -32,64 +33,98 @@ namespace Factorio.DAL
         #region Public Methods
 
 
-        /// <summary>
-        /// Read all <see cref="FactorioItem"/> from a xml file
-        /// </summary>
-        /// <param name="path">path to file</param>
-        /// <returns></returns>
-        /// <exception cref="FactorioException"></exception>
         public ObservableCollection<FactorioItem> ReadItems(string path)
         {
-            // contains items where all properties are known
+            // Contains all items that are currently known
             var knownItems = new List<FactorioItem>();
-            // contains items where only the name is known
+
+            // Contains all items that are known but have items in their recipe that are unkown
+            var knownItemsWithoutRecipe = new List<FactorioItem>();
+
+            // Contains items that are found in recipes but aren't loaded yet
             var unknownItems = new List<FactorioItem>();
-            XmlReader reader = null;
+
+            
 
             try
             {
-                // check if file exists
+                // Check if file exists, create one if it doesn't
                 if (!File.Exists(path))
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(path));
                     FactorioXmlHelper.CreateXml(path);
                 }
 
-                reader = XmlReader.Create(path);
-                FactorioItem currentItem = null;
+                XDocument itemsFile = XDocument.Load(path);
 
-                // read all lines
-                while (reader.Read())
-                {
-                    if (reader.Name == FactorioXmlHelper.XmlItemElement && reader.NodeType != XmlNodeType.EndElement)
-                    {
-                        this.readItemElement(reader, out currentItem, knownItems, unknownItems);
-                    }
-                    else if (reader.Name == FactorioXmlHelper.XmlCraftingElement)
-                    {
-                        this.readCraftingElement(reader, currentItem, knownItems, unknownItems);
-                    }
-                }
             }
-            catch (FactorioException)
+            catch (Exception)
             {
-                // pass through
                 throw;
-            }
-            catch (Exception ex)
-            {
-                // create a new exception to add the event code
-                throw new FactorioException(DiagnosticEvents.DalXmlRead, "An error occurred while reading a xml file with the message: " + ex.Message, ex);
-            }
-            finally
-            {
-                // make sure to close the reader
-                if (reader != null)
-                    reader.Close();
             }
 
             return new ObservableCollection<FactorioItem>(knownItems);
+
         }
+
+        /// <summary>
+        /// Read all <see cref="FactorioItem"/> from a xml file
+        /// </summary>
+        /// <param name="path">path to file</param>
+        /// <returns></returns>
+        /// <exception cref="FactorioException"></exception>
+        //public ObservableCollection<FactorioItem> ReadItems(string path)
+        //{
+        //    // contains items where all properties are known
+        //    var knownItems = new List<FactorioItem>();
+        //    // contains items where only the name is known
+        //    var unknownItems = new List<FactorioItem>();
+        //    XmlReader reader = null;
+
+        //    try
+        //    {
+        //        // check if file exists
+        //        if (!File.Exists(path))
+        //        {
+        //            Directory.CreateDirectory(Path.GetDirectoryName(path));
+        //            FactorioXmlHelper.CreateXml(path);
+        //        }
+
+        //        reader = XmlReader.Create(path);
+        //        FactorioItem currentItem = null;
+
+        //        // read all lines
+        //        while (reader.Read())
+        //        {
+        //            if (reader.Name == FactorioXmlHelper.XmlItemElement && reader.NodeType != XmlNodeType.EndElement)
+        //            {
+        //                this.readItemElement(reader, out currentItem, knownItems, unknownItems);
+        //            }
+        //            else if (reader.Name == FactorioXmlHelper.XmlCraftingElement)
+        //            {
+        //                this.readCraftingElement(reader, currentItem, knownItems, unknownItems);
+        //            }
+        //        }
+        //    }
+        //    catch (FactorioException)
+        //    {
+        //        // pass through
+        //        throw;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // create a new exception to add the event code
+        //        throw new FactorioException(DiagnosticEvents.DalXmlRead, "An error occurred while reading a xml file with the message: " + ex.Message, ex);
+        //    }
+        //    finally
+        //    {
+        //        // make sure to close the reader
+        //        if (reader != null)
+        //            reader.Close();
+        //    }
+
+        //    return new ObservableCollection<FactorioItem>(knownItems);
+        //}
 
 
         /// <summary>

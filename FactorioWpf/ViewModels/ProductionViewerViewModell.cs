@@ -67,39 +67,36 @@ namespace FactorioWpf.ViewModels
         /// Used to create the Images and Lines that are drawn on the canvas.
         /// </summary>
         /// <param name="assembly">Assembly as tree root</param>
-        /// <param name="layer">Layer of the tree structure</param>
+        /// <param name="layer">Current layer of the tree structure</param>
         /// <param name="position">Position of the Root element</param>
         /// <returns>The actuall position of the created AssemblyCanvasStructure</returns>
         private int getAssemblyCanvasStructure(FactorioAssembly assembly, int layer, int position)
         {
             int currentPosition = position;
 
+            // Search for the first free column in this layer
             foreach (ImageHelper image in Images)
             {
                 if (image.Row == layer && image.Column >= currentPosition)
                     currentPosition = image.Column + 1;
             }
 
+            // Create new ImageHelper with image of the current assembly
             Images.Add(new ImageHelper(currentPosition, layer, assembly.AssemblyItem.PicturePath));
 
             int nextPos = currentPosition;
-
-            foreach (ImageHelper image in Images)
-            {
-                if (image.Row + 1 == layer && image.Column >= nextPos)
-                    nextPos = image.Column + 1;
-            }
 
             foreach (FactorioAssembly subAssembly in assembly.SubAssembly)
             {
                 nextPos = getAssemblyCanvasStructure(subAssembly, layer + 1, nextPos);
 
+                // Create line between the current assembly and its subassemblies
                 Lines.Add(
                     new Line(
-                        currentPosition * (ImageHelper.sLeftOffset + ImageHelper.sWidth) - ImageHelper.sWidth / 2 + ImageHelper.sOffset, 
-                        layer * (ImageHelper.sHeight + ImageHelper.sTopOffset) + ImageHelper.sOffset, 
-                        nextPos * (ImageHelper.sLeftOffset + ImageHelper.sWidth) - ImageHelper.sWidth / 2 + ImageHelper.sOffset, 
-                        (layer + 1) * (ImageHelper.sHeight + ImageHelper.sTopOffset)
+                        currentPosition * (ImageHelper.LeftOffset + ImageHelper.Width) + ImageHelper.Width / 2 + ImageHelper.Offset,
+                        layer * (ImageHelper.Height + ImageHelper.TopOffset) + ImageHelper.Height + ImageHelper.Offset,
+                        nextPos * (ImageHelper.LeftOffset + ImageHelper.Width) + ImageHelper.Width / 2 + ImageHelper.Offset,
+                        (layer + 1) * (ImageHelper.Height + ImageHelper.TopOffset) + ImageHelper.Offset
                     ));
 
                 nextPos++;

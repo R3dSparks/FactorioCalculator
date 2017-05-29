@@ -116,7 +116,7 @@ namespace Factorio.DAL
         {
 
             if (reader == null)
-                throw new FactorioException(DiagnosticEvents.DalXmlReadAttribute, "Cannot read the attribute value, because the reade is empty.");
+                throw new FactorioException(DiagnosticEvents.DalXmlReadAttribute, "Cannot read the attribute value, because the reader is empty.");
 
             if (reader.HasAttributes == false)
                 throw new FactorioException(DiagnosticEvents.DalXmlReadAttribute, "The reader does not have any attributes.");
