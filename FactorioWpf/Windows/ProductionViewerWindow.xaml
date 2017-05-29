@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FactorioWpf.Windows"
         xmlns:Converters="clr-namespace:FactorioWpf.Converters" x:Class="FactorioWpf.Windows.ProductionViewerWindow"
         mc:Ignorable="d"
-        Title="ProductionViewerWindow" Height="300" Width="300">
+        Title="ProductionViewerWindow" Height="Auto" Width="Auto">
     
     <Window.Resources>
         <Converters:PathToPictureConverter x:Key="PathToPictureConverter"/>
@@ -17,7 +17,7 @@
         <ItemsControl ItemsSource="{Binding Images}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas/>
+                    <Canvas />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemContainerStyle>
@@ -37,7 +37,7 @@
         <ItemsControl ItemsSource="{Binding Lines}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas/>
+                    <Canvas />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>

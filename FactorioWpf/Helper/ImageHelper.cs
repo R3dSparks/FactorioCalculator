@@ -12,9 +12,25 @@ namespace FactorioWpf.Helper
 
         public static int sHeight = 30;
 
-        public int Left { get; set; }
+        public static int sOffset = 20;
 
-        public int Top { get; set; }
+        public static int sTopOffset = 50;
+
+        public static int sLeftOffset = 20;
+
+        public int Row { get; set; }
+
+        public int Column { get; set; }
+
+        public int Left
+        {
+            get => Column * (sWidth + sLeftOffset) + sOffset;
+        }
+
+        public int Top
+        {
+            get => Row * (sHeight + sTopOffset) + sOffset;
+        }
 
         public int Width { get { return sWidth; } }
 
@@ -22,10 +38,10 @@ namespace FactorioWpf.Helper
 
         public string ImagePath { get; set; }
 
-        public ImageHelper(int left, int top, string path)
+        public ImageHelper(int column, int row, string path)
         {
-            Left = left;
-            Top = top;
+            Column = column;
+            Row = row;
             ImagePath = path;
         }
 

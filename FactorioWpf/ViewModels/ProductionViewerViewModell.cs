@@ -13,8 +13,6 @@ namespace FactorioWpf.ViewModels
     {
         #region Private Variables
 
-        private int m_offset = 50;
-
         private IFactorioLogic m_logic;
 
         private FactorioAssembly m_factorioAssembly;
@@ -60,30 +58,54 @@ namespace FactorioWpf.ViewModels
 
             m_factorioAssembly = new FactorioAssembly(item);
 
-            getAssembly(m_factorioAssembly, 0, 0);
+            getAssemblyCanvasStructure(m_factorioAssembly, 0, 0);
         }
 
         #endregion
 
-
-        private void getAssembly(FactorioAssembly assembly, int layer, int pos)
+        /// <summary>
+        /// Used to create the Images and Lines that are drawn on the canvas.
+        /// </summary>
+        /// <param name="assembly">Assembly as tree root</param>
+        /// <param name="layer">Layer of the tree structure</param>
+        /// <param name="position">Position of the Root element</param>
+        /// <returns>The actuall position of the created AssemblyCanvasStructure</returns>
+        private int getAssemblyCanvasStructure(FactorioAssembly assembly, int layer, int position)
         {
-            Images.Add(new ImageHelper(pos * 50 + m_offset, layer * 70 + m_offset, assembly.AssemblyItem.PicturePath));
+            int currentPosition = position;
 
-            int nextPos = pos;
+            foreach (ImageHelper image in Images)
+            {
+                if (image.Row == layer && image.Column >= currentPosition)
+                    currentPosition = image.Column + 1;
+            }
+
+            Images.Add(new ImageHelper(currentPosition, layer, assembly.AssemblyItem.PicturePath));
+
+            int nextPos = currentPosition;
+
+            foreach (ImageHelper image in Images)
+            {
+                if (image.Row + 1 == layer && image.Column >= nextPos)
+                    nextPos = image.Column + 1;
+            }
 
             foreach (FactorioAssembly subAssembly in assembly.SubAssembly)
             {
-                getAssembly(subAssembly, layer + 1, nextPos);
+                nextPos = getAssemblyCanvasStructure(subAssembly, layer + 1, nextPos);
 
                 Lines.Add(
                     new Line(
-                        pos * 50 + ImageHelper.sWidth / 2 + m_offset, layer * 70 + ImageHelper.sHeight + m_offset, 
-                        nextPos * 50 + ImageHelper.sWidth / 2 + m_offset, (layer + 1) * 70 + m_offset
+                        currentPosition * (ImageHelper.sLeftOffset + ImageHelper.sWidth) - ImageHelper.sWidth / 2 + ImageHelper.sOffset, 
+                        layer * (ImageHelper.sHeight + ImageHelper.sTopOffset) + ImageHelper.sOffset, 
+                        nextPos * (ImageHelper.sLeftOffset + ImageHelper.sWidth) - ImageHelper.sWidth / 2 + ImageHelper.sOffset, 
+                        (layer + 1) * (ImageHelper.sHeight + ImageHelper.sTopOffset)
                     ));
 
                 nextPos++;
             }
+
+            return currentPosition;
         }
 
     }

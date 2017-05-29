@@ -6,6 +6,7 @@ using Factorio.Entities;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using System.IO;
 
 namespace Factorio.DAL
 {
@@ -54,7 +55,12 @@ namespace Factorio.DAL
             item.DefaultCraftingStation = FactorioXmlHelper.ReadAttribute(reader, FactorioXmlHelper.XmlItemAttributeCraftingStation);
 
             if (reader.GetAttribute(FactorioXmlHelper.XmlItemAttributePicture) != null)
+            {
                 item.PicturePath = FactorioXmlHelper.ReadAttribute<string>(reader, FactorioXmlHelper.XmlItemAttributePicture);
+
+                if (File.Exists(item.PicturePath) == false)
+                    item.PicturePath = null;
+            }
 
             item.Productivity = item.CraftingOutput / item.CraftingTime;
             return item;
