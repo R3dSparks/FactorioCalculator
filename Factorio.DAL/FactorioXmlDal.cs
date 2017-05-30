@@ -16,7 +16,6 @@ namespace Factorio.DAL
 
         #region Constructor
 
-
         /// <summary>
         /// default constructor
         /// </summary>
@@ -25,11 +24,9 @@ namespace Factorio.DAL
 
         }
 
-
         #endregion
 
         #region Public Methods
-
 
         public ObservableCollection<FactorioItem> ReadItems(string path)
         {

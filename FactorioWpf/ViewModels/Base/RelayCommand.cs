@@ -42,7 +42,7 @@ namespace FactorioWpf.ViewModels
                 ErrorMessage errorMessage = new ErrorMessage(ex);
                 errorMessage.ShowDialog();
             }
-            
+
         }
     }
 }

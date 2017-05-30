@@ -15,6 +15,7 @@ namespace Factorio
             {CraftingType.ChemicalPlant, 1 },
             {CraftingType.Furnace, 1 },
             {CraftingType.Refinery, 1 },
+            {CraftingType.Drill, 1 },
         };
 
         /// <summary>
