@@ -130,6 +130,12 @@ namespace Factorio
         public void RemoveItem(FactorioItem item)
         {
             this.Items.Remove(item);
+
+            foreach (var i in this.Items)
+            {
+                i.RemoveRecipeItem(item);
+            }
+
             this.SaveItems();
         }
 

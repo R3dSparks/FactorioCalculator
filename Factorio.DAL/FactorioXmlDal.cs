@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
-
 using Factorio.Entities;
-using System.Linq;
 using System.Collections.ObjectModel;
 using System.Xml.Linq;
 
@@ -39,9 +37,7 @@ namespace Factorio.DAL
             var knownItems = new List<FactorioItem>();
 
             // Contains items that are found in recipes but aren't loaded yet
-            var unknownItems = new List<FactorioItem>();
-
-            
+            var unknownItems = new List<FactorioItem>();            
 
             try
             {
@@ -54,15 +50,16 @@ namespace Factorio.DAL
 
                 XDocument itemsFile = XDocument.Load(path);
 
-
                 foreach (var xmlItemData in itemsFile.Descendants(FactorioXmlHelper.XmlItemElement))
                 {
-                    FactorioItem newItem = FactorioXmlHelper.GetFactorioItemFromXmlData(xmlItemData);
+                    FactorioItem newItem = FactorioXmlHelper.GetFactorioItemFromXmlData(xmlItemData, knownItems, unknownItems);
 
                     knownItems.Add(newItem);
 
                     newItem.TryAddRecipeData(xmlItemData, knownItems, unknownItems);
                 }
+
+                
 
             }
             catch (FactorioException)

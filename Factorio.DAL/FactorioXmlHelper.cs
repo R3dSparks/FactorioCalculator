@@ -37,13 +37,31 @@ namespace Factorio.DAL
         /// </summary>
         /// <param name="xmlData">Xml data for the item</param>
         /// <returns>New <see cref="FactorioItem"/></returns>
-        public static FactorioItem GetFactorioItemFromXmlData(XElement xmlData)
+        public static FactorioItem GetFactorioItemFromXmlData(XElement xmlData, List<FactorioItem> knownItems, List<FactorioItem> unknownItems)
         {
             FactorioItem item;
 
             try
             {
-                item = new FactorioItem(Convert.ToInt32(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeId).Value))
+
+                int id = Convert.ToInt32(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeId).Value);
+
+                if (unknownItems.Exists(i => i.Id == id))
+                {
+                    item = unknownItems.Find(i => i.Id == id);
+
+                    item.Name = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeName).Value;
+                    item.CraftingOutput = Convert.ToInt32(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeOutput).Value);
+                    item.CraftingTime = Convert.ToDouble(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeTime).Value);
+                    item.DefaultCraftingType = (CraftingType)Enum.Parse(typeof(CraftingType), xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeCraftingStation).Value);
+                    item.PicturePath = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributePicture).Value;
+
+                    unknownItems.Remove(item);
+                    
+                    return item;
+                }
+
+                item = new FactorioItem(id)
                 {
                     Name = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeName).Value,
                     CraftingOutput = Convert.ToInt32(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeOutput).Value),
@@ -51,6 +69,8 @@ namespace Factorio.DAL
                     DefaultCraftingType = (CraftingType)Enum.Parse(typeof(CraftingType), xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeCraftingStation).Value),
                     PicturePath = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributePicture).Value
                 };
+
+
             }
             catch (Exception)
             {
@@ -73,31 +93,35 @@ namespace Factorio.DAL
             {
                 try
                 {
-                    // Get the recipe part of XElement
-                    XElement recipe = xmlData.Descendants(FactorioXmlHelper.XmlCraftingElement).First();
-
-                    // Id of the recipe item
-                    int id = Convert.ToInt32(recipe.Attribute(FactorioXmlHelper.XmlCraftingAttributeId).Value);
-
-                    // Quantity of the recipe item
-                    int quantity = Convert.ToInt32(recipe.Attribute(FactorioXmlHelper.XmlCraftingAttributeQuantity).Value);
-
-                    // Look for a known item with id of the recipe item
-                    FactorioItem recipeItem = knownItems.Find(i => i.Id == id);
-
-                    if (recipeItem != null)
+                    // Get a list of all recipe parts of XElement
+                    var recipes = xmlData.Descendants(FactorioXmlHelper.XmlCraftingElement);
+                    
+                    foreach (var recipe in recipes)
                     {
-                        item.AddRecipeItem(recipeItem, quantity);
-                    }
-                    // If the recipe item is not known create a dummy item with its id and add it to unkown items
-                    else
-                    {
-                        recipeItem = new FactorioItem(id);
+                        // Id of the recipe item
+                        int id = Convert.ToInt32(recipe.Attribute(FactorioXmlHelper.XmlCraftingAttributeId).Value);
 
-                        unknownItems.Add(recipeItem);
+                        // Quantity of the recipe item
+                        int quantity = Convert.ToInt32(recipe.Attribute(FactorioXmlHelper.XmlCraftingAttributeQuantity).Value);
 
-                        item.AddRecipeItem(recipeItem, quantity);
+                        // Look for a known item with id of the recipe item
+                        FactorioItem recipeItem = knownItems.Find(i => i.Id == id);
+
+                        if (recipeItem != null)
+                        {
+                            item.AddRecipeItem(recipeItem, quantity);
+                        }
+                        // If the recipe item is not known create a dummy item with its id and add it to unkown items
+                        else if(unknownItems.Exists(i => i.Id == id) == false)
+                        {
+                            recipeItem = new FactorioItem(id);
+
+                            unknownItems.Add(recipeItem);
+
+                            item.AddRecipeItem(recipeItem, quantity);
+                        }
                     }
+                    
                 }
                 catch (FormatException)
                 {
