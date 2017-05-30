@@ -63,7 +63,7 @@ namespace Factorio
             get
             {
                 if (m_craftingStation == null)
-                    return FactorioHelper.DefaultCraftingSpeeds[AssemblyItem.DefaultCraftingStation];
+                    return FactorioHelper.DefaultCraftingSpeeds[AssemblyItem.DefaultCraftingType];
                 else
                     return FactorioHelper.CraftingSpeeds[CraftingStation];
             }

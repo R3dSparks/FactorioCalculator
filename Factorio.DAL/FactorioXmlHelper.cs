@@ -1,12 +1,10 @@
 ﻿using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-
 using Factorio.Entities;
 using System;
-using System.Collections.Generic;
 using System.Xml.Linq;
 using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Factorio.DAL
 {
@@ -35,125 +33,79 @@ namespace Factorio.DAL
         #region XML IO Methods
 
         /// <summary>
-        /// Fill this object with the information from the <paramref name="reader"/>.
+        /// Create new <see cref="FactorioItem"/> from data in the XElement
         /// </summary>
-        /// <param name="reader">Contains the information for this object</param>
-        public static FactorioItem ReadXml(XmlReader reader)
+        /// <param name="xmlData">Xml data for the item</param>
+        /// <returns>New <see cref="FactorioItem"/></returns>
+        public static FactorioItem GetFactorioItemFromXmlData(XElement xmlData)
         {
             FactorioItem item;
 
-            if (readAttributeValue(reader, FactorioXmlHelper.XmlItemAttributeId) == null)
-                item = new FactorioItem();
-            else
-                item = new FactorioItem(FactorioXmlHelper.ReadAttribute<int>(reader, FactorioXmlHelper.XmlItemAttributeId));
-
-
-
-            item.Name = FactorioXmlHelper.ReadAttribute<string>(reader, FactorioXmlHelper.XmlItemAttributeName);
-            item.CraftingOutput = FactorioXmlHelper.ReadAttribute<int>(reader, FactorioXmlHelper.XmlItemAttributeOutput);
-            item.CraftingTime = FactorioXmlHelper.ReadAttribute<double>(reader, FactorioXmlHelper.XmlItemAttributeTime);
-            item.DefaultCraftingStation = FactorioXmlHelper.ReadAttribute(reader, FactorioXmlHelper.XmlItemAttributeCraftingStation);
-
-            if (reader.GetAttribute(FactorioXmlHelper.XmlItemAttributePicture) != null)
+            try
             {
-                item.PicturePath = FactorioXmlHelper.ReadAttribute<string>(reader, FactorioXmlHelper.XmlItemAttributePicture);
-
-                if (File.Exists(item.PicturePath) == false)
-                    item.PicturePath = null;
+                item = new FactorioItem(Convert.ToInt32(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeId).Value))
+                {
+                    Name = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeName).Value,
+                    CraftingOutput = Convert.ToInt32(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeOutput).Value),
+                    CraftingTime = Convert.ToDouble(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeTime).Value),
+                    DefaultCraftingType = (CraftingType)Enum.Parse(typeof(CraftingType), xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeCraftingStation).Value),
+                    PicturePath = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributePicture).Value
+                };
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
-            item.Productivity = item.CraftingOutput / item.CraftingTime;
             return item;
         }
 
-
         /// <summary>
-        /// Read an attribute from a <see cref="XmlReader"/> and convert it into the type <paramref name="T"/>
+        /// Try to add a recipe to the this <see cref="FactorioItem"/>
         /// </summary>
-        /// <typeparam name="T">Convert the read item into this type</typeparam>
-        /// <param name="reader">This reader contains the attribute</param>
-        /// <param name="attributeName">Read the attribute with this name</param>
-        /// <returns>Returns the read item or throws an exception if someting isn't right</returns>
-        /// <exception cref="FactorioException"></exception>
-        public static T ReadAttribute<T>(XmlReader reader, string attributeName)
+        /// <param name="item">Item to add reipe for</param>
+        /// <param name="xmlData">Xml data for this item</param>
+        /// <param name="knownItems">List of all known items</param>
+        /// <param name="unknownItems">List of all unkown items</param>
+        public static void TryAddRecipeData(this FactorioItem item, XElement xmlData, List<FactorioItem> knownItems, List<FactorioItem> unknownItems)
         {
-            string val = readAttributeValue(reader, attributeName);
+            if(xmlData.Descendants(FactorioXmlHelper.XmlCraftingElement).FirstOrDefault() != null)
+            {
+                try
+                {
+                    // Get the recipe part of XElement
+                    XElement recipe = xmlData.Descendants(FactorioXmlHelper.XmlCraftingElement).First();
 
+                    // Id of the recipe item
+                    int id = Convert.ToInt32(recipe.Attribute(FactorioXmlHelper.XmlCraftingAttributeId).Value);
 
-            if (FactorioXmlHelper.CanChangeType(val, typeof(T)) == false)
-                throw new FactorioException(DiagnosticEvents.DalXmlReadAttribute, String.Format("The read information from the XmlReader cannot be Converted to the type '{0}'. The value is '{1}'", typeof(T), val));
+                    // Quantity of the recipe item
+                    int quantity = Convert.ToInt32(recipe.Attribute(FactorioXmlHelper.XmlCraftingAttributeQuantity).Value);
+
+                    // Look for a known item with id of the recipe item
+                    FactorioItem recipeItem = knownItems.Find(i => i.Id == id);
+
+                    if (recipeItem != null)
+                    {
+                        item.AddRecipeItem(recipeItem, quantity);
+                    }
+                    // If the recipe item is not known create a dummy item with its id and add it to unkown items
+                    else
+                    {
+                        recipeItem = new FactorioItem(id);
+
+                        unknownItems.Add(recipeItem);
+
+                        item.AddRecipeItem(recipeItem, quantity);
+                    }
+                }
+                catch (FormatException)
+                {
+                    throw;
+                }
                 
-
-            return (T)Convert.ChangeType(val, typeof(T));
-
-
-        }
-
-
-        public static CraftingType ReadAttribute(XmlReader reader, string attributeName)
-        {
-            string val = readAttributeValue(reader, attributeName);
-
-            if (val == null)
-                return default(CraftingType);
-            
-            CraftingType crafting = default(CraftingType);
-
-            if (Enum.TryParse(val, out crafting) == false)
-                return default(CraftingType);
-            else
-                return crafting;
-        }
-
-
-        /// <summary>
-        /// Read the value from an attribute
-        /// </summary>
-        /// <param name="reader">this reader contains the attribute</param>
-        /// <param name="attributeName">read the attribute with this name</param>
-        /// <returns></returns>
-        private static string readAttributeValue(XmlReader reader, string attributeName)
-        {
-
-            if (reader == null)
-                throw new FactorioException(DiagnosticEvents.DalXmlReadAttribute, "Cannot read the attribute value, because the reader is empty.");
-
-            if (reader.HasAttributes == false)
-                throw new FactorioException(DiagnosticEvents.DalXmlReadAttribute, "The reader does not have any attributes.");
-
-            return reader.GetAttribute(attributeName);
-        }
-
-
-        /// <summary>
-        /// Check if the object can be converted to the <paramref name="conversionType"/>. Return true if it is possible, otherwise false
-        /// </summary>
-        /// <param name="value">check if this object can be converted into the given type</param>
-        /// <param name="conversionType">check if the object can be converted to this type</param>
-        /// <returns>true if possible, false if not</returns>
-        public static bool CanChangeType(object value, Type conversionType)
-        {
-            if (conversionType == null)
-            {
-                return false;
             }
-
-            if (value == null)
-            {
-                return false;
-            }
-
-            IConvertible convertible = value as IConvertible;
-
-            if (convertible == null)
-            {
-                return false;
-            }
-
-            return true;
         }
-
-
 
         /// <summary>
         /// Add this object to the <see cref="writer"/>.
@@ -165,7 +117,7 @@ namespace Factorio.DAL
             writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeName, item.Name);
             writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeOutput, item.CraftingOutput.ToString());
             writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeTime, item.CraftingTime.ToString());
-            writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeCraftingStation, item.DefaultCraftingStation.ToString());
+            writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeCraftingStation, item.DefaultCraftingType.ToString());
 
             if(item.PicturePath != null)
                 writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributePicture, item.PicturePath);

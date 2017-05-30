@@ -62,7 +62,7 @@ namespace Factorio.Entities
         /// <summary>
         /// Where this item is crafted by default
         /// </summary>
-        public CraftingType DefaultCraftingStation { get; set; }
+        public CraftingType DefaultCraftingType { get; set; }
 
         /// <summary>
         /// Path to the item picture
@@ -106,7 +106,7 @@ namespace Factorio.Entities
             CraftingOutput = output;
             CraftingTime = time;
             Productivity = output / time;
-            DefaultCraftingStation = crafting;
+            DefaultCraftingType = crafting;
             PicturePath = path;
         }
 
@@ -117,7 +117,7 @@ namespace Factorio.Entities
             CraftingOutput = output;
             CraftingTime = time;
             Productivity = output / time;
-            DefaultCraftingStation = crafting;
+            DefaultCraftingType = crafting;
             PicturePath = path;
         }
 
@@ -161,7 +161,7 @@ namespace Factorio.Entities
                 CraftingOutput = this.CraftingOutput,
                 CraftingTime = this.CraftingTime,
                 Productivity = this.Productivity,
-                DefaultCraftingStation = this.DefaultCraftingStation,
+                DefaultCraftingType = this.DefaultCraftingType,
                 PicturePath = this.PicturePath
             };
 

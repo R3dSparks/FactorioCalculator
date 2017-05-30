@@ -326,7 +326,7 @@ namespace FactorioWpf.ViewModels
             m_itemCopy.Name = name;
             m_itemCopy.CraftingOutput = output;
             m_itemCopy.CraftingTime = time;
-            m_itemCopy.DefaultCraftingStation = crafting;
+            m_itemCopy.DefaultCraftingType = crafting;
             m_itemCopy.PicturePath = this.PicturePath;
 
 
