@@ -16,19 +16,19 @@ namespace FactorioWpf.ViewModels
         private IFactorioLogic m_logic;
 
         private FactorioAssembly m_factorioAssembly;
-        private List<ImageHelper> m_images;
+        private List<AssemblyImageHelper> m_images;
         private List<Line> m_lines;
 
         #endregion
 
         #region Public Properties
 
-        public List<ImageHelper> Images
+        public List<AssemblyImageHelper> Images
         {
             get
             {
                 if (m_images == null)
-                    m_images = new List<ImageHelper>();
+                    m_images = new List<AssemblyImageHelper>();
 
                 return m_images;
             }
@@ -58,7 +58,7 @@ namespace FactorioWpf.ViewModels
 
             m_factorioAssembly = new FactorioAssembly(item);
 
-            getAssemblyCanvasStructure(m_factorioAssembly, 0, 0);
+            getAssemblyCanvasStructure(m_factorioAssembly);
         }
 
         #endregion
@@ -70,39 +70,9 @@ namespace FactorioWpf.ViewModels
         /// <param name="layer">Current layer of the tree structure</param>
         /// <param name="position">Position of the Root element</param>
         /// <returns>The actuall position of the created AssemblyCanvasStructure</returns>
-        private int getAssemblyCanvasStructure(FactorioAssembly assembly, int layer, int position)
+        private void getAssemblyCanvasStructure(FactorioAssembly assembly)
         {
-            int currentPosition = position;
-
-            // Search for the first free column in this layer
-            foreach (ImageHelper image in Images)
-            {
-                if (image.Row == layer && image.Column >= currentPosition)
-                    currentPosition = image.Column + 1;
-            }
-
-            // Create new ImageHelper with image of the current assembly
-            Images.Add(new ImageHelper(currentPosition, layer, assembly.AssemblyItem.PicturePath));
-
-            int nextPos = currentPosition;
-
-            foreach (FactorioAssembly subAssembly in assembly.SubAssembly)
-            {
-                nextPos = getAssemblyCanvasStructure(subAssembly, layer + 1, nextPos);
-
-                // Create line between the current assembly and its subassemblies
-                Lines.Add(
-                    new Line(
-                        currentPosition * (ImageHelper.LeftOffset + ImageHelper.Width) + ImageHelper.Width / 2 + ImageHelper.Offset,
-                        layer * (ImageHelper.Height + ImageHelper.TopOffset) + ImageHelper.Height + ImageHelper.Offset,
-                        nextPos * (ImageHelper.LeftOffset + ImageHelper.Width) + ImageHelper.Width / 2 + ImageHelper.Offset,
-                        (layer + 1) * (ImageHelper.Height + ImageHelper.TopOffset) + ImageHelper.Offset
-                    ));
-
-                nextPos++;
-            }
-
-            return currentPosition;
+            Images.Add(new AssemblyImageHelper(0, 0, assembly.AssemblyItem.PicturePath));
         }
 
     }
