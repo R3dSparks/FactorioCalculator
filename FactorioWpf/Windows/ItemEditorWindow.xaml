@@ -78,7 +78,7 @@
                 <StackPanel>
                     
                     <ListBox BorderThickness="0" BorderBrush="White"
-                             ItemsSource="{Binding Item.Recipe}"
+                             ItemsSource="{Binding ItemDummy.Recipe}"
                              SelectedItem="{Binding SelectedRecipeItem}"
                              HorizontalContentAlignment="Right">
 

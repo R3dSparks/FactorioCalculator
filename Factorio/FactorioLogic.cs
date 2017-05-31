@@ -145,22 +145,6 @@ namespace Factorio
         }
 
         /// <summary>
-        /// Edit an existing item and save Items list to xml file
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="output"></param>
-        /// <param name="time"></param>
-        /// <param name="crafting"></param>
-        /// <param name="path"></param>
-        public void EditItem(FactorioItem item, string name, int output, double time, CraftingType crafting, string path)
-        {
-            item.Name = name;
-
-
-            this.SaveItems();
-        }
-
-        /// <summary>
         /// Add a new item to the Items list and save Items list to xml file
         /// </summary>
         /// <param name="name"></param>

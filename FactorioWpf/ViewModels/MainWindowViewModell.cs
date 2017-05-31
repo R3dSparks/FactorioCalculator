@@ -158,13 +158,6 @@ namespace FactorioWpf.ViewModels
 
             var editorViewModell = (ItemEditorViewModell)editor.DataContext;
 
-            editorViewModell.Title = "Edit item";
-            editorViewModell.TxtItemName = SelectedItem.Name;
-            editorViewModell.TxtItemOutput = SelectedItem.CraftingOutput.ToString();
-            editorViewModell.TxtItemTime = SelectedItem.CraftingTime.ToString();
-            editorViewModell.SelectedCrafting = SelectedItem.DefaultCraftingType.ToString();
-            editorViewModell.PicturePath = SelectedItem.PicturePath;
-
             editor.ShowDialog();
         }
 

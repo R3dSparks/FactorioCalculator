@@ -14,7 +14,10 @@ namespace FactorioWpf.ViewModels
     {
         #region Private Variables
 
-        private FactorioItem m_itemCopy;
+        /// <summary>
+        /// Dummy item for editing
+        /// </summary>
+        private FactorioItem m_itemDummy;
 
         /// <summary>
         /// Names of <see cref="CraftingType"/>
@@ -198,13 +201,21 @@ namespace FactorioWpf.ViewModels
                 // If no items are added yet, don't return list, because Xaml crashes
                 if(m_fLogic.Items.Count > 0)
                     // Get all items without the item that is edited
-                    return m_fLogic.Items.Where(x => x.Id != m_itemCopy.Id).ToList();
+                    return m_fLogic.Items.Where(x => x.Id != m_item.Id).ToList();
 
                 return null;
             }
         }
 
         #endregion
+
+        public FactorioItem ItemDummy
+        {
+            get
+            {
+                return m_itemDummy;
+            }
+        }
 
         /// <summary>
         /// Current item
@@ -213,7 +224,7 @@ namespace FactorioWpf.ViewModels
         {
             get
             {
-                return m_itemCopy;
+                return m_item;
             }
         }
 
@@ -231,21 +242,35 @@ namespace FactorioWpf.ViewModels
         #region Constructor
 
         /// <summary>
-        /// Default constructor
+        /// Constructor for item creation
         /// </summary>
         public ItemEditorViewModell(IFactorioLogic logic, Window window)
         {
             init(logic, window);
 
-            m_itemCopy = new FactorioItem();
+            m_item = new FactorioItem();
+            m_itemDummy = new FactorioItem(-1);
         }
 
+        /// <summary>
+        /// Constructor for item editing
+        /// </summary>
+        /// <param name="logic"></param>
+        /// <param name="window"></param>
+        /// <param name="item"></param>
         public ItemEditorViewModell(IFactorioLogic logic, Window window, FactorioItem item)
         {
             init(logic, window);
 
+            this.Title = "Edit item";
+            this.TxtItemName = item.Name;
+            this.TxtItemOutput = item.CraftingOutput.ToString();
+            this.TxtItemTime = item.CraftingTime.ToString();
+            this.SelectedCrafting = item.DefaultCraftingType.ToString();
+            this.PicturePath = item.PicturePath;
+
             this.m_item = item;
-            this.m_itemCopy = item.GetCopy();           
+            this.m_itemDummy = item.GetCopy();           
         }
         
         /// <summary>
@@ -269,14 +294,14 @@ namespace FactorioWpf.ViewModels
 
         private void DeleteRecipeItem()
         {
-            m_itemCopy.RemoveRecipeItem(SelectedRecipeItem.Key);
+            m_itemDummy.RemoveRecipeItem(SelectedRecipeItem.Key);
         }
 
         private void AddRecipeItem()
         {
             int quantity = Convert.ToInt32(TxtRecipeQuantity);
 
-            m_itemCopy.AddRecipeItem(SelectedComboBoxRecipeItem, quantity);
+            m_itemDummy.AddRecipeItem(SelectedComboBoxRecipeItem, quantity);
         }
 
         /// <summary>
@@ -323,19 +348,22 @@ namespace FactorioWpf.ViewModels
             double time = Convert.ToDouble(TxtItemTime);
             CraftingType crafting = (CraftingType)Enum.Parse(typeof(CraftingType), SelectedCrafting);
 
-            m_itemCopy.Name = name;
-            m_itemCopy.CraftingOutput = output;
-            m_itemCopy.CraftingTime = time;
-            m_itemCopy.DefaultCraftingType = crafting;
-            m_itemCopy.PicturePath = this.PicturePath;
+            m_item.Name = name;
+            m_item.CraftingOutput = output;
+            m_item.CraftingTime = time;
+            m_item.DefaultCraftingType = crafting;
+            m_item.PicturePath = this.PicturePath;
 
+            m_item.Recipe.Clear();
 
-            if (m_item != null)
-                // If a reference item is set replace it with item copy
-                m_fLogic.Items[m_fLogic.Items.IndexOf(m_item)] = m_itemCopy;
-            else
-                // Else add item as new entry to the list
-                m_fLogic.Items.Add(m_itemCopy);         
+            // Copy recipe from the dummy item to the original
+            foreach (var recipeItem in m_itemDummy.Recipe)
+            {
+                m_item.AddRecipeItem(recipeItem.Key, recipeItem.Value);
+            }
+
+            if(m_itemDummy.Id == -1)
+                m_fLogic.Items.Add(m_item);
 
             m_fLogic.SaveItems();
 

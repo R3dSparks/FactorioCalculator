@@ -71,16 +71,6 @@ namespace Factorio.Entities
         void AddItem(string name, int output, double time, CraftingType crafting, string path);
 
         /// <summary>
-        /// Edit an existing item
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="output"></param>
-        /// <param name="time"></param>
-        /// <param name="crafting"></param>
-        /// <param name="path"></param>
-        void EditItem(FactorioItem item, string name, int output, double time, CraftingType crafting, string path);
-
-        /// <summary>
         /// Remove an item from Items
         /// </summary>
         /// <param name="item"></param>
