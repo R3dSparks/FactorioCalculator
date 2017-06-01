@@ -10,7 +10,9 @@ namespace FactorioWpf.Helper
     {
         private List<AssemblyImageHelper> m_images;
 
-        public int Id { get; set; }
+        public int Top { get; set; }
+
+
 
         public List<AssemblyImageHelper> Images
         {
@@ -23,9 +25,9 @@ namespace FactorioWpf.Helper
             }
         }
 
-        public Layer(int id)
+        public Layer(int top)
         {
-            Id = id;
+            Top = top;
         }
 
 
