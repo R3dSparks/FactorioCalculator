@@ -54,7 +54,7 @@ namespace Factorio.DAL
                     item.CraftingOutput = Convert.ToInt32(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeOutput).Value);
                     item.CraftingTime = Convert.ToDouble(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeTime).Value);
                     item.DefaultCraftingType = (CraftingType)Enum.Parse(typeof(CraftingType), xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeCraftingStation).Value);
-                    item.PicturePath = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributePicture).Value;
+                    item.ImagePath = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributePicture).Value;
 
                     unknownItems.Remove(item);
                     
@@ -67,7 +67,7 @@ namespace Factorio.DAL
                     CraftingOutput = Convert.ToInt32(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeOutput).Value),
                     CraftingTime = Convert.ToDouble(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeTime).Value),
                     DefaultCraftingType = (CraftingType)Enum.Parse(typeof(CraftingType), xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeCraftingStation).Value),
-                    PicturePath = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributePicture).Value
+                    ImagePath = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributePicture).Value
                 };
 
 
@@ -143,8 +143,8 @@ namespace Factorio.DAL
             writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeTime, item.CraftingTime.ToString());
             writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributeCraftingStation, item.DefaultCraftingType.ToString());
 
-            if(item.PicturePath != null)
-                writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributePicture, item.PicturePath);
+            if(item.ImagePath != null)
+                writer.WriteAttributeString(FactorioXmlHelper.XmlItemAttributePicture, item.ImagePath);
 
             if (item.Recipe != null)
             {

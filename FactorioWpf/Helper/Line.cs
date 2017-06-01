@@ -8,22 +8,22 @@ namespace FactorioWpf.Helper
 {
     public class Line
     {
-        public int Top1 { get; set; }
+        private AssemblyImageHelper m_start;
 
-        public int Left1 { get; set; }
+        private AssemblyImageHelper m_end;
 
-        public int Top2 { get; set; }
+        public int Top1 { get => m_start.Top + AssemblyImageHelper.Height; }
 
-        public int Left2 { get; set; }
+        public int Left1 { get => m_start.Left + AssemblyImageHelper.Width / 2; }
 
+        public int Top2 { get => m_end.Top; }
 
-        public Line(int x1, int y1, int x2, int y2)
+        public int Left2 { get => m_end.Left + AssemblyImageHelper.Width / 2; }
+
+        public Line(AssemblyImageHelper start, AssemblyImageHelper end)
         {
-            Top1 = y1;
-            Left1 = x1;
-
-            Top2 = y2;
-            Left2 = x2;
+            m_start = start;
+            m_end = end;
         }
     }
 }

@@ -72,7 +72,7 @@ namespace FactorioWpf.ViewModels
         /// <returns>The actuall position of the created AssemblyCanvasStructure</returns>
         private void getAssemblyCanvasStructure(FactorioAssembly assembly)
         {
-            Images.Add(new AssemblyImageHelper(0, 0, assembly.AssemblyItem.PicturePath));
+            
         }
 
     }

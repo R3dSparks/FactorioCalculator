@@ -12,33 +12,32 @@ namespace FactorioWpf.Helper
         /// <summary>
         /// Assembly that is displayed
         /// </summary>
-        public FactorioAssembly Assembly { get; set; }
+        public FactorioAssembly Assembly { get; private set; }
 
         /// <summary>
         /// Image width
         /// </summary>
-        public static int Width { get; } = 30;
+        public static int Width { get; private set; } = 30;
 
         /// <summary>
         /// Image height
         /// </summary>
-        public static int Height { get; } = 30;
+        public static int Height { get; private set; } = 30;
 
         /// <summary>
-        /// Leftward offset from the image
+        /// Distance from left of canvas
         /// </summary>
-        public static int TopOffset { get; } = 20;
+        public int Left { get; set; }
 
         /// <summary>
-        /// Upward offset from the image
+        /// Distance from top of canvas
         /// </summary>
-        public static int LeftOffset { get; } = 20;
+        public int Top { get; set; }
 
-        public int Left { get; }
-
-        public int Top { get; }
-
-        public string ImagePath { get => Assembly.AssemblyItem.PicturePath; }
+        /// <summary>
+        /// Path to the image
+        /// </summary>
+        public string ImagePath { get => Assembly.AssemblyItem.ImagePath; }
 
         public AssemblyImageHelper(int left, int top, FactorioAssembly assembly)
         {
