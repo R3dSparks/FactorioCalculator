@@ -22,16 +22,20 @@ namespace FactorioWpf.Helper
             }
         }
 
+        /// <summary>
+        /// Depth of this layer in the tree structure
+        /// </summary>
         public int Depth { get; set; }
 
+        /// <summary>
+        /// Height of the layer
+        /// </summary>
         public static int Height { get; private set; } = 40;
 
-        public int Size { get; set; } = 0;
-
         /// <summary>
-        /// Size of gap between two images
+        /// Width of this layer
         /// </summary>
-        public static int GapSize { get; set; } = 20;
+        public int Width { get; set; } = 0;
 
         public Layer(int depth)
         {
@@ -40,7 +44,19 @@ namespace FactorioWpf.Helper
 
         public void AddAssembly(FactorioAssembly assembly, int position)
         {
-            AssemblyImages.Add(new AssemblyImageHelper(position, Depth * Height, assembly));
+            if(position >= Width)
+            {
+                AssemblyImages.Add(new AssemblyImageHelper(position, Depth * Height, assembly));
+
+                Width += (position - Width) + AssemblyImageHelper.Width;
+            }
+            else
+            {
+                AssemblyImages.Add(new AssemblyImageHelper(Width, Depth * Height, assembly));
+
+                Width += AssemblyImageHelper.Width;
+            }
+
         }
     }
 }
