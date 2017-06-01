@@ -67,7 +67,7 @@ namespace Factorio.Entities
         /// <summary>
         /// Path to the item picture
         /// </summary>
-        public string PicturePath { get; set; }
+        public string ImagePath { get; set; }
 
         #endregion
 
@@ -107,7 +107,7 @@ namespace Factorio.Entities
             CraftingTime = time;
             Productivity = output / time;
             DefaultCraftingType = crafting;
-            PicturePath = path;
+            ImagePath = path;
         }
 
         public FactorioItem(int id, string name, int output, double time, CraftingType crafting = CraftingType.AssemblingMachine, string path = null)
@@ -118,7 +118,7 @@ namespace Factorio.Entities
             CraftingTime = time;
             Productivity = output / time;
             DefaultCraftingType = crafting;
-            PicturePath = path;
+            ImagePath = path;
         }
 
 
@@ -162,7 +162,7 @@ namespace Factorio.Entities
                 CraftingTime = this.CraftingTime,
                 Productivity = this.Productivity,
                 DefaultCraftingType = this.DefaultCraftingType,
-                PicturePath = this.PicturePath
+                ImagePath = this.ImagePath
             };
 
             foreach (var recipeItem in this.Recipe)

@@ -267,7 +267,7 @@ namespace FactorioWpf.ViewModels
             this.TxtItemOutput = item.CraftingOutput.ToString();
             this.TxtItemTime = item.CraftingTime.ToString();
             this.SelectedCrafting = item.DefaultCraftingType.ToString();
-            this.PicturePath = item.PicturePath;
+            this.PicturePath = item.ImagePath;
 
             this.m_item = item;
             this.m_itemDummy = item.GetCopy();           
@@ -352,7 +352,7 @@ namespace FactorioWpf.ViewModels
             m_item.CraftingOutput = output;
             m_item.CraftingTime = time;
             m_item.DefaultCraftingType = crafting;
-            m_item.PicturePath = this.PicturePath;
+            m_item.ImagePath = this.PicturePath;
 
             m_item.Recipe.Clear();
 
