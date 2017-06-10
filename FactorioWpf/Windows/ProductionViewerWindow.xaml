@@ -29,7 +29,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Image Source="{Binding Path=ImagePath, Converter={StaticResource PathToPictureConverter}}" 
-                           Width="{Binding Width}" Height="{Binding Height}" />
+                           Width="{Binding ImageWidth}" Height="{Binding ImageHeight}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

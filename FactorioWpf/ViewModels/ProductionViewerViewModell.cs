@@ -19,6 +19,8 @@ namespace FactorioWpf.ViewModels
         private List<AssemblyImageHelper> m_images;
         private List<Line> m_lines;
 
+        private TreeStructure m_assemblyStructure;
+
         #endregion
 
         #region Public Properties
@@ -58,22 +60,13 @@ namespace FactorioWpf.ViewModels
 
             m_factorioAssembly = new FactorioAssembly(item);
 
-            getAssemblyCanvasStructure(m_factorioAssembly);
+            m_assemblyStructure = new TreeStructure(m_factorioAssembly);
+
+            m_images = m_assemblyStructure.GetImageList();
+            m_lines = m_assemblyStructure.Lines;
         }
 
         #endregion
-
-        /// <summary>
-        /// Used to create the Images and Lines that are drawn on the canvas.
-        /// </summary>
-        /// <param name="assembly">Assembly as tree root</param>
-        /// <param name="layer">Current layer of the tree structure</param>
-        /// <param name="position">Position of the Root element</param>
-        /// <returns>The actuall position of the created AssemblyCanvasStructure</returns>
-        private void getAssemblyCanvasStructure(FactorioAssembly assembly)
-        {
-            
-        }
 
     }
 }

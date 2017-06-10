@@ -11,6 +11,8 @@ namespace FactorioWpf.Helper
     {
         private List<AssemblyImageHelper> m_assemblyImages;
 
+        private int m_width = 0;
+
         public List<AssemblyImageHelper> AssemblyImages
         {
             get
@@ -28,34 +30,48 @@ namespace FactorioWpf.Helper
         public int Depth { get; set; }
 
         /// <summary>
-        /// Height of the layer
-        /// </summary>
-        public static int Height { get; private set; } = 40;
-
-        /// <summary>
         /// Width of this layer
         /// </summary>
-        public int Width { get; set; } = 0;
+        public int Width {
+            get
+            {
+                return m_width;
+            }
+            set
+            {
+                m_width = value;
+                if (m_width > MaxWidth)
+                    MaxWidth = m_width;
+            }
+        }
+
+        public int MaxWidth { get; set; } = 0;
 
         public Layer(int depth)
         {
             Depth = depth;
         }
 
-        public void AddAssembly(FactorioAssembly assembly, int position)
+        public AssemblyImageHelper AddAssembly(FactorioAssembly assembly, int position)
         {
+            AssemblyImageHelper image;
+
             if(position >= Width)
             {
-                AssemblyImages.Add(new AssemblyImageHelper(position, Depth * Height, assembly));
+                image = new AssemblyImageHelper(position, Depth * AssemblyImageHelper.Height, assembly);
 
                 Width += (position - Width) + AssemblyImageHelper.Width;
             }
             else
             {
-                AssemblyImages.Add(new AssemblyImageHelper(Width, Depth * Height, assembly));
+                image = new AssemblyImageHelper(Width, Depth * AssemblyImageHelper.Height, assembly);
 
                 Width += AssemblyImageHelper.Width;
             }
+
+            AssemblyImages.Add(image);
+
+            return image;
 
         }
     }
