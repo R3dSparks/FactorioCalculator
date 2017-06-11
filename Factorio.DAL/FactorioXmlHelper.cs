@@ -57,19 +57,22 @@ namespace Factorio.DAL
                     item.ImagePath = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributePicture).Value;
 
                     unknownItems.Remove(item);
-                    
-                    return item;
+
+                }
+                else
+                {
+                    item = new FactorioItem(id)
+                    {
+                        Name = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeName).Value,
+                        CraftingOutput = Convert.ToInt32(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeOutput).Value),
+                        CraftingTime = Convert.ToDouble(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeTime).Value),
+                        DefaultCraftingType = (CraftingType)Enum.Parse(typeof(CraftingType), xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeCraftingStation).Value),
+                        ImagePath = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributePicture).Value
+                    };
                 }
 
-                item = new FactorioItem(id)
-                {
-                    Name = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeName).Value,
-                    CraftingOutput = Convert.ToInt32(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeOutput).Value),
-                    CraftingTime = Convert.ToDouble(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeTime).Value),
-                    DefaultCraftingType = (CraftingType)Enum.Parse(typeof(CraftingType), xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeCraftingStation).Value),
-                    ImagePath = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributePicture).Value
-                };
-
+                if (FactorioXmlHelper.IsImagePathValid(item.ImagePath) == false)
+                    item.ImagePath = String.Empty;
 
             }
             catch (Exception)
@@ -161,6 +164,21 @@ namespace Factorio.DAL
 
 
         #endregion
+
+
+        /// <summary>
+        /// Check if an image file exist at the given path.
+        /// </summary>
+        /// <param name="path">check this path</param>
+        /// <returns>true if the file exists, false if not</returns>
+        public static bool IsImagePathValid(string path)
+        {
+            if (String.IsNullOrEmpty(path))
+                return false;
+
+            return File.Exists(path);
+        }
+
 
         /// <summary>
         /// Create a standart xml file to save items
