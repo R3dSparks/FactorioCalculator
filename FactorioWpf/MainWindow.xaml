@@ -67,7 +67,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <Image Grid.Column="0" Source="{Binding PicturePath, Converter={StaticResource PathToPictureConverter}}" />
+                            <Image Grid.Column="0" Source="{Binding ImagePath, Converter={StaticResource PathToPictureConverter}}" />
                             <Label Grid.Column="1" Content="{Binding Name}" />
 
                         </Grid>

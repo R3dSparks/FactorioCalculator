@@ -7,14 +7,18 @@
         xmlns:Converters="clr-namespace:FactorioWpf.Converters" x:Class="FactorioWpf.Windows.ProductionViewerWindow"
         mc:Ignorable="d"
         Title="ProductionViewerWindow" Height="Auto" Width="Auto">
-    
+
     <Window.Resources>
         <Converters:PathToPictureConverter x:Key="PathToPictureConverter"/>
+        <ContextMenu x:Key="ProductionContextMenu">
+            <MenuItem Header="Test" />
+        </ContextMenu>
     </Window.Resources>
 
     <Grid>
-        
+
         <ItemsControl ItemsSource="{Binding Images}">
+
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas />
@@ -29,7 +33,8 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Image Source="{Binding Path=ImagePath, Converter={StaticResource PathToPictureConverter}}" 
-                           Width="{Binding ImageWidth}" Height="{Binding ImageHeight}" />
+                           Width="{Binding ImageWidth}" Height="{Binding ImageHeight}"
+                           ContextMenu="{StaticResource ProductionContextMenu}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
