@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item id="0" name="Iron plate" output="1" time="3,5" crafting="AssemblingMachine" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\iron-plate.png" />
+  <Item id="1" name="Copper plate" output="1" time="3,5" crafting="AssemblingMachine" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\copper-plate.png" />
+  <Item id="2" name="Iron gear wheel" output="1" time="0,5" crafting="AssemblingMachine" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\iron-gear-wheel.png">
+    <Crafting id="0" quantity="2" />
+  </Item>
+  <Item id="3" name="Copper cable" output="2" time="0,5" crafting="AssemblingMachine" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\copper-cable.png">
+    <Crafting id="1" quantity="1" />
+  </Item>
+  <Item id="4" name="Steel plate" output="1" time="17,5" crafting="Furnace" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\steel-plate.png" />
+  <Item id="5" name="Stone brick" output="1" time="3,5" crafting="Furnace" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\stone-brick.png" />
+  <Item id="6" name="Electronic circuit" output="1" time="0,5" crafting="AssemblingMachine" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\electronic-circuit.png">
+    <Crafting id="3" quantity="2" />
+    <Crafting id="0" quantity="1" />
+  </Item>
+  <Item id="7" name="Science pack 1" output="1" time="5" crafting="AssemblingMachine" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\science-pack-1.png">
+    <Crafting id="1" quantity="1" />
+    <Crafting id="2" quantity="1" />
+  </Item>
+  <Item id="8" name="Transport belt" output="1" time="0,5" crafting="AssemblingMachine" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\transport-belt.png">
+    <Crafting id="2" quantity="1" />
+    <Crafting id="0" quantity="1" />
+  </Item>
+  <Item id="9" name="Inserter" output="1" time="0,5" crafting="AssemblingMachine" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\inserter.png">
+    <Crafting id="0" quantity="1" />
+    <Crafting id="2" quantity="1" />
+    <Crafting id="6" quantity="1" />
+  </Item>
+  <Item id="11" name="Science pack 2" output="1" time="6" crafting="AssemblingMachine" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\science-pack-2.png">
+    <Crafting id="8" quantity="1" />
+    <Crafting id="9" quantity="1" />
+  </Item>
+  <Item id="12" name="Science pack 3" output="1" time="12" crafting="AssemblingMachine" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\science-pack-3.png">
+    <Crafting id="13" quantity="1" />
+    <Crafting id="19" quantity="1" />
+    <Crafting id="17" quantity="1" />
+  </Item>
+  <Item id="13" name="Advanced circuit" output="1" time="6" crafting="AssemblingMachine" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\advanced-circuit.png">
+    <Crafting id="3" quantity="4" />
+    <Crafting id="6" quantity="2" />
+    <Crafting id="14" quantity="2" />
+  </Item>
+  <Item id="14" name="Plastic bar" output="2" time="1" crafting="ChemicalPlant" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\plastic-bar.png">
+    <Crafting id="15" quantity="1" />
+    <Crafting id="16" quantity="20" />
+  </Item>
+  <Item id="15" name="Coal" output="1" time="1" crafting="Drill" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\coal.png" />
+  <Item id="16" name="Petroleum gas" output="1" time="1" crafting="Refinery" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\fluid\petroleum-gas.png" />
+  <Item id="17" name="Electric mining drill" output="1" time="2" crafting="AssemblingMachine" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\electric-mining-drill.png">
+    <Crafting id="0" quantity="10" />
+    <Crafting id="2" quantity="5" />
+    <Crafting id="6" quantity="3" />
+  </Item>
+  <Item id="18" name="Pipe" output="1" time="0,5" crafting="AssemblingMachine" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\pipe.png">
+    <Crafting id="0" quantity="1" />
+  </Item>
+  <Item id="19" name="Engine unit" output="1" time="10" crafting="AssemblingMachine" picture="E:\Steam\SteamApps\common\Factorio\data\base\graphics\icons\engine-unit.png">
+    <Crafting id="2" quantity="1" />
+    <Crafting id="18" quantity="2" />
+    <Crafting id="4" quantity="1" />
+  </Item>
+</Items>
