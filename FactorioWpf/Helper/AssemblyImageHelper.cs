@@ -55,7 +55,7 @@ namespace FactorioWpf.Helper
         /// <summary>
         /// Path to the image
         /// </summary>
-        public string ImagePath { get => Assembly.AssemblyItem.ImagePath; }
+        public string ImagePath { get { return Assembly.AssemblyItem.ImagePath; } }
 
         public AssemblyImageHelper(int left, int top, FactorioAssembly assembly)
         {
