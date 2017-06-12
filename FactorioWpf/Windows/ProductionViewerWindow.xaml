@@ -18,7 +18,14 @@
 
     <Grid>
 
-        <ItemsControl ItemsSource="{Binding Images}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Column="0" Content="Test"/>
+
+        <ItemsControl Grid.Column="1" ItemsSource="{Binding Images}">
 
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -40,7 +47,7 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         
-        <ItemsControl ItemsSource="{Binding Lines}">
+        <ItemsControl Grid.Column="1" ItemsSource="{Binding Lines}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas />
