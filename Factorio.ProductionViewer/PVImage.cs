@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace FactorioWpf.Helper.ProductionViewer
 {
+    /// <summary>
+    /// This class represents one image in the prouction viewer
+    /// </summary>
     public class PVImage : IPVImage
     {
 

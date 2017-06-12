@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PVImage.cs" />
+    <Compile Include="PVLayer.cs" />
     <Compile Include="PVLine.cs" />
     <Compile Include="PVSettings.cs" />
     <Compile Include="PVTreeStructure.cs" />

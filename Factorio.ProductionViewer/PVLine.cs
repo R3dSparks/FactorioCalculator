@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Factorio.ProductionViewer 
 {
+    /// <summary>
+    /// this class represents one line in the production viewer
+    /// </summary>
     public class PVLine : IPVLine
     {
         
