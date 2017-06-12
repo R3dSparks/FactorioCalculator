@@ -41,7 +41,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Image Source="{Binding Path=ImagePath, Converter={StaticResource PathToPictureConverter}}" 
-                           Width="{Binding ImageWidth}" Height="{Binding ImageHeight}"
+                           Width="{Binding Path=ImageWidth}" Height="{Binding Path=ImageHeight}"
                            ContextMenu="{StaticResource ProductionContextMenu}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -55,8 +55,8 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Line X1="{Binding Left1}" Y1="{Binding Top1}" 
-                          X2="{Binding Left2}" Y2="{Binding Top2}"
+                    <Line X1="{Binding StartLeft}" Y1="{Binding StartTop}" 
+                          X2="{Binding EndLeft}" Y2="{Binding EndTop}"
                           Stroke="Black" StrokeThickness="1" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

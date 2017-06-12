@@ -166,7 +166,13 @@ namespace FactorioWpf.ViewModels
         /// </summary>
         private void DeleteItem()
         {
-            fLogic.RemoveItem(SelectedItem);
+            if(System.Windows.MessageBox.Show(
+                "Do you realy want to delete this item?", 
+                "Warning", 
+                System.Windows.MessageBoxButton.OKCancel,
+                System.Windows.MessageBoxImage.Information, 
+                System.Windows.MessageBoxResult.OK) == System.Windows.MessageBoxResult.OK)
+                fLogic.RemoveItem(SelectedItem);
         }
 
         #endregion

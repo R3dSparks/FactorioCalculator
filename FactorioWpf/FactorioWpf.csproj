@@ -64,10 +64,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\PathToPictureConverter.cs" />
-    <Compile Include="Helper\AssemblyImageHelper.cs" />
-    <Compile Include="Helper\Layer.cs" />
-    <Compile Include="Helper\Line.cs" />
-    <Compile Include="Helper\TreeStructure.cs" />
     <Compile Include="ViewModels\ItemDetailViewModell.cs" />
     <Compile Include="ViewModels\ItemEditorViewModell.cs" />
     <Compile Include="ViewModels\Base\BaseViewModell.cs" />
@@ -148,6 +144,10 @@
       <Project>{6a92c8f5-841d-4ea2-bb7c-59b7e261fa0d}</Project>
       <Name>Factorio.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Factorio.ProductionViewer\Factorio.ProductionViewer.csproj">
+      <Project>{abc6baaf-7579-4977-8852-43c6309182e5}</Project>
+      <Name>Factorio.ProductionViewer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Factorio\Factorio.csproj">
       <Project>{c3f2becf-01ec-48d0-ae8f-d9a034a17d98}</Project>
       <Name>Factorio</Name>
@@ -156,6 +156,7 @@
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.2.0.10\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.2.0.10\build\dotnet\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

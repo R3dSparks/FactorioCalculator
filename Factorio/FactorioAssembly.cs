@@ -117,6 +117,12 @@ namespace Factorio
 
         #endregion
 
+        #region Public Methods
+
+
+
+        #endregion
+
         //#region Public methods
 
         ///// <summary>
