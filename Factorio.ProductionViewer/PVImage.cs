@@ -50,9 +50,14 @@ namespace Factorio.ProductionViewer
         {
             get
             {
-                return this.PositionStart * this.ViewSettings.WidthOffset + // calculate the width between all images befor this image
-                    this.PositionStart * this.ViewSettings.ImageWidth +     // calculate the total image width of all images before this image
-                    this.ViewSettings.MarginLeft;                           // add the left margin of the tree structure
+                // get the distance for the starting position
+                int firstPart = getDistance(this.PositionStart, true);
+
+                // check if the image uses more than 1 position, if so than calculate the middle value of this distance
+                int secondPart = this.MultiPositionImage ? getDistance(this.PositionEnd - this.PositionStart) / 2: 0;
+
+                // add the distance of the starting point and the middle value if it takes more than one position
+                return firstPart + secondPart;
             }
         }
 
@@ -145,6 +150,28 @@ namespace Factorio.ProductionViewer
 
         #endregion
 
+        #region Private Methods
 
+
+
+        /// <summary>
+        /// calculate the width distance value and add the margin if <paramref name="considerMargin"/> is true
+        /// </summary>
+        /// <param name="distance">position distances</param>
+        /// <param name="considerMargin">if it is true, then it adds the margin of the tree structure at the end</param>
+        /// <returns></returns>
+        private int getDistance(int distance, bool considerMargin = false)
+        {
+            int firstPart = distance * this.ViewSettings.WidthOffset +          // calculate the width between all images befor this image
+                    distance * this.ViewSettings.ImageWidth;                    // calculate the total image width of all images before this image
+            
+            int secondPart = considerMargin ? this.ViewSettings.MarginLeft : 0; // add the left margin of the tree structure if considerMargin is true
+
+            return firstPart + secondPart;
+        }
+
+
+
+        #endregion
     }
 }

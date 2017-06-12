@@ -138,7 +138,7 @@ namespace Factorio.ProductionViewer
         /// <param name="assembly"></param>
         /// <param name="position"></param>
         /// <param name="level"></param>
-        private void buildTreeStructure(FactorioAssembly assembly, int position = 0, int level = 0)
+        private PVImage buildTreeStructure(FactorioAssembly assembly, int position = 0, int level = 0)
         {
             // create image and set values
             var image = new PVImage(assembly, this.Settings);
@@ -163,11 +163,18 @@ namespace Factorio.ProductionViewer
                 // loop through all sub assemblys
                 for (int i = 0; i < assembly.SubAssembly.Count; i++)
                 {
-                    var curLevel = level + 1;   // get the next level
-                    var curPos = i + position;  // get the next position 
+                    var addValue = i <= 1 ? i : 1;      // the increes value can only be 0 or 1. It is related to the counter 'i', so for the first etheration it is 0 and after that it is always 1.
+                    var curLevel = level + 1;           // get the next level
+                    var curPos = addValue + position;   // get the next position 
+
 
                     // create the next image
-                    buildTreeStructure(assembly.SubAssembly[i], curPos, curLevel);
+                    var subImage = buildTreeStructure(assembly.SubAssembly[i], curPos, curLevel);
+
+
+                    // create a line between the image and ist sub image
+                    this.Lines.Add(new PVLine(image, subImage));
+
 
                     // override the old position with the new furthest position
                     position = m_currentPossition;
@@ -176,14 +183,14 @@ namespace Factorio.ProductionViewer
                 // set the position end value
                 image.PositionEnd = position;
             }
+            
+            return image;
         }
 
         
 
 
         #endregion
-
-
-
+        
     }
 }

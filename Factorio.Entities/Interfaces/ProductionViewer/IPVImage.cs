@@ -25,12 +25,12 @@ namespace Factorio.Entities.Interfaces.ProductionViewer
         /// <summary>
         /// Distance from left of canvas
         /// </summary>
-        int Left { get; set; }
+        int Left { get; }
 
         /// <summary>
         /// Distance from top of canvas
         /// </summary>
-        int Top { get; set; }
+        int Top { get; }
         
         /// <summary>
         /// Path to the image
