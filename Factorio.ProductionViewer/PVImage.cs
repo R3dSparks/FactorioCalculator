@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FactorioWpf.Helper.ProductionViewer
+namespace Factorio.ProductionViewer
 {
     /// <summary>
     /// This class represents one image in the prouction viewer
@@ -50,12 +50,9 @@ namespace FactorioWpf.Helper.ProductionViewer
         {
             get
             {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
+                return this.PositionStart * this.ViewSettings.WidthOffset + // calculate the width between all images befor this image
+                    this.PositionStart * this.ViewSettings.ImageWidth +     // calculate the total image width of all images before this image
+                    this.ViewSettings.MarginLeft;                           // add the left margin of the tree structure
             }
         }
 
@@ -66,12 +63,9 @@ namespace FactorioWpf.Helper.ProductionViewer
         {
             get
             {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
+                return this.Level * this.ViewSettings.HeightOffset +    // calculate the height between all images before this image
+                    this.Level * this.ViewSettings.ImageHeight +        // calculate the total image height of all images before this image
+                    this.ViewSettings.MarginTop;                        // add the top margin of the tree structure
             }
         }
 
@@ -101,22 +95,34 @@ namespace FactorioWpf.Helper.ProductionViewer
         /// <summary>
         /// Reference to the settings class
         /// </summary>
-        public PVSettings ViewSettings {
+        public PVSettings ViewSettings
+        {
             get { return m_settings; }
             private set { m_settings = value; }
         }
 
         /// <summary>
-        /// The amount of images which are located left to the current image to calculate the spaceing. 
-        /// It does not represent the total value of images located left.
+        /// Start position.
+        /// The first position is 0
         /// </summary>
-        public int ImageLeftCount { get; set; }
+        public int PositionStart { get; set; }
 
         /// <summary>
-        /// The amount of sub images below the current image.
+        /// End position.
+        /// The first position is 0
         /// </summary>
-        public int SubImageWith { get; set; }
+        public int PositionEnd { get; set; }
 
+        /// <summary>
+        /// Is true if this image is longer than 1 position
+        /// </summary>
+        public bool MultiPositionImage { get { return PositionStart != PositionEnd; } }
+
+        /// <summary>
+        /// Level of this image
+        /// The first level is 0
+        /// </summary>
+        public int Level { get; set; }
 
 
         #endregion
@@ -139,6 +145,6 @@ namespace FactorioWpf.Helper.ProductionViewer
 
         #endregion
 
-        
+
     }
 }

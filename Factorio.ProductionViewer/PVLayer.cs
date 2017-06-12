@@ -13,6 +13,8 @@ namespace Factorio.ProductionViewer
 
 
 
+        private List<PVImage> m_images;
+
 
 
         #endregion
@@ -25,7 +27,25 @@ namespace Factorio.ProductionViewer
         /// Level of this layer.
         /// The first level is 0
         /// </summary>
-        public int Level { get; set; }
+        public int Level { get; private set; }
+
+        /// <summary>
+        /// Images which are located in this layer
+        /// </summary>
+        public List<PVImage> Images
+        {
+            get
+            {
+                if (m_images == null)
+                    m_images = new List<PVImage>();
+                return m_images;
+            }
+        }
+
+        /// <summary>
+        /// Public reference to its parent tree structure
+        /// </summary>
+        public PVTreeStructure ParentTreeStructure { get; private set; }
 
 
 
@@ -38,13 +58,16 @@ namespace Factorio.ProductionViewer
         /// <summary>
         /// create a new layer and define its level
         /// </summary>
-        /// <param name="level"></param>
-        public PVLayer(int level)
+        /// <param name="level">level of this layer</param>
+        /// <param name="treeStructure">parent tree structure</param>
+        public PVLayer(PVTreeStructure treeStructure, int level)
         {
             this.Level = level;
+            this.ParentTreeStructure = treeStructure;
         }
 
         #endregion
+        
 
     }
 }

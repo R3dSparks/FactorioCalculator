@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FactorioWpf.Helper.ProductionViewer
+namespace Factorio.ProductionViewer
 {
     public class PVTreeStructure : IPVLogic
     {
@@ -19,6 +19,8 @@ namespace FactorioWpf.Helper.ProductionViewer
         private FactorioAssembly m_parentAssembly;
         private List<IPVLine> m_lines;
         private List<IPVImage> m_images;
+
+        private int m_currentPossition;
 
 
 
@@ -101,7 +103,7 @@ namespace FactorioWpf.Helper.ProductionViewer
         public PVTreeStructure(FactorioAssembly assembly)
         {
             this.ParentAssembly = assembly;
-            buildTreeStructure();
+            buildTreeStructure(this.ParentAssembly);
         }
 
 
@@ -119,7 +121,7 @@ namespace FactorioWpf.Helper.ProductionViewer
         {
             this.Lines = new List<IPVLine>();
             this.Images = new List<IPVImage>();
-            buildTreeStructure();
+            buildTreeStructure(this.ParentAssembly);
         }
 
 
@@ -133,10 +135,50 @@ namespace FactorioWpf.Helper.ProductionViewer
         /// <summary>
         /// build the tree structure out of the given assembly
         /// </summary>
-        private void buildTreeStructure()
+        /// <param name="assembly"></param>
+        /// <param name="position"></param>
+        /// <param name="level"></param>
+        private void buildTreeStructure(FactorioAssembly assembly, int position = 0, int level = 0)
         {
+            // create image and set values
+            var image = new PVImage(assembly, this.Settings);
+            image.PositionStart = position;
+            image.Level = level;
+            
 
+            // save the latest position value
+            m_currentPossition = position;
+
+
+            // add a reference to the image list
+            this.Images.Add(image);
+
+
+            // check if this assembly has sub assemblys
+            if (assembly.SubAssembly.Count == 0)
+                // if not set the position end to the same value as the start value
+                image.PositionEnd = position; 
+            else
+            {
+                // loop through all sub assemblys
+                for (int i = 0; i < assembly.SubAssembly.Count; i++)
+                {
+                    var curLevel = level + 1;   // get the next level
+                    var curPos = i + position;  // get the next position 
+
+                    // create the next image
+                    buildTreeStructure(assembly.SubAssembly[i], curPos, curLevel);
+
+                    // override the old position with the new furthest position
+                    position = m_currentPossition;
+                }
+
+                // set the position end value
+                image.PositionEnd = position;
+            }
         }
+
+        
 
 
         #endregion

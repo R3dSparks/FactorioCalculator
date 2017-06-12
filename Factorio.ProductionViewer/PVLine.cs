@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Factorio.ProductionViewer 
+namespace Factorio.ProductionViewer
 {
     /// <summary>
     /// this class represents one line in the production viewer
