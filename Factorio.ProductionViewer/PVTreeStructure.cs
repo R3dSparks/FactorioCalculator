@@ -73,6 +73,20 @@ namespace Factorio.ProductionViewer
             private set { m_labels = value; }
         }
 
+        /// <summary>
+        /// all items which are displayed in the canvas
+        /// </summary>
+        public List<IPVBaseNode> Nodes
+        {
+            get
+            {
+                var nodes = new List<IPVBaseNode>();
+                nodes.AddRange(this.Images);
+                nodes.AddRange(this.Lines);
+                nodes.AddRange(this.Labels);
+                return nodes;
+            }
+        }
 
         #endregion
 
@@ -159,7 +173,7 @@ namespace Factorio.ProductionViewer
             var image = new PVImage(assembly, this.Settings);
             image.PositionStart = position;
             image.Level = level;
-            
+
 
             // save the latest position value
             m_currentPossition = position;
@@ -176,7 +190,7 @@ namespace Factorio.ProductionViewer
             // check if this assembly has sub assemblys
             if (assembly.SubAssembly.Count == 0)
                 // if not set the position end to the same value as the start value
-                image.PositionEnd = position; 
+                image.PositionEnd = position;
             else
             {
                 // loop through all sub assemblys
@@ -202,14 +216,14 @@ namespace Factorio.ProductionViewer
                 // set the position end value
                 image.PositionEnd = position;
             }
-            
+
             return image;
         }
 
-        
+
 
 
         #endregion
-        
+
     }
 }

@@ -62,7 +62,14 @@ namespace Factorio.ProductionViewer
             // add the image left value with half of its width
             get { return m_to.Left + (m_to.ImageWidth / 2); }
         }
-        
+
+
+
+        #region not in use
+
+        // These two properties are not needed for the line.
+        // the only reason they exist is because of the base interface.
+
         public int Left
         {
             get { return 0; }
@@ -74,7 +81,8 @@ namespace Factorio.ProductionViewer
         }
 
 
-
+        #endregion
+        
         #endregion
 
         #region Constructors

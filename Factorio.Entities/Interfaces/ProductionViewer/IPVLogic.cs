@@ -27,5 +27,10 @@ namespace Factorio.Entities.Interfaces.ProductionViewer
         /// </summary>
         List<IPVLabel> Labels { get; }
 
+        /// <summary>
+        /// all items which are displayed in the canvas
+        /// </summary>
+        List<IPVBaseNode> Nodes { get; }
+
     }
 }

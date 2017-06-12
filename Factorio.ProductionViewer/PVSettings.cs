@@ -176,7 +176,6 @@ namespace Factorio.ProductionViewer
 
 
         #endregion
-     
-           
+      
     }
 }
