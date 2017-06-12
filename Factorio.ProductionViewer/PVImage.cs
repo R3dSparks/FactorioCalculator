@@ -1,20 +1,84 @@
 ﻿using Factorio;
+using Factorio.Entities.Interfaces.ProductionViewer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FactorioWpf.Helper
+namespace FactorioWpf.Helper.ProductionViewer
 {
-    public class ProductionViewImage
+    public class PVImage : IPVImage
     {
 
         #region Private variables
 
 
         FactorioAssembly m_relatedAssembly;
-        ProductionViewSettings m_settings;
+        PVSettings m_settings;
+
+
+        #endregion
+
+        #region Interface Properties
+
+
+
+        /// <summary>
+        /// Width of the image
+        /// </summary>
+        public int ImageWidth
+        {
+            get { return this.ViewSettings.ImageWidth; }
+        }
+
+        /// <summary>
+        /// Height of the image
+        /// </summary>
+        public int ImageHeight
+        {
+            get { return this.ViewSettings.ImageHeight; }
+        }
+
+        /// <summary>
+        /// Distance from left of canvas
+        /// </summary>
+        public int Left
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Distance from top of canvas
+        /// </summary>
+        public int Top
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Path to the image
+        /// </summary>
+        public string ImagePath
+        {
+            get { return this.PatrentAssembly.AssemblyItem.ImagePath; }
+        }
 
 
         #endregion
@@ -34,7 +98,7 @@ namespace FactorioWpf.Helper
         /// <summary>
         /// Reference to the settings class
         /// </summary>
-        public ProductionViewSettings ViewSettings {
+        public PVSettings ViewSettings {
             get { return m_settings; }
             private set { m_settings = value; }
         }
@@ -51,6 +115,7 @@ namespace FactorioWpf.Helper
         public int SubImageWith { get; set; }
 
 
+
         #endregion
 
         #region Constructions
@@ -61,7 +126,7 @@ namespace FactorioWpf.Helper
         /// </summary>
         /// <param name="assambly">this is the parrent assembly</param>
         /// <param name="setting">view settings class reference</param>
-        public ProductionViewImage(FactorioAssembly assambly, ProductionViewSettings setting)
+        public PVImage(FactorioAssembly assambly, PVSettings setting)
         {
             this.PatrentAssembly = assambly;
             this.ViewSettings = setting;
@@ -71,8 +136,6 @@ namespace FactorioWpf.Helper
 
         #endregion
 
-
-
-
+        
     }
 }

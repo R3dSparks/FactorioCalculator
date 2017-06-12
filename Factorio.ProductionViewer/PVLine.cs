@@ -5,23 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FactorioWpf.Helper
+namespace Factorio.ProductionViewer 
 {
-    public class Line : IPVLine
+    public class PVLine : IPVLine
     {
-
-        #region Private Variables
-
-
-
-        private AssemblyImageHelper m_start;
-
-        private AssemblyImageHelper m_end;
-
-
-
-        #endregion
-
+        
         #region Interface Properties
 
 
@@ -29,22 +17,22 @@ namespace FactorioWpf.Helper
         /// <summary>
         /// The distance to the canves top for the first point
         /// </summary>
-        public int StartTop { get { return m_start.Top + m_start.ImageHeight; } }
+        public int StartTop { get; }
 
         /// <summary>
         /// The diestance to the canvas left for the first point
         /// </summary>
-        public int StartLeft { get { return m_start.Left + m_start.ImageWidth / 2; } }
+        public int StartLeft { get; }
 
         /// <summary>
         /// The distance to the canves top for the second point
         /// </summary>
-        public int EndTop { get { return m_end.Top; } }
+        public int EndTop { get; }
 
         /// <summary>
         /// The diestance to the canvas left for the second point
         /// </summary>
-        public int EndLeft { get { return m_end.Left + m_end.ImageWidth / 2; } }
+        public int EndLeft { get; }
 
 
 
@@ -55,14 +43,11 @@ namespace FactorioWpf.Helper
 
 
         /// <summary>
-        /// default constructor
+        /// defaul constructor
         /// </summary>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
-        public Line(AssemblyImageHelper start, AssemblyImageHelper end)
+        public PVLine()
         {
-            m_start = start;
-            m_end = end;
+
         }
 
 

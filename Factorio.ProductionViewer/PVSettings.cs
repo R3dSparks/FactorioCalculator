@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FactorioWpf.Helper
+namespace FactorioWpf.Helper.ProductionViewer
 {
     /// <summary>
     /// This class contain values which are used in calculating the view for the production viewer
     /// </summary>
-    public class ProductionViewSettings
+    public class PVSettings
     {
 
         #region Default Values
@@ -57,7 +57,7 @@ namespace FactorioWpf.Helper
         /// <summary>
         /// default constructor. It uses the default values
         /// </summary>
-        public ProductionViewSettings()
+        public PVSettings()
         {
             this.ImageHeight = m_imageHeight;
             this.ImageWidth = m_imageWidth;
@@ -72,7 +72,7 @@ namespace FactorioWpf.Helper
         /// <param name="imageWidth"></param>
         /// <param name="heightOffset"></param>
         /// <param name="widthOffset"></param>
-        public ProductionViewSettings(int imageHight, int imageWidth, int heightOffset, int widthOffset)
+        public PVSettings(int imageHight, int imageWidth, int heightOffset, int widthOffset)
         {
             this.ImageHeight = imageHight;
             this.ImageWidth = imageWidth;

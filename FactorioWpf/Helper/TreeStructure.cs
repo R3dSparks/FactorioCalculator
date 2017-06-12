@@ -1,4 +1,5 @@
 ﻿using Factorio;
+using Factorio.Entities.Interfaces.ProductionViewer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,24 +8,67 @@ using System.Threading.Tasks;
 
 namespace FactorioWpf.Helper
 {
-    public class TreeStructure
+    public class TreeStructure : IPVLogic
     {
+
+        #region Private Variables
+
+
         private List<Layer> m_layers;
+        private List<IPVLine> m_lines;
 
-        private List<Line> m_lines;
 
-        public List<Line> Lines
+
+        #endregion
+
+        #region Properties
+
+
+
+        /// <summary>
+        /// lines which connects the pictures
+        /// </summary>
+        public List<IPVLine> Lines
         {
             get
             {
                 if (m_lines == null)
-                    m_lines = new List<Line>();
+                    m_lines = new List<IPVLine>();
 
                 return m_lines;
             }
         }
 
+        /// <summary>
+        /// images which are shown
+        /// </summary>
+        public List<IPVImage> Images
+        {
+            get
+            {
+                List<IPVImage> images = new List<IPVImage>();
 
+                foreach (var layer in m_layers)
+                {
+                    images.AddRange(layer.AssemblyImages);
+                }
+
+                return images;
+            }
+        }
+
+
+
+        #endregion
+
+        #region Constructors
+
+
+        
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        /// <param name="assembly"></param>
         public TreeStructure(FactorioAssembly assembly)
         {
             m_layers = new List<Layer>(1);
@@ -32,6 +76,21 @@ namespace FactorioWpf.Helper
             createLayer(assembly, 0, 0);
         }
 
+
+
+        #endregion
+
+        #region Private Method
+        
+
+
+        /// <summary>
+        /// creates the structure for the production view
+        /// </summary>
+        /// <param name="assembly"></param>
+        /// <param name="layer"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
         private AssemblyImageHelper createLayer(FactorioAssembly assembly, int layer, int position)
         {
             if (m_layers.Count <= layer)
@@ -60,16 +119,10 @@ namespace FactorioWpf.Helper
             return image;
         }
 
-        internal List<AssemblyImageHelper> GetImageList()
-        {
-            List<AssemblyImageHelper> images = new List<AssemblyImageHelper>();
 
-            foreach (var layer in m_layers)
-            {
-                images.AddRange(layer.AssemblyImages);
-            }
 
-            return images;
-        }
+        #endregion
+
+        
     }
 }

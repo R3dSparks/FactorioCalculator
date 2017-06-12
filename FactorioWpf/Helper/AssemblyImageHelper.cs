@@ -1,4 +1,5 @@
 ﻿using Factorio;
+using Factorio.Entities.Interfaces.ProductionViewer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,40 +8,34 @@ using System.Threading.Tasks;
 
 namespace FactorioWpf.Helper
 {
-    public class AssemblyImageHelper
+    public class AssemblyImageHelper : IPVImage
     {
-        public static int ImageWidth { get; private set; } = 30;
-        private static int m_widthOffset = 20;
 
-        public static int ImageHeight { get; private set; } = 30;
-        private static int m_heightOffset = 40;
+        #region Private Variables
 
-        /// <summary>
-        /// Assembly that is displayed
-        /// </summary>
-        public FactorioAssembly Assembly { get; private set; }
 
-        /// <summary>
-        /// Image width
-        /// </summary>
-        public static int Width
-        {
-            get
-            {
-                return ImageWidth + m_widthOffset;
-            }
-        }
+
+        private int m_widthOffset = 20;
+        private int m_heightOffset = 40;
+
+
+
+        #endregion
+
+        #region Interface Properties
+
+
 
         /// <summary>
-        /// Image height
+        /// Width of the image
         /// </summary>
-        public static int Height
-        {
-            get
-            {
-                return ImageHeight + m_heightOffset;
-            }
-        }
+        public int ImageWidth { get { return 30; } }
+
+        /// <summary>
+        /// Height of the image
+        /// </summary>
+        public int ImageHeight { get { return 30; } }
+
 
         /// <summary>
         /// Distance from left of canvas
@@ -55,14 +50,71 @@ namespace FactorioWpf.Helper
         /// <summary>
         /// Path to the image
         /// </summary>
-        public string ImagePath { get { return Assembly.AssemblyItem.ImagePath; } }
+        public string ImagePath { get { return this.Assembly.AssemblyItem.ImagePath; } }
 
+
+
+        #endregion
+
+        #region Properties
+
+
+
+        /// <summary>
+        /// Assembly that is displayed
+        /// </summary>
+        public FactorioAssembly Assembly { get; private set; }
+
+        /// <summary>
+        /// Image width
+        /// </summary>
+        public int Width
+        {
+            get { return this.ImageWidth + m_widthOffset; }
+        }
+
+        /// <summary>
+        /// Image height
+        /// </summary>
+        public int Height
+        {
+            get { return this.ImageHeight + m_heightOffset; }
+        }
+
+
+
+        #endregion
+
+        #region Constructors
+
+
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="top"></param>
+        /// <param name="assembly"></param>
         public AssemblyImageHelper(int left, int top, FactorioAssembly assembly)
         {
-            Left = left;
-            Top = top;
-            Assembly = assembly;
+            this.Left = left;
+            this.Top = top;
+            this.Assembly = assembly;
         }
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        /// <param name="assembly"></param>
+        public AssemblyImageHelper(FactorioAssembly assembly)
+        {
+            this.Assembly = assembly;
+        }
+
+
+
+        #endregion
+
 
     }
 }
