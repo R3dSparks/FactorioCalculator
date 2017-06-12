@@ -27,6 +27,9 @@ namespace Factorio.Entities.Interfaces.ProductionViewer
         /// </summary>
         string ImagePath { get; }
 
-        
+        /// <summary>
+        /// Name of the assembly which can be seen in the image
+        /// </summary>
+        string AssemblyName { get; }
     }
 }

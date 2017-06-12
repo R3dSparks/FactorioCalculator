@@ -81,6 +81,13 @@ namespace Factorio.ProductionViewer
             get { return this.ParentAssembly.AssemblyItem.ImagePath; }
         }
 
+        /// <summary>
+        /// Name of the assembly which can be seen in the image
+        /// </summary>
+        public string AssemblyName
+        {
+            get { return this.ParentAssembly.AssemblyItem.Name; }
+        }
 
         #endregion
 

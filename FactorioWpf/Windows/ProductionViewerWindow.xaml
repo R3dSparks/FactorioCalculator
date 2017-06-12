@@ -25,7 +25,8 @@
                     <Image Source="{Binding Path=ImagePath, Converter={StaticResource PathToPictureConverter}}" 
                            Width="{Binding Path=ImageWidth}" 
                            Height="{Binding Path=ImageHeight}"
-                           ContextMenu="{StaticResource ProductionContextMenu}"/>
+                           ContextMenu="{StaticResource ProductionContextMenu}"
+                           ToolTip="{Binding Path=AssemblyName}"/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type pv:PVLine}">
                     <Line X1="{Binding Path=StartLeft}" Y1="{Binding Path=StartTop}" 
