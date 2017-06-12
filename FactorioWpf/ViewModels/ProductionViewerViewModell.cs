@@ -80,7 +80,6 @@ namespace FactorioWpf.ViewModels
             m_logic = logic;
 
             m_factorioAssembly = new FactorioAssembly(item);
-            
             m_PVLogic = new PVTreeStructure(m_factorioAssembly);
 
             m_images = m_PVLogic.Images;
