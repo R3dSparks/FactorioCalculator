@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FactorioWpf.Windows"
+        xmlns:pv="clr-namespace:Factorio.ProductionViewer;assembly=Factorio.ProductionViewer"
         xmlns:Converters="clr-namespace:FactorioWpf.Converters" 
         x:Class="FactorioWpf.Windows.ProductionViewerWindow"
         mc:Ignorable="d"
@@ -18,43 +19,44 @@
 
     <Grid>
 
-        <ItemsControl ItemsSource="{Binding Images}">
-
+        <ItemsControl ItemsSource="{Binding Nodes}">
+            <ItemsControl.Resources>
+                <DataTemplate DataType="{x:Type pv:PVImage}">
+                    <Image Source="{Binding Path=ImagePath, Converter={StaticResource PathToPictureConverter}}" 
+                           Width="{Binding Path=ImageWidth}" 
+                           Height="{Binding Path=ImageHeight}"
+                           ContextMenu="{StaticResource ProductionContextMenu}"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type pv:PVLine}">
+                    <Line X1="{Binding Path=StartLeft}" Y1="{Binding Path=StartTop}" 
+                          X2="{Binding Path=EndLeft}" Y2="{Binding Path=EndTop}"
+                          Stroke="Black" StrokeThickness="1" />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type pv:PVLabel}">
+                    <TextBlock Text="{Binding Path=Text}"
+                               FontSize="{Binding Path=FontSize}"
+                               FontFamily="{Binding Path=FontFamily}"
+                               Foreground="{Binding Path=FontColor}"
+                               Background="{Binding Path=BackgroundColor}"/>
+                </DataTemplate>
+            </ItemsControl.Resources>
+            
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
+            
             <ItemsControl.ItemContainerStyle>
-                <Style>
+                <Style TargetType="ContentPresenter">
                     <Setter Property="Canvas.Left" Value="{Binding Path=Left}"/>
                     <Setter Property="Canvas.Top" Value="{Binding Path=Top}" />
                 </Style>
             </ItemsControl.ItemContainerStyle>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Image Source="{Binding Path=ImagePath, Converter={StaticResource PathToPictureConverter}}" 
-                           Width="{Binding Path=ImageWidth}" Height="{Binding Path=ImageHeight}"
-                           ContextMenu="{StaticResource ProductionContextMenu}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
         </ItemsControl>
-        
-        <ItemsControl ItemsSource="{Binding Lines}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Line X1="{Binding StartLeft}" Y1="{Binding StartTop}" 
-                          X2="{Binding EndLeft}" Y2="{Binding EndTop}"
-                          Stroke="Black" StrokeThickness="1" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        
+
+
+
     </Grid>
     
 </Window>

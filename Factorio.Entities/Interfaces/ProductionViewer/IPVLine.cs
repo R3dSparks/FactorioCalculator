@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Factorio.Entities.Interfaces.ProductionViewer
 {
     /// <summary>
-    /// This interface prvides the values which are referenced in the view model for the production view lines
+    /// This interface provides the values which are referenced in the view model for the production view lines
     /// </summary>
-    public interface IPVLine
+    public interface IPVLine : IPVBaseNode
     {
 
         /// <summary>

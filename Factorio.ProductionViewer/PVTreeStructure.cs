@@ -19,6 +19,7 @@ namespace Factorio.ProductionViewer
         private FactorioAssembly m_parentAssembly;
         private List<IPVLine> m_lines;
         private List<IPVImage> m_images;
+        private List<IPVLabel> m_labels;
 
         private int m_currentPossition;
 
@@ -58,6 +59,19 @@ namespace Factorio.ProductionViewer
             private set { m_lines = value; }
         }
 
+        /// <summary>
+        /// labels wich are shown next to the images
+        /// </summary>
+        public List<IPVLabel> Labels
+        {
+            get
+            {
+                if (m_labels == null)
+                    m_labels = new List<IPVLabel>();
+                return m_labels;
+            }
+            private set { m_labels = value; }
+        }
 
 
         #endregion
@@ -121,6 +135,7 @@ namespace Factorio.ProductionViewer
         {
             this.Lines = new List<IPVLine>();
             this.Images = new List<IPVImage>();
+            this.Labels = new List<IPVLabel>();
             buildTreeStructure(this.ParentAssembly);
         }
 
@@ -152,6 +167,10 @@ namespace Factorio.ProductionViewer
 
             // add a reference to the image list
             this.Images.Add(image);
+
+
+            // add a new label next to the image
+            this.Labels.Add(new PVLabel(image));
 
 
             // check if this assembly has sub assemblys

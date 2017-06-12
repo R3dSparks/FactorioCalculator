@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Factorio.Entities.Interfaces.ProductionViewer
 {
     /// <summary>
-    /// This interface prvides the values which are referenced in the view model for the production view images
+    /// This interface provides the values which are referenced in the view model for the production view images
     /// </summary>
-    public interface IPVImage
+    public interface IPVImage : IPVBaseNode
     {
 
         /// <summary>
@@ -21,23 +21,12 @@ namespace Factorio.Entities.Interfaces.ProductionViewer
         /// Height of the image
         /// </summary>
         int ImageHeight { get; }
-
-        /// <summary>
-        /// Distance from left of canvas
-        /// </summary>
-        int Left { get; }
-
-        /// <summary>
-        /// Distance from top of canvas
-        /// </summary>
-        int Top { get; }
         
         /// <summary>
         /// Path to the image
         /// </summary>
         string ImagePath { get; }
 
-
-
+        
     }
 }

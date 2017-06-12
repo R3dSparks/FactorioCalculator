@@ -16,11 +16,16 @@ namespace Factorio.Entities.Interfaces.ProductionViewer
         /// lines which connects the pictures
         /// </summary>
         List<IPVLine> Lines { get; }
-
-
+    
         /// <summary>
         /// images which are shown
         /// </summary>
         List<IPVImage> Images { get; }
+
+        /// <summary>
+        /// labels wich are shown next to the images
+        /// </summary>
+        List<IPVLabel> Labels { get; }
+
     }
 }

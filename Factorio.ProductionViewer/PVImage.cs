@@ -1,5 +1,4 @@
-﻿using Factorio;
-using Factorio.Entities.Interfaces.ProductionViewer;
+﻿using Factorio.Entities.Interfaces.ProductionViewer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,7 +78,7 @@ namespace Factorio.ProductionViewer
         /// </summary>
         public string ImagePath
         {
-            get { return this.PatrentAssembly.AssemblyItem.ImagePath; }
+            get { return this.ParentAssembly.AssemblyItem.ImagePath; }
         }
 
 
@@ -91,7 +90,7 @@ namespace Factorio.ProductionViewer
         /// <summary>
         /// Reference to the Assembly which is represented by this class
         /// </summary>
-        public FactorioAssembly PatrentAssembly
+        public FactorioAssembly ParentAssembly
         {
             get { return m_relatedAssembly; }
             private set { m_relatedAssembly = value; }
@@ -130,6 +129,7 @@ namespace Factorio.ProductionViewer
         public int Level { get; set; }
 
 
+
         #endregion
 
         #region Constructions
@@ -142,7 +142,7 @@ namespace Factorio.ProductionViewer
         /// <param name="setting">view settings class reference</param>
         public PVImage(FactorioAssembly assambly, PVSettings setting)
         {
-            this.PatrentAssembly = assambly;
+            this.ParentAssembly = assambly;
             this.ViewSettings = setting;
         }
 
@@ -173,5 +173,6 @@ namespace Factorio.ProductionViewer
 
 
         #endregion
+
     }
 }

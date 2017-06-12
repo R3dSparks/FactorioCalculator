@@ -62,6 +62,16 @@ namespace Factorio.ProductionViewer
             // add the image left value with half of its width
             get { return m_to.Left + (m_to.ImageWidth / 2); }
         }
+        
+        public int Left
+        {
+            get { return 0; }
+        }
+
+        public int Top
+        {
+            get { return 0; }
+        }
 
 
 
