@@ -64,10 +64,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\PathToPictureConverter.cs" />
-    <Compile Include="Helper\AssemblyImageHelper.cs" />
-    <Compile Include="Helper\Layer.cs" />
-    <Compile Include="Helper\Line.cs" />
-    <Compile Include="Helper\TreeStructure.cs" />
     <Compile Include="ViewModels\ItemDetailViewModell.cs" />
     <Compile Include="ViewModels\ItemEditorViewModell.cs" />
     <Compile Include="ViewModels\Base\BaseViewModell.cs" />

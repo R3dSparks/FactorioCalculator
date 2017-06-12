@@ -2,7 +2,6 @@
 using Factorio.Entities;
 using Factorio.Entities.Interfaces.ProductionViewer;
 using Factorio.ProductionViewer;
-using FactorioWpf.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,8 +80,7 @@ namespace FactorioWpf.ViewModels
             m_logic = logic;
 
             m_factorioAssembly = new FactorioAssembly(item);
-
-            // m_PVLogic = new TreeStructure(m_factorioAssembly);
+            
             m_PVLogic = new PVTreeStructure(m_factorioAssembly);
 
             m_images = m_PVLogic.Images;
