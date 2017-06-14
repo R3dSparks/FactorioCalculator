@@ -8,7 +8,6 @@ using System.Linq;
 
 namespace Factorio.Entities.Helper
 {
-    [ImplementPropertyChanged]
     public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>, INotifyPropertyChanged, INotifyCollectionChanged
     {
         #region Private Values

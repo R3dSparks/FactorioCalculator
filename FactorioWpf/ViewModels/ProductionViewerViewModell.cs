@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace FactorioWpf.ViewModels
 {
@@ -25,14 +26,12 @@ namespace FactorioWpf.ViewModels
 
         private FactorioAssembly m_factorioAssembly;
         private List<IPVBaseNode> m_nodes;
-        
+
 
 
         #endregion
 
         #region Public Properties
-
-        
 
         /// <summary>
         /// all shown items

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factorio", "Factorio\Factorio.csproj", "{C3F2BECF-01EC-48D0-AE8F-D9A034A17D98}"
 EndProject
@@ -16,8 +16,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{D1A37A06-23B7-4674-8E6F-B33073F06949}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactorioWpf", "FactorioWpf\FactorioWpf.csproj", "{227F99CD-C47E-4BC3-9CD3-FE6B14DD4259}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ItemData", "ItemData", "{F6165D9E-0BA3-45DE-840A-25EA6691DF2C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factorio.ProductionViewer", "Factorio.ProductionViewer\Factorio.ProductionViewer.csproj", "{ABC6BAAF-7579-4977-8852-43C6309182E5}"
 EndProject
