@@ -192,37 +192,37 @@ namespace Factorio.ProductionViewer
             //this.Labels.Add(new PVLabel(image));
 
 
-            //// check if this assembly has sub assemblys
-            //if (assembly.SubAssembly.Count == 0)
-            //    // if not set the position end to the same value as the start value
-            //    image.PositionEnd = position;
-            //else
-            //{
-            //    // loop through all sub assemblys
-            //    for (int i = 0; i < assembly.SubAssembly.Count; i++)
-            //    {
-            //        var addValue = i <= 1 ? i : 1;      // the increes value can only be 0 or 1. It is related to the counter 'i', so for the first etheration it is 0 and after that it is always 1.
-            //        var curLevel = level + 1;           // get the next level
-            //        var curPos = addValue + position;   // get the next position 
+            // check if this assembly has sub assemblys
+            if (assembly.SubAssemblies.Count == 0)
+                // if not set the position end to the same value as the start value
+                image.PositionEnd = position;
+            else
+            {
+                // loop through all sub assemblys
+                for (int i = 0; i < assembly.SubAssemblies.Count; i++)
+                {
+                    var addValue = i <= 1 ? i : 1;      // the increes value can only be 0 or 1. It is related to the counter 'i', so for the first etheration it is 0 and after that it is always 1.
+                    var curLevel = level + 1;           // get the next level
+                    var curPos = addValue + position;   // get the next position 
 
 
-            //        // create the next image
-            //        var subImage = buildTreeStructure(assembly.SubAssembly[i], curPos, curLevel);
+                    // create the next image
+                    var subImage = buildTreeStructure(assembly.SubAssemblies[i], curPos, curLevel);
 
 
-            //        // create a line between the image and ist sub image
-            //        this.Lines.Add(new PVLine(image, subImage));
+                    // create a line between the image and ist sub image
+                    this.Lines.Add(new PVLine(image, subImage));
 
 
-            //        // override the old position with the new furthest position
-            //        position = m_currentPossition;
-            //    }
+                    // override the old position with the new furthest position
+                    position = m_currentPossition;
+                }
 
-            //    // set the position end value
-            //    image.PositionEnd = position;
-            //}
+                // set the position end value
+                image.PositionEnd = position;
+            }
 
-            //return image;
+            return image;
         }
 
 
