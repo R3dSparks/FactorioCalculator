@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,19 +17,26 @@ namespace Factorio.ProductionViewer
         #region Default Values
 
 
+
+        // item placeholder values
+        private int m_iphWidth = 50;
+        private int m_iphHeight = 50;
+        private int m_iphColumns = 1;
+        private int m_iphRows = 2;
+
         // image values
         private int m_imageWidth = 30;
         private int m_imageHeight = 30;
+        private Margins m_imageMargin = new Margins(5, 5, 5, 5);
 
 
         // space between items
-        private int m_heightOffset = 40;
-        private int m_widthOffset = 20;
+        private int m_heightOffset = 60;
+        private int m_widthOffset = 40;
 
 
         // tree structure magine
-        private int m_marginTop = 20;
-        private int m_marginLeft = 20;
+        private Margins m_treeStructureMagin = new Margins(20, 0, 20, 0);
 
 
         // label values
@@ -37,11 +45,44 @@ namespace Factorio.ProductionViewer
         private string m_labelFontFamily = "Arial";
         private Color m_labelFontColor = Color.Black;
         private Color m_labelBackgroundColor = Color.Transparent;
-        
+        private Margins m_labelMargin = new Margins(5, 5, 5, 5);
+
 
 
         #endregion
-        
+
+        #region Item Placeholder Properties
+
+
+
+        /// <summary>
+        /// Minimum width for an item place holder
+        /// </summary>
+        public int ItemPHMinWidth { get; set; }
+
+        /// <summary>
+        /// Minimum height for an item place holder
+        /// </summary>
+        public int ItemPHMinHeight { get; set; }
+
+        /// <summary>
+        /// Columns in the item placeholders.
+        /// <para></para>
+        /// The value must be at least 1 or gather
+        /// </summary>
+        public int ItemPHColumns { get; set; }
+
+        /// <summary>
+        /// Rows in the item placeholders.
+        /// <para></para>
+        /// The value must be at least 1 or gather
+        /// </summary>
+        public int ItemPHRows { get; set; }
+
+
+
+        #endregion
+
         #region Image Properties
 
 
@@ -55,6 +96,11 @@ namespace Factorio.ProductionViewer
         /// The hight of all images in the production view
         /// </summary>
         public int ImageHeight { get; set; }
+
+        /// <summary>
+        /// Margins of an image
+        /// </summary>
+        public Margins ImageMargin { get; set; }
 
 
 
@@ -80,17 +126,12 @@ namespace Factorio.ProductionViewer
 
         #region Tree Structure Margin Properties
 
-
-
-        /// <summary>
-        /// top margin for the tree structure
-        /// </summary>
-        public int MarginTop { get; set; }
+        
 
         /// <summary>
-        /// left margin for the tree structure
+        /// tree structure margins
         /// </summary>
-        public int MarginLeft{ get; set; }
+        public Margins TreeStructureMargin { get; set; }
 
 
 
@@ -125,6 +166,11 @@ namespace Factorio.ProductionViewer
         /// </summary>
         public Color LabelBackgroundColor { get; set; }
 
+        /// <summary>
+        /// Label margins
+        /// </summary>
+        public Margins LabelMargin { get; set; }
+
 
 
         #endregion
@@ -138,39 +184,26 @@ namespace Factorio.ProductionViewer
         /// </summary>
         public PVSettings()
         {
+            this.ItemPHMinHeight = m_iphHeight;
+            this.ItemPHMinWidth = m_iphWidth;
+            this.ItemPHColumns = m_iphColumns;
+            this.ItemPHRows = m_iphRows;
+
             this.ImageHeight = m_imageHeight;
             this.ImageWidth = m_imageWidth;
+            this.ImageMargin = m_imageMargin;
 
             this.HeightOffset = m_heightOffset;
             this.WidthOffset = m_widthOffset;
 
-            this.MarginTop = m_marginTop;
-            this.MarginLeft = m_marginLeft;
+            this.TreeStructureMargin = m_treeStructureMagin;
 
             this.LabelLocation = m_labelLocation;
             this.LabelFontSize = m_labelFontSize;
             this.LabelFontFamily = m_labelFontFamily;
             this.LabelFontColor = m_labelFontColor;
             this.LabelBackgroundColor = m_labelBackgroundColor;
-        }
-
-        /// <summary>
-        /// constructor with defined values for all settings
-        /// </summary>
-        /// <param name="imageHight">heightr of an image</param>
-        /// <param name="imageWidth">width of an image</param>
-        /// <param name="heightOffset">space between images in the hight</param>
-        /// <param name="widthOffset">space between images in the width</param>
-        /// <param name="marginTop">margin to the top side</param>
-        /// <param name="marginLeft">margin on the left side</param>
-        public PVSettings(int imageHight, int imageWidth, int heightOffset, int widthOffset, int marginTop, int marginLeft) : this()
-        {
-            this.ImageHeight = imageHight;
-            this.ImageWidth = imageWidth;
-            this.HeightOffset = heightOffset;
-            this.WidthOffset = widthOffset;
-            this.MarginTop = marginTop;
-            this.MarginLeft = marginLeft;
+            this.LabelMargin = m_labelMargin;
         }
 
 

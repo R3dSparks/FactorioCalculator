@@ -41,6 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\IPVItem.cs" />
+    <Compile Include="Helper\IRestable.cs" />
+    <Compile Include="Helper\PVCalculatorHelper.cs" />
+    <Compile Include="Helper\PVColumn.cs" />
+    <Compile Include="Helper\PVItemPlaceHolder.cs" />
+    <Compile Include="Helper\PVRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PVImage.cs" />
     <Compile Include="PVLabel.cs" />
