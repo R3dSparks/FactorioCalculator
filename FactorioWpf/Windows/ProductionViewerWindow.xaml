@@ -19,7 +19,12 @@
 
     <Grid>
 
-        <ItemsControl ItemsSource="{Binding Nodes}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <ItemsControl Grid.Row="0" ItemsSource="{Binding Nodes}">
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type pv:PVImage}">
                     <Image Source="{Binding Path=ImagePath, Converter={StaticResource PathToPictureConverter}}" 
@@ -56,7 +61,35 @@
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
 
+        <Grid Grid.Row="1">
 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0" Content="Crafting stations:" />
+                <Label Grid.Column="0" Grid.Row="1" Content="Items per second:" />
+
+                <TextBox Grid.Column="1" Grid.Row="0" />
+                <TextBox Grid.Column="1" Grid.Row="1" />
+
+
+            </Grid>
+            
+        </Grid>
 
     </Grid>
     
