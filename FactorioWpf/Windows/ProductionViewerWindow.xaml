@@ -40,9 +40,28 @@
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Image Source="{Binding Path=ImagePath, Converter={StaticResource PathToPictureConverter}}" 
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        
+                        <Image Source="{Binding Path=ImagePath, Converter={StaticResource PathToPictureConverter}}" 
                            Width="{Binding Path=ImageWidth}" Height="{Binding Path=ImageHeight}"
-                           ContextMenu="{StaticResource ProductionContextMenu}"/>
+                           ContextMenu="{StaticResource ProductionContextMenu}"
+                           Grid.Row="0" Grid.Column="0"    />
+                        <ComboBox Grid.Row="1" Grid.Column="0">
+                            <ComboBoxItem Content="Test1" />
+                            <ComboBoxItem Content="Test2" />
+                        </ComboBox>
+                        <Label Content="Information" Grid.Row="1" Grid.Column="1" />
+                    </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
