@@ -178,7 +178,6 @@ namespace Factorio.DAL
             return File.Exists(path);
         }
 
-
         /// <summary>
         /// Create a standart xml file to save items
         /// </summary>

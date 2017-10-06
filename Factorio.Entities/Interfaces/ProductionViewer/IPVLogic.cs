@@ -21,6 +21,6 @@ namespace Factorio.Entities.Interfaces.ProductionViewer
         /// <summary>
         /// images which are shown
         /// </summary>
-        List<IPVImage> Images { get; }
+        List<IPVFactorioItemContainer> FactorioItemContainers { get; }
     }
 }

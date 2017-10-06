@@ -17,8 +17,8 @@ namespace Factorio.ProductionViewer
 
 
 
-        private PVImage m_from;
-        private PVImage m_to;
+        private PVFactorioItemContainer m_from;
+        private PVFactorioItemContainer m_to;
 
 
 
@@ -34,7 +34,7 @@ namespace Factorio.ProductionViewer
         public int StartTop
         {
             // add the image top value with its height
-            get { return m_from.Top + m_from.ImageHeight; }
+            get { return m_from.Top + m_from.ContainerHeight; }
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Factorio.ProductionViewer
         public int StartLeft
         {
             // add the image left value with half of its width
-            get { return m_from.Left + (m_from.ImageWidth / 2); }
+            get { return m_from.Left + (m_from.ContainerWidth / 2); }
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Factorio.ProductionViewer
         public int EndLeft
         {
             // add the image left value with half of its width
-            get { return m_to.Left + (m_to.ImageWidth / 2); }
+            get { return m_to.Left + (m_to.ContainerWidth / 2); }
         }
 
 
@@ -76,7 +76,7 @@ namespace Factorio.ProductionViewer
         /// </summary>
         /// <param name="from">the line starts at the bottom middle of this image</param>
         /// <param name="to">the line stop at the top middle of this image</param>
-        public PVLine(PVImage from, PVImage to)
+        public PVLine(PVFactorioItemContainer from, PVFactorioItemContainer to)
         {
             m_from = from;
             m_to = to;

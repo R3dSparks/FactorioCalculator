@@ -14,34 +14,28 @@ namespace Factorio.ProductionViewer
         #region Private Variables
 
 
-
         private PVSettings m_settings;
         private FactorioAssembly m_parentAssembly;
         private List<IPVLine> m_lines;
-        private List<IPVImage> m_images;
-
-        private int m_currentPossition;
-
+        private List<IPVFactorioItemContainer> m_factorioItemContainers;
 
 
         #endregion
 
         #region Interface Properties
 
-
-
         /// <summary>
         /// images which are shown
         /// </summary>
-        public List<IPVImage> Images
+        public List<IPVFactorioItemContainer> FactorioItemContainers
         {
             get
             {
-                if (m_images == null)
-                    m_images = new List<IPVImage>();
-                return m_images;
+                if (m_factorioItemContainers == null)
+                    m_factorioItemContainers = new List<IPVFactorioItemContainer>();
+                return m_factorioItemContainers;
             }
-            private set { m_images = value; }
+            private set { m_factorioItemContainers = value; }
         }
 
         /// <summary>
@@ -120,7 +114,7 @@ namespace Factorio.ProductionViewer
         public void Rebuild()
         {
             this.Lines = new List<IPVLine>();
-            this.Images = new List<IPVImage>();
+            this.FactorioItemContainers = new List<IPVFactorioItemContainer>();
             buildTreeStructure(this.ParentAssembly);
         }
 
@@ -138,53 +132,29 @@ namespace Factorio.ProductionViewer
         /// <param name="assembly"></param>
         /// <param name="position"></param>
         /// <param name="level"></param>
-        private PVImage buildTreeStructure(FactorioAssembly assembly, int position = 0, int level = 0)
+        private PVFactorioItemContainer buildTreeStructure(FactorioAssembly assembly, int position = 0, int level = 0)
         {
-            // create image and set values
-            var image = new PVImage(assembly, this.Settings);
-            image.PositionStart = position;
-            image.Level = level;
-            
+            PVFactorioItemContainer container = new PVFactorioItemContainer(assembly, level, this.Settings);
 
-            // save the latest position value
-            m_currentPossition = position;
+            container.Left = position;
 
+            int newPosition = position;
 
-            // add a reference to the image list
-            this.Images.Add(image);
-
-
-            // check if this assembly has sub assemblys
-            if (assembly.SubAssembly.Count == 0)
-                // if not set the position end to the same value as the start value
-                image.PositionEnd = position; 
-            else
+            for(int i=0; i < container.Assembly.SubAssembly.Count; i++)
             {
-                // loop through all sub assemblys
-                for (int i = 0; i < assembly.SubAssembly.Count; i++)
-                {
-                    var addValue = i <= 1 ? i : 1;      // the increes value can only be 0 or 1. It is related to the counter 'i', so for the first etheration it is 0 and after that it is always 1.
-                    var curLevel = level + 1;           // get the next level
-                    var curPos = addValue + position;   // get the next position 
+                // Build a branch for the current subassembly and position it right to the last subassembly
+                PVFactorioItemContainer currentContainer = buildTreeStructure(container.Assembly.SubAssembly[i], position + i * (Settings.ItemContainerWidth + Settings.WidthOffset), level + 1);
 
+                Lines.Add(new PVLine(container, currentContainer));
 
-                    // create the next image
-                    var subImage = buildTreeStructure(assembly.SubAssembly[i], curPos, curLevel);
-
-
-                    // create a line between the image and ist sub image
-                    this.Lines.Add(new PVLine(image, subImage));
-
-
-                    // override the old position with the new furthest position
-                    position = m_currentPossition;
-                }
-
-                // set the position end value
-                image.PositionEnd = position;
+                newPosition = (currentContainer.Left - position) / 2;
             }
-            
-            return image;
+
+            container.Left = newPosition;
+
+            FactorioItemContainers.Add(container);
+
+            return container;
         }
 
         

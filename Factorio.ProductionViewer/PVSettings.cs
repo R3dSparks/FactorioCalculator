@@ -18,18 +18,42 @@ namespace Factorio.ProductionViewer
         private int m_imageWidth = 60;
         private int m_imageHeight = 40;
 
-        private int m_heightOffset = 40;
-        private int m_widthOffset = 20;
+        private int m_imageTopOffset = 10;
+        private int m_imageLefthOffset = 10;
+
+        private int m_heightOffset = 80;
+        private int m_widthOffset = 40;
 
         private int m_marginTop = 20;
         private int m_marginLeft = 20;
 
+        private int m_itemContainerHeight = 80;
+        private int m_itemContainerWidth = 100;
+
 
         #endregion
-        
+
         #region Properties
 
+        /// <summary>
+        /// Image offset from top of container
+        /// </summary>
+        public int ImageTopOffset { get; set; }
 
+        /// <summary>
+        /// Image offset from left of container
+        /// </summary>
+        public int ImageLeftOffset { get; set; }
+
+        /// <summary>
+        /// Height of all item containers in the production view
+        /// </summary>
+        public int ItemContainerHeight { get; set; }
+
+        /// <summary>
+        /// Width of all item containers in the production view
+        /// </summary>
+        public int ItemContainerWidth { get; set; }
 
         /// <summary>
         /// The width of all images in the production view
@@ -80,6 +104,10 @@ namespace Factorio.ProductionViewer
             this.WidthOffset = m_widthOffset;
             this.MarginTop = m_marginTop;
             this.MarginLeft = m_marginLeft;
+            this.ItemContainerHeight = m_itemContainerHeight;
+            this.ItemContainerWidth = m_itemContainerWidth;
+            this.ImageTopOffset = m_imageTopOffset;
+            this.ImageLeftOffset = m_imageLefthOffset;
         }
 
         /// <summary>

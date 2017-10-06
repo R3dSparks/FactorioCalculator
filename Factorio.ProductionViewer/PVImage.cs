@@ -16,16 +16,11 @@ namespace Factorio.ProductionViewer
 
         #region Private variables
 
-
-        FactorioAssembly m_relatedAssembly;
         PVSettings m_settings;
-
 
         #endregion
 
         #region Interface Properties
-
-
 
         /// <summary>
         /// Width of the image
@@ -46,56 +41,22 @@ namespace Factorio.ProductionViewer
         /// <summary>
         /// Distance from left of canvas
         /// </summary>
-        public int Left
-        {
-            get
-            {
-                // get the distance for the starting position
-                int firstPart = getDistance(this.PositionStart, true);
-
-                // check if the image uses more than 1 position, if so than calculate the middle value of this distance
-                int secondPart = this.MultiPositionImage ? getDistance(this.PositionEnd - this.PositionStart) / 2: 0;
-
-                // add the distance of the starting point and the middle value if it takes more than one position
-                return firstPart + secondPart;
-            }
-        }
+        public int Left { get; private set; }
 
         /// <summary>
         /// Distance from top of canvas
         /// </summary>
-        public int Top
-        {
-            get
-            {
-                return this.Level * this.ViewSettings.HeightOffset +    // calculate the height between all images before this image
-                    this.Level * this.ViewSettings.ImageHeight +        // calculate the total image height of all images before this image
-                    this.ViewSettings.MarginTop;                        // add the top margin of the tree structure
-            }
-        }
+        public int Top { get; private set; }
 
         /// <summary>
         /// Path to the image
         /// </summary>
-        public string ImagePath
-        {
-            get { return this.PatrentAssembly.AssemblyItem.ImagePath; }
-        }
+        public string ImagePath { get; private set; }
 
 
         #endregion
 
         #region Properties
-
-
-        /// <summary>
-        /// Reference to the Assembly which is represented by this class
-        /// </summary>
-        public FactorioAssembly PatrentAssembly
-        {
-            get { return m_relatedAssembly; }
-            private set { m_relatedAssembly = value; }
-        }
 
         /// <summary>
         /// Reference to the settings class
@@ -140,9 +101,11 @@ namespace Factorio.ProductionViewer
         /// </summary>
         /// <param name="assambly">this is the parrent assembly</param>
         /// <param name="setting">view settings class reference</param>
-        public PVImage(FactorioAssembly assambly, PVSettings setting)
+        public PVImage(string imagePath, int left, int top, PVSettings setting)
         {
-            this.PatrentAssembly = assambly;
+            this.ImagePath = imagePath;
+            this.Left = left;
+            this.Top = top;
             this.ViewSettings = setting;
         }
 
@@ -151,24 +114,6 @@ namespace Factorio.ProductionViewer
         #endregion
 
         #region Private Methods
-
-
-
-        /// <summary>
-        /// calculate the width distance value and add the margin if <paramref name="considerMargin"/> is true
-        /// </summary>
-        /// <param name="distance">position distances</param>
-        /// <param name="considerMargin">if it is true, then it adds the margin of the tree structure at the end</param>
-        /// <returns></returns>
-        private int getDistance(int distance, bool considerMargin = false)
-        {
-            int firstPart = distance * this.ViewSettings.WidthOffset +          // calculate the width between all images befor this image
-                    distance * this.ViewSettings.ImageWidth;                    // calculate the total image width of all images before this image
-            
-            int secondPart = considerMargin ? this.ViewSettings.MarginLeft : 0; // add the left margin of the tree structure if considerMargin is true
-
-            return firstPart + secondPart;
-        }
 
 
 

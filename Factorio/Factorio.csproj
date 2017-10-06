@@ -43,6 +43,7 @@
     <Compile Include="FactorioAssembly.cs" />
     <Compile Include="FactorioHelper.cs" />
     <Compile Include="FactorioLogic.cs" />
+    <Compile Include="FactorioSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

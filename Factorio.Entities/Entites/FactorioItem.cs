@@ -15,6 +15,8 @@ namespace Factorio.Entities
 
         private static int idCounter = 0;
 
+        private string iconImageName;
+
         private ObservableDictionary<FactorioItem, int> m_recipe;
 
         #endregion
@@ -67,7 +69,18 @@ namespace Factorio.Entities
         /// <summary>
         /// Path to the item picture
         /// </summary>
-        public string ImagePath { get; set; }
+        public string ImagePath
+        {
+            get
+            {
+                return iconImageName;
+            }
+
+            set
+            {
+                iconImageName = value;
+            }
+        }
 
         #endregion
 

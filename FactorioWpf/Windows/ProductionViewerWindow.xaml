@@ -25,7 +25,7 @@
 
         <Button Grid.Column="0" Content="Test"/>
 
-        <ItemsControl Grid.Column="1" ItemsSource="{Binding Images}">
+        <ItemsControl Grid.Column="1" ItemsSource="{Binding FactorioItemContainers}">
 
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -52,8 +52,8 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         
-                        <Image Source="{Binding Path=ImagePath, Converter={StaticResource PathToPictureConverter}}" 
-                           Width="{Binding Path=ImageWidth}" Height="{Binding Path=ImageHeight}"
+                        <Image Source="{Binding Path=Image.ImagePath, Converter={StaticResource PathToPictureConverter}}" 
+                           Width="{Binding Path=Image.ImageWidth}" Height="{Binding Path=Image.ImageHeight}"
                            ContextMenu="{StaticResource ProductionContextMenu}"
                            Grid.Row="0" Grid.Column="0"    />
                         <ComboBox Grid.Row="1" Grid.Column="0">

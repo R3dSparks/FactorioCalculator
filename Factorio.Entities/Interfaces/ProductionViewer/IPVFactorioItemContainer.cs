@@ -6,38 +6,34 @@ using System.Threading.Tasks;
 
 namespace Factorio.Entities.Interfaces.ProductionViewer
 {
-    /// <summary>
-    /// This interface prvides the values which are referenced in the view model for the production view images
-    /// </summary>
-    public interface IPVImage
+    public interface IPVFactorioItemContainer
     {
 
         /// <summary>
-        /// Width of the image
+        /// Height of the container
         /// </summary>
-        int ImageWidth { get; }
+        int ContainerHeight { get; }
 
         /// <summary>
-        /// Height of the image
+        /// Width of the container
         /// </summary>
-        int ImageHeight { get; }
+        int ContainerWidth { get; }
 
         /// <summary>
-        /// Left coordinate in canvas
+        /// Distance from left of canvas
         /// </summary>
         int Left { get; }
 
+
         /// <summary>
-        /// Top coordinate in canvas
+        /// Distance from top of canvas
         /// </summary>
         int Top { get; }
 
         /// <summary>
-        /// Path to the image
+        /// Image for this item container
         /// </summary>
-        string ImagePath { get; }
-
-
+        IPVImage Image { get; }
 
     }
 }

@@ -23,7 +23,7 @@ namespace FactorioWpf.ViewModels
         private IFactorioLogic m_logic;
 
         private FactorioAssembly m_factorioAssembly;
-        private List<IPVImage> m_images;
+        private List<IPVFactorioItemContainer> m_factorioItemContainers;
         private List<IPVLine> m_lines;
 
         private IPVLogic m_PVLogic;
@@ -39,14 +39,14 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public List<IPVImage> Images
+        public List<IPVFactorioItemContainer> FactorioItemContainers
         {
             get
             {
-                if (m_images == null)
-                    m_images = new List<IPVImage>();
+                if (m_factorioItemContainers == null)
+                    m_factorioItemContainers = new List<IPVFactorioItemContainer>();
 
-                return m_images;
+                return m_factorioItemContainers;
             }
         }
 
@@ -82,7 +82,7 @@ namespace FactorioWpf.ViewModels
             m_factorioAssembly = new FactorioAssembly(item);
             m_PVLogic = new PVTreeStructure(m_factorioAssembly);
 
-            m_images = m_PVLogic.Images;
+            m_factorioItemContainers = m_PVLogic.FactorioItemContainers;
             m_lines = m_PVLogic.Lines;
         }
 
