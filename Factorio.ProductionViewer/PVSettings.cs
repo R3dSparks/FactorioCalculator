@@ -15,19 +15,19 @@ namespace Factorio.ProductionViewer
         #region Default Values
 
 
-        private int m_imageWidth = 60;
-        private int m_imageHeight = 40;
+        private int m_imageWidth = 30;
+        private int m_imageHeight = 30;
 
-        private int m_imageTopOffset = 10;
-        private int m_imageLefthOffset = 10;
+        private int m_imageTopOffset = 0;
+        private int m_imageLefthOffset = 0;
 
         private int m_heightOffset = 80;
-        private int m_widthOffset = 40;
+        private int m_widthOffset = 20;
 
         private int m_marginTop = 20;
         private int m_marginLeft = 20;
 
-        private int m_itemContainerHeight = 80;
+        private int m_itemContainerHeight = 50;
         private int m_itemContainerWidth = 100;
 
 

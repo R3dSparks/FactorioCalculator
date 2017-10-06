@@ -47,20 +47,27 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+                        <Grid Grid.Column="0">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Image Source="{Binding Path=Image.ImagePath, Converter={StaticResource PathToPictureConverter}}" 
+                                Width="{Binding Path=Image.ImageWidth}" Height="{Binding Path=Image.ImageHeight}"
+                                ContextMenu="{StaticResource ProductionContextMenu}"
+                                Grid.Row="0" />
+
+                            <ComboBox Grid.Row="1">
+                                <ComboBoxItem Content="Test1" />
+                                <ComboBoxItem Content="Test2" />
+                            </ComboBox>
+
+                        </Grid>
+
+                        <Label Content="Information" Grid.Column="1" />
                         
-                        <Image Source="{Binding Path=Image.ImagePath, Converter={StaticResource PathToPictureConverter}}" 
-                           Width="{Binding Path=Image.ImageWidth}" Height="{Binding Path=Image.ImageHeight}"
-                           ContextMenu="{StaticResource ProductionContextMenu}"
-                           Grid.Row="0" Grid.Column="0"    />
-                        <ComboBox Grid.Row="1" Grid.Column="0">
-                            <ComboBoxItem Content="Test1" />
-                            <ComboBoxItem Content="Test2" />
-                        </ComboBox>
-                        <Label Content="Information" Grid.Row="1" Grid.Column="1" />
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

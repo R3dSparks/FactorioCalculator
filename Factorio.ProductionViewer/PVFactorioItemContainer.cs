@@ -20,6 +20,8 @@ namespace Factorio.ProductionViewer
 
         #region Public Properties
 
+        public int Width { get; set; }
+
         public FactorioAssembly Assembly
         {
             get

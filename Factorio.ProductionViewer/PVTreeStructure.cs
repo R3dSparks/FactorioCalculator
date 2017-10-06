@@ -137,20 +137,36 @@ namespace Factorio.ProductionViewer
             PVFactorioItemContainer container = new PVFactorioItemContainer(assembly, level, this.Settings);
 
             container.Left = position;
+            container.Width = 0;
 
-            int newPosition = position;
+            PVFactorioItemContainer firstSubContainer = null;
+            PVFactorioItemContainer lastSubContainer = null;
 
             for(int i=0; i < container.Assembly.SubAssembly.Count; i++)
             {
                 // Build a branch for the current subassembly and position it right to the last subassembly
-                PVFactorioItemContainer currentContainer = buildTreeStructure(container.Assembly.SubAssembly[i], position + i * (Settings.ItemContainerWidth + Settings.WidthOffset), level + 1);
+                PVFactorioItemContainer currentSubContainer = buildTreeStructure(
+                    container.Assembly.SubAssembly[i],
+                    container.Left + (i < 1 ? 0 : 1) * (Settings.ItemContainerWidth + Settings.WidthOffset) + container.Width / 2, 
+                    level + 1);
 
-                Lines.Add(new PVLine(container, currentContainer));
+                if (firstSubContainer == null)
+                    firstSubContainer = currentSubContainer;
 
-                newPosition = (currentContainer.Left - position) / 2;
+                lastSubContainer = currentSubContainer;
+
+                Lines.Add(new PVLine(container, currentSubContainer));
+
+                container.Left = lastSubContainer.Left;
+                container.Width += currentSubContainer.Width;
             }
 
-            container.Left = newPosition;
+            if(firstSubContainer != null)
+            {
+                container.Left = (lastSubContainer.Left - firstSubContainer.Left) / 2 + firstSubContainer.Left;
+                container.Width = lastSubContainer.Left - firstSubContainer.Left;
+            }
+
 
             FactorioItemContainers.Add(container);
 

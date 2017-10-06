@@ -67,8 +67,10 @@ namespace Factorio.DAL
                         CraftingOutput = Convert.ToInt32(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeOutput).Value),
                         CraftingTime = Convert.ToDouble(xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeTime).Value),
                         DefaultCraftingType = (CraftingType)Enum.Parse(typeof(CraftingType), xmlData.Attribute(FactorioXmlHelper.XmlItemAttributeCraftingStation).Value),
-                        ImagePath = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributePicture).Value
                     };
+
+                    if (xmlData.Attribute(FactorioXmlHelper.XmlItemAttributePicture) != null)
+                        item.ImagePath = xmlData.Attribute(FactorioXmlHelper.XmlItemAttributePicture).Value;
                 }
 
                 if (FactorioXmlHelper.IsImagePathValid(item.ImagePath) == false)
