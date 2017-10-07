@@ -28,14 +28,25 @@ namespace Factorio.Entities
         public int Id { get; private set; }
 
         /// <summary>
-        /// name of the item
+        /// Name of the item
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Profuctivity means items per second
+        /// Productivity means items per second
         /// </summary>
-        public double Productivity { get; set; }
+        public double Productivity
+        {
+            get
+            {
+                return CraftingOutput / CraftingTime;
+            }
+
+            private set
+            {
+                Productivity = value;
+            }
+        }
 
         /// <summary>
         /// The amount which is crafted with one craft
@@ -118,7 +129,6 @@ namespace Factorio.Entities
             Name = name;
             CraftingOutput = output;
             CraftingTime = time;
-            Productivity = output / time;
             DefaultCraftingType = crafting;
             ImagePath = path;
         }

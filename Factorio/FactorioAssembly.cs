@@ -5,17 +5,20 @@ using System.Linq;
 using Factorio.Entities;
 using Factorio.DAL;
 using Factorio.Entities.Enum;
+using System.ComponentModel;
 
 namespace Factorio
 {
-    public class FactorioAssembly
+    public class FactorioAssembly : INotifyPropertyChanged
     {
+
+        public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
         #region Private Variables
 
         private List<FactorioAssembly> m_subAssembly;
 
-        private CraftingStation? m_craftingStation;
+        private CraftingStation? m_craftingStation; 
 
         #endregion
 

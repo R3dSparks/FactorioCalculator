@@ -40,7 +40,9 @@
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Background="Fuchsia" 
+                          MinWidth="{Binding Path=Settings.ItemContainerWidth}" MaxWidth="{Binding Path=Settings.ItemContainerWidth}"
+                          MinHeight="{Binding Path=Settings.ItemContainerHeight}" MaxHeight="{Binding Path=Settings.ItemContainerHeight}">
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -59,14 +61,11 @@
                                 ContextMenu="{StaticResource ProductionContextMenu}"
                                 Grid.Row="0" />
 
-                            <ComboBox Grid.Row="1">
-                                <ComboBoxItem Content="Test1" />
-                                <ComboBoxItem Content="Test2" />
-                            </ComboBox>
+                            <ComboBox Grid.Row="1" ItemsSource="{Binding Path=AssemblyOptions}" SelectedItem="{Binding Path=SelectedCraftingStation}" />
 
                         </Grid>
 
-                        <Label Content="Information" Grid.Column="1" />
+                        <Label Content="{Binding Path=Information}" Grid.Column="1"/>
                         
                     </Grid>
                 </DataTemplate>

@@ -2,6 +2,7 @@
 using Factorio.Entities.Interfaces.ProductionViewer;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace Factorio.ProductionViewer
         private PVSettings m_settings;
         private FactorioAssembly m_parentAssembly;
         private List<IPVLine> m_lines;
-        private List<IPVFactorioItemContainer> m_factorioItemContainers;
+        private ObservableCollection<IPVFactorioItemContainer> m_factorioItemContainers;
 
 
         #endregion
@@ -27,12 +28,12 @@ namespace Factorio.ProductionViewer
         /// <summary>
         /// images which are shown
         /// </summary>
-        public List<IPVFactorioItemContainer> FactorioItemContainers
+        public ObservableCollection<IPVFactorioItemContainer> FactorioItemContainers
         {
             get
             {
                 if (m_factorioItemContainers == null)
-                    m_factorioItemContainers = new List<IPVFactorioItemContainer>();
+                    m_factorioItemContainers = new ObservableCollection<IPVFactorioItemContainer>();
                 return m_factorioItemContainers;
             }
             private set { m_factorioItemContainers = value; }
@@ -57,8 +58,6 @@ namespace Factorio.ProductionViewer
         #endregion
 
         #region Properties
-
-
 
         /// <summary>
         /// Settings for this prduction viewer
@@ -114,7 +113,7 @@ namespace Factorio.ProductionViewer
         public void Rebuild()
         {
             this.Lines = new List<IPVLine>();
-            this.FactorioItemContainers = new List<IPVFactorioItemContainer>();
+            this.FactorioItemContainers = new ObservableCollection<IPVFactorioItemContainer>();
             buildTreeStructure(this.ParentAssembly);
         }
 
@@ -147,7 +146,7 @@ namespace Factorio.ProductionViewer
                 // Build a branch for the current subassembly and position it right to the last subassembly
                 PVFactorioItemContainer currentSubContainer = buildTreeStructure(
                     container.Assembly.SubAssembly[i],
-                    container.Left + (i < 1 ? 0 : 1) * (Settings.ItemContainerWidth + Settings.WidthOffset) + container.Width / 2, 
+                    container.Left + container.Width,
                     level + 1);
 
                 if (firstSubContainer == null)
@@ -157,15 +156,16 @@ namespace Factorio.ProductionViewer
 
                 Lines.Add(new PVLine(container, currentSubContainer));
 
-                container.Left = lastSubContainer.Left;
                 container.Width += currentSubContainer.Width;
             }
 
             if(firstSubContainer != null)
             {
                 container.Left = (lastSubContainer.Left - firstSubContainer.Left) / 2 + firstSubContainer.Left;
-                container.Width = lastSubContainer.Left - firstSubContainer.Left;
             }
+            else
+                container.Width = this.Settings.ItemContainerWidth + this.Settings.WidthOffset;
+
 
 
             FactorioItemContainers.Add(container);

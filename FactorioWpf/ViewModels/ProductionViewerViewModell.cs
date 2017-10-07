@@ -4,6 +4,7 @@ using Factorio.Entities.Interfaces.ProductionViewer;
 using Factorio.ProductionViewer;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,12 +24,10 @@ namespace FactorioWpf.ViewModels
         private IFactorioLogic m_logic;
 
         private FactorioAssembly m_factorioAssembly;
-        private List<IPVFactorioItemContainer> m_factorioItemContainers;
+        private ObservableCollection<IPVFactorioItemContainer> m_factorioItemContainers;
         private List<IPVLine> m_lines;
 
         private IPVLogic m_PVLogic;
-
-
 
         #endregion
 
@@ -39,12 +38,12 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public List<IPVFactorioItemContainer> FactorioItemContainers
+        public ObservableCollection<IPVFactorioItemContainer> FactorioItemContainers
         {
             get
             {
                 if (m_factorioItemContainers == null)
-                    m_factorioItemContainers = new List<IPVFactorioItemContainer>();
+                    m_factorioItemContainers = new ObservableCollection<IPVFactorioItemContainer>();
 
                 return m_factorioItemContainers;
             }
@@ -69,8 +68,6 @@ namespace FactorioWpf.ViewModels
         #endregion
 
         #region Constructor
-
-
 
         /// <summary>
         /// Create new ProductionView for an <see cref="FactorioItem"/>

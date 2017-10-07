@@ -2,14 +2,18 @@
 using Factorio.Entities.Interfaces.ProductionViewer;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Factorio.ProductionViewer
 {
-    public class PVFactorioItemContainer : IPVFactorioItemContainer
+    public class PVFactorioItemContainer : IPVFactorioItemContainer, INotifyPropertyChanged
     {
+
+
+        public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
         #region Private Variables
 
@@ -17,10 +21,41 @@ namespace Factorio.ProductionViewer
         private PVSettings m_settings;
         private PVImage m_image;
         private List<CraftingStation> m_assemblyOptions;
+        private CraftingStation m_selectedCraftingStation;
 
         #endregion
 
         #region Public Properties
+
+        public CraftingStation SelectedCraftingStation
+        {
+            get
+            {
+                return m_selectedCraftingStation;
+            }
+            set
+            {
+                m_selectedCraftingStation = value;
+                Assembly.CraftingStation = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("Information"));
+            }
+        }
+
+        public string Information
+        {
+            get
+            {
+                return $"Quantity: {this.Assembly.Quantity}\nProductivity: {this.Assembly.AssemblyItem.Productivity}";
+            }
+        }
+
+        public PVSettings Settings
+        {
+            get
+            {
+                return m_settings;
+            }
+        }
 
         public int Width { get; set; }
 
