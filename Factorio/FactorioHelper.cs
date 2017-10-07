@@ -33,5 +33,36 @@ namespace Factorio
             {CraftingStation.StoneFurnace , 1},
         };
 
+        public static List<CraftingStation> GetCraftingStationsFromCraftingType(CraftingType type)
+        {
+            List<CraftingStation> stations = new List<CraftingStation>();
+
+            switch (type)
+            {
+                case CraftingType.AssemblingMachine:
+                    stations.Add(CraftingStation.AssemblingMachine1);
+                    stations.Add(CraftingStation.AssemblingMachine2);
+                    stations.Add(CraftingStation.AssemblingMachine3);
+                    break;
+                case CraftingType.Furnace:
+                    stations.Add(CraftingStation.StoneFurnace);
+                    stations.Add(CraftingStation.SteelFurnace);
+                    stations.Add(CraftingStation.ElectricFurnace);
+                    break;
+                case CraftingType.ChemicalPlant:
+                    stations.Add(CraftingStation.ChemicalPlant);
+                    break;
+                case CraftingType.Refinery:
+                    stations.Add(CraftingStation.Refinary);
+                    break;
+                case CraftingType.Drill:
+                    break;
+                default:
+                    break;
+            }
+
+            return stations;
+        }
+
     }
 }

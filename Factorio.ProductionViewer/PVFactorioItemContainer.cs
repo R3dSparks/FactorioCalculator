@@ -1,4 +1,5 @@
-﻿using Factorio.Entities.Interfaces.ProductionViewer;
+﻿using Factorio.Entities.Enum;
+using Factorio.Entities.Interfaces.ProductionViewer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace Factorio.ProductionViewer
         private FactorioAssembly m_assembly;
         private PVSettings m_settings;
         private PVImage m_image;
+        private List<CraftingStation> m_assemblyOptions;
 
         #endregion
 
@@ -35,6 +37,17 @@ namespace Factorio.ProductionViewer
         #endregion
 
         #region Interface Implementation
+
+        public List<CraftingStation> AssemblyOptions
+        {
+            get
+            {
+                if (m_assemblyOptions == null)
+                    m_assemblyOptions = FactorioHelper.GetCraftingStationsFromCraftingType(this.m_assembly.AssemblyItem.DefaultCraftingType);
+
+                return m_assemblyOptions;
+            }
+        }
 
         public IPVImage Image
         {
