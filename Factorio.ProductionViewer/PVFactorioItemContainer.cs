@@ -17,11 +17,32 @@ namespace Factorio.ProductionViewer
 
         #region Private Variables
 
+        /// <summary>
+        /// The assembly displayed in this container
+        /// </summary>
         private FactorioAssembly m_assembly;
+
+        /// <summary>
+        /// Settings for this container
+        /// </summary>
         private PVSettings m_settings;
+
+        /// <summary>
+        /// Image displayed in this container
+        /// </summary>
         private PVImage m_image;
+
+        /// <summary>
+        /// List of all crafting stations for this item type
+        /// </summary>
         private List<CraftingStation> m_assemblyOptions;
+
+        /// <summary>
+        /// Currently selected crafting station
+        /// </summary>
         private CraftingStation m_selectedCraftingStation;
+
+        private PVTreeStructure m_viewModell;
 
         #endregion
 
@@ -37,7 +58,12 @@ namespace Factorio.ProductionViewer
             {
                 m_selectedCraftingStation = value;
                 Assembly.CraftingStation = value;
-                PropertyChanged(this, new PropertyChangedEventArgs("Information"));
+
+                foreach (var container in m_viewModell.FactorioItemContainers)
+                {
+                    PropertyChanged(container, new PropertyChangedEventArgs("Information"));
+                }
+                
             }
         }
 
@@ -137,11 +163,12 @@ namespace Factorio.ProductionViewer
 
         #region Constructors
 
-        public PVFactorioItemContainer(FactorioAssembly assembly, int level, PVSettings settings)
+        public PVFactorioItemContainer(FactorioAssembly assembly, int level, PVSettings settings, PVTreeStructure viewModell)
         {
             this.m_assembly = assembly;
             this.Level = level;
             this.m_settings = settings;
+            this.m_viewModell = viewModell;
         }
 
         #endregion

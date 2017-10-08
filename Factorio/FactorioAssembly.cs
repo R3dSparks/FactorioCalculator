@@ -18,7 +18,11 @@ namespace Factorio
 
         private List<FactorioAssembly> m_subAssembly;
 
-        private CraftingStation? m_craftingStation; 
+        private CraftingStation? m_craftingStation;
+
+        private FactorioAssembly m_topAssembly; 
+
+        private double m_quantity;
 
         #endregion
 
@@ -26,8 +30,20 @@ namespace Factorio
 
         public FactorioItem AssemblyItem { get; private set; }
 
-        public double Quantity { get; private set; }
-        
+        public double Quantity
+        {
+            get
+            {
+                return m_quantity;
+            }
+            set
+            {
+                m_quantity = value;
+            }
+        }
+
+        public int ItemQuantity { get; set; }
+
         /// <summary>
         /// List of assemlies that are needed to run this assembly
         /// </summary>
@@ -49,7 +65,7 @@ namespace Factorio
         {
             get
             {
-                return m_craftingStation ?? CraftingStation.AssemblingMachine1;
+                return m_craftingStation ?? FactorioHelper.DefaultCraftingStation[AssemblyItem.DefaultCraftingType];
             }
 
             set
@@ -66,10 +82,7 @@ namespace Factorio
         {
             get
             {
-                if (m_craftingStation == null)
-                    return FactorioHelper.DefaultCraftingSpeeds[AssemblyItem.DefaultCraftingType];
-                else
-                    return FactorioHelper.CraftingSpeeds[CraftingStation];
+                return FactorioHelper.CraftingSpeeds[CraftingStation];
             }
         }
 
@@ -106,6 +119,10 @@ namespace Factorio
         {
             AssemblyItem = assemblyItem;
 
+            ItemQuantity = quantity;
+
+            m_topAssembly = topAssembly;
+
             Quantity = (quantity * ((topAssembly.Quantity * topAssembly.AssemblyItem.Productivity)) / (assemblyItem.Productivity * topAssembly.AssemblyItem.CraftingOutput));
 
             Quantity *= topAssembly.CraftingSpeed / CraftingSpeed;
@@ -123,17 +140,33 @@ namespace Factorio
         /// Is called whenever the CraftingStation Property is changed
         /// </summary>
         /// <param name="craftingStation"></param>
+        private void changedCraftingStation(FactorioAssembly topAssembly)
+        {
+                Quantity = (ItemQuantity * ((topAssembly.Quantity * topAssembly.AssemblyItem.Productivity)) / (this.AssemblyItem.Productivity * topAssembly.AssemblyItem.CraftingOutput));
+
+                Quantity *= topAssembly.CraftingSpeed / CraftingSpeed;
+
+            foreach (var subAssembly in this.SubAssembly)
+            {
+                subAssembly.changedCraftingStation(this);
+            }
+
+        }
+
         private void changedCraftingStation()
         {
-            SubAssembly.Clear();
-
-            if (AssemblyItem.Recipe == null)
-                return;
-
-            foreach (var item in AssemblyItem.Recipe)
+            if(m_topAssembly != null)
             {
-                SubAssembly.Add(new FactorioAssembly(item.Key, this, item.Value));
+                Quantity = (ItemQuantity * ((m_topAssembly.Quantity * m_topAssembly.AssemblyItem.Productivity)) / (this.AssemblyItem.Productivity * m_topAssembly.AssemblyItem.CraftingOutput));
+
+                Quantity *= m_topAssembly.CraftingSpeed / CraftingSpeed;
             }
+            
+            foreach (var subAssembly in this.SubAssembly)
+            {
+                subAssembly.changedCraftingStation(this);
+            }
+
         }
 
         #endregion

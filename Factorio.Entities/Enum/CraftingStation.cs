@@ -10,6 +10,8 @@ namespace Factorio.Entities.Enum
         SteelFurnace,
         ElectricFurnace,
         ChemicalPlant,
-        Refinary
+        Refinary,
+        CoalDrill,
+        ElectricDrill
     }
 }

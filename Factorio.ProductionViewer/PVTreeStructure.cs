@@ -133,7 +133,7 @@ namespace Factorio.ProductionViewer
         /// <param name="level"></param>
         private PVFactorioItemContainer buildTreeStructure(FactorioAssembly assembly, int position = 0, int level = 0)
         {
-            PVFactorioItemContainer container = new PVFactorioItemContainer(assembly, level, this.Settings);
+            PVFactorioItemContainer container = new PVFactorioItemContainer(assembly, level, this.Settings, this);
 
             container.Left = position;
             container.Width = 0;

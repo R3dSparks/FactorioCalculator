@@ -1,5 +1,6 @@
 ﻿using Factorio;
 using Factorio.Entities;
+using Factorio.Entities.Enum;
 using Factorio.Entities.Interfaces.ProductionViewer;
 using Factorio.ProductionViewer;
 using System;
@@ -32,8 +33,6 @@ namespace FactorioWpf.ViewModels
         #endregion
 
         #region Public Properties
-
-
 
         /// <summary>
         /// 

@@ -9,13 +9,13 @@ namespace Factorio
         /// <summary>
         /// Default crafting speeds for the different crafting station types
         /// </summary>
-        public static readonly Dictionary<CraftingType, double> DefaultCraftingSpeeds = new Dictionary<CraftingType, double>()
+        public static readonly Dictionary<CraftingType, CraftingStation> DefaultCraftingStation = new Dictionary<CraftingType, CraftingStation>()
         {
-            {CraftingType.AssemblingMachine, 1},
-            {CraftingType.ChemicalPlant, 1 },
-            {CraftingType.Furnace, 1 },
-            {CraftingType.Refinery, 1 },
-            {CraftingType.Drill, 1 },
+            {CraftingType.AssemblingMachine, CraftingStation.AssemblingMachine1},
+            {CraftingType.ChemicalPlant, CraftingStation.ChemicalPlant },
+            {CraftingType.Furnace, CraftingStation.StoneFurnace },
+            {CraftingType.Refinery, CraftingStation.Refinary },
+            {CraftingType.Drill, CraftingStation.CoalDrill },
         };
 
         /// <summary>

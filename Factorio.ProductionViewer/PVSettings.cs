@@ -28,7 +28,7 @@ namespace Factorio.ProductionViewer
         private int m_marginLeft = 20;
 
         private int m_itemContainerHeight = 60;
-        private int m_itemContainerWidth = 180;
+        private int m_itemContainerWidth = 300;
 
 
         #endregion
