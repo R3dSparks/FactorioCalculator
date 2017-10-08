@@ -23,10 +23,16 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="0" Content="Test"/>
-
         <ItemsControl Grid.Column="1" ItemsSource="{Binding FactorioItemContainers}">
 
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer>
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas />
@@ -66,12 +72,13 @@
                         </Grid>
 
                         <Label Content="{Binding Path=Information}" Grid.Column="1"/>
-                        
+
                     </Grid>
+
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        
+                
         <ItemsControl Grid.Column="1" ItemsSource="{Binding Lines}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -86,7 +93,7 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        
+
     </Grid>
     
 </Window>

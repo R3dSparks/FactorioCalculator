@@ -31,6 +31,8 @@ namespace Factorio
             {CraftingStation.Refinary , 1},
             {CraftingStation.SteelFurnace , 2},
             {CraftingStation.StoneFurnace , 1},
+            {CraftingStation.CoalDrill, 1 },
+            {CraftingStation.ElectricDrill, 1 }
         };
 
         public static List<CraftingStation> GetCraftingStationsFromCraftingType(CraftingType type)
