@@ -11,24 +11,18 @@
 
     <Window.Resources>
         <Converters:PathToPictureConverter x:Key="PathToPictureConverter"/>
-        <ContextMenu x:Key="ProductionContextMenu">
-            <MenuItem Header="Test" />
-        </ContextMenu>
     </Window.Resources>
 
     <Grid>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="0" Content="Summary:"/>
+        <Label Grid.Column="0" Content="Summary:" BorderBrush="Black" BorderThickness="1"/>
 
-        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1"/>
-
-        <ScrollViewer Grid.Column="2" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+        <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
 
             <Canvas Width="{Binding Path=PVLogic.TotalWidth}" Margin="{Binding Path=PVLogic.Margin}">
 
@@ -51,7 +45,7 @@
                 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Background="Fuchsia" 
+                            <Grid Background="Gray" 
                                 MinWidth="{Binding Path=Settings.ItemContainerWidth}" MaxWidth="{Binding Path=Settings.ItemContainerWidth}"
                                 MinHeight="{Binding Path=Settings.ItemContainerHeight}" MaxHeight="{Binding Path=Settings.ItemContainerHeight}">
 
@@ -69,7 +63,6 @@
 
                                     <Image Source="{Binding Path=Image.ImagePath, Converter={StaticResource PathToPictureConverter}}" 
                                         Width="{Binding Path=Image.ImageWidth}" Height="{Binding Path=Image.ImageHeight}"
-                                        ContextMenu="{StaticResource ProductionContextMenu}"
                                         Grid.Row="0" />
 
                                     <ComboBox Grid.Row="1" ItemsSource="{Binding Path=AssemblyOptions}" SelectedItem="{Binding Path=SelectedCraftingStation}" />
