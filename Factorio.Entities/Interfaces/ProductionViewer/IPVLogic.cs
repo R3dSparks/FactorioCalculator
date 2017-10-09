@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Factorio.Entities.Interfaces.ProductionViewer
 {
@@ -12,6 +13,10 @@ namespace Factorio.Entities.Interfaces.ProductionViewer
     /// </summary>
     public interface IPVLogic
     {
+        /// <summary>
+        /// Margin for tree structure inside the canvas
+        /// </summary>
+        Thickness Margin { get; }
 
         /// <summary>
         /// lines which connects the pictures

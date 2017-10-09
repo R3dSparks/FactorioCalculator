@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Factorio.ProductionViewer
 {
@@ -67,6 +68,17 @@ namespace Factorio.ProductionViewer
             get
             {
                 return FactorioItemContainers[FactorioItemContainers.Count - 1].Width;
+            }
+        }
+
+        /// <summary>
+        /// Margin for tree structure inside the canvas
+        /// </summary>
+        public Thickness Margin
+        {
+            get
+            {
+                return new Thickness(Settings.MarginLeft, Settings.MarginTop, 0, 0);
             }
         }
 

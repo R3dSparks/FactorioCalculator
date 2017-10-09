@@ -21,13 +21,18 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" Height="600" Width="800">
+        <Label Grid.Column="0" Content="Summary:"/>
 
-            <Canvas Width="{Binding Path=PVLogic.TotalWidth}">
+        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1"/>
 
-                <ItemsControl Grid.Column="1" ItemsSource="{Binding FactorioItemContainers}" >
+        <ScrollViewer Grid.Column="2" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+
+            <Canvas Width="{Binding Path=PVLogic.TotalWidth}" Margin="{Binding Path=PVLogic.Margin}">
+
+                <ItemsControl ItemsSource="{Binding FactorioItemContainers}" >
                     
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -81,7 +86,7 @@
 
 
 
-                <ItemsControl Grid.Column="1" ItemsSource="{Binding Lines}">
+                <ItemsControl ItemsSource="{Binding Lines}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas />
