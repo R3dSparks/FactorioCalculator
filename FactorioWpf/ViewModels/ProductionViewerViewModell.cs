@@ -34,6 +34,14 @@ namespace FactorioWpf.ViewModels
 
         #region Public Properties
 
+        public IPVLogic PVLogic
+        {
+            get
+            {
+                return m_PVLogic;
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>

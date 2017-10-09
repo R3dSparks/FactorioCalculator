@@ -9,6 +9,8 @@ namespace Factorio.Entities.Interfaces.ProductionViewer
     public interface IPVFactorioItemContainer
     {
 
+        int Width { get; }
+
         /// <summary>
         /// Height of the container
         /// </summary>

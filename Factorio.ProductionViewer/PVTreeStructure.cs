@@ -60,6 +60,17 @@ namespace Factorio.ProductionViewer
         #region Properties
 
         /// <summary>
+        /// Total width of the tree
+        /// </summary>
+        public int TotalWidth
+        {
+            get
+            {
+                return FactorioItemContainers[FactorioItemContainers.Count - 1].Width;
+            }
+        }
+
+        /// <summary>
         /// Settings for this prduction viewer
         /// </summary>
         public PVSettings Settings
