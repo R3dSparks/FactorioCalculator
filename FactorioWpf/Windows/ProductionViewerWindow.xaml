@@ -42,9 +42,9 @@
         
        
 
-        <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
 
-            <Canvas Width="{Binding Path=PVLogic.TotalWidth}" Margin="{Binding Path=PVLogic.Margin}">
+            <Canvas Width="{Binding Path=PVLogic.TotalWidth}" Height="{Binding Path=PVLogic.TotalHeight}" Margin="{Binding Path=PVLogic.Margin}">
 
                 <ItemsControl ItemsSource="{Binding FactorioItemContainers}" >
                     

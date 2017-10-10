@@ -69,6 +69,22 @@ namespace Factorio.ProductionViewer
             }
         }
 
+        public int TotalHeight
+        {
+            get
+            {
+                int height = 0;
+
+                foreach(var container in FactorioItemContainers)
+                {
+                    if (container.Top > height)
+                        height = container.Top;
+                }
+
+                return height + Settings.ItemContainerHeight + Settings.HeightOffset;
+            }
+        }
+
         /// <summary>
         /// Total width of the tree
         /// </summary>

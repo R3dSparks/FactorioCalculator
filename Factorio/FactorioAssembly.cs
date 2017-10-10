@@ -143,6 +143,19 @@ namespace Factorio
 
         #endregion
 
+        #region Public Methods
+
+        /// <summary>
+        /// Create a list with information about this assemby
+        /// </summary>
+        /// <returns></returns>
+        public List<int> GetSummary()
+        {
+            return null;
+        }
+
+        #endregion
+
         #region Private Methods
 
         /// <summary>
