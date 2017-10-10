@@ -40,7 +40,7 @@ namespace Factorio.ProductionViewer
         /// <summary>
         /// Currently selected crafting station
         /// </summary>
-        private CraftingStation m_selectedCraftingStation;
+        private CraftingStation? m_selectedCraftingStation;
 
         private PVTreeStructure m_viewModell;
 
@@ -66,7 +66,7 @@ namespace Factorio.ProductionViewer
         {
             get
             {
-                return m_selectedCraftingStation;
+                return m_selectedCraftingStation ?? FactorioHelper.DefaultCraftingStation[m_assembly.AssemblyItem.DefaultCraftingType];
             }
             set
             {
