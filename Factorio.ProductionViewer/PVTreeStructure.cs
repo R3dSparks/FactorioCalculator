@@ -20,6 +20,7 @@ namespace Factorio.ProductionViewer
         private FactorioAssembly m_parentAssembly;
         private List<IPVLine> m_lines;
         private ObservableCollection<IPVFactorioItemContainer> m_factorioItemContainers;
+        private IPVFactorioItemContainer m_rootContainer;
 
 
         #endregion
@@ -59,6 +60,14 @@ namespace Factorio.ProductionViewer
         #endregion
 
         #region Properties
+
+        public IPVFactorioItemContainer RootContainer
+        {
+            get
+            {
+                return m_rootContainer;
+            }
+        }
 
         /// <summary>
         /// Total width of the tree
@@ -157,6 +166,9 @@ namespace Factorio.ProductionViewer
         private PVFactorioItemContainer buildTreeStructure(FactorioAssembly assembly, int position = 0, int level = 0)
         {
             PVFactorioItemContainer container = new PVFactorioItemContainer(assembly, level, this.Settings, this);
+
+            if (level == 0)
+                m_rootContainer = container;
 
             container.Left = position;
             container.Width = 0;

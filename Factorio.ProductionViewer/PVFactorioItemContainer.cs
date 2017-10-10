@@ -48,6 +48,20 @@ namespace Factorio.ProductionViewer
 
         #region Public Properties
 
+        public double Quantity
+        {
+            get
+            {
+                return m_assembly.Quantity;
+            }
+            set
+            {
+                m_assembly.Quantity = value;
+                foreach (var container in this.m_viewModell.FactorioItemContainers)
+                    PropertyChanged(container, new PropertyChangedEventArgs("Information"));
+            }
+        }
+
         public CraftingStation SelectedCraftingStation
         {
             get

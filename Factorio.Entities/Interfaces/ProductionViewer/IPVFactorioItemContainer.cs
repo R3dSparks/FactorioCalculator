@@ -37,5 +37,7 @@ namespace Factorio.Entities.Interfaces.ProductionViewer
         /// </summary>
         IPVImage Image { get; }
 
+        double Quantity { get; set; }
+
     }
 }

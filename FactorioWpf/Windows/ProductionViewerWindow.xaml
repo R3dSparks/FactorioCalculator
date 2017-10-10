@@ -20,9 +20,29 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="0" Content="Summary:" BorderBrush="Black" BorderThickness="1"/>
+        <Grid Grid.Column="0" >
 
-        <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Quantity:"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=RootQuantity, UpdateSourceTrigger=PropertyChanged}" MinWidth="25"/>
+
+            <Label Grid.Row="1" Content="Summary:" />
+
+        </Grid>
+        
+       
+
+        <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
 
             <Canvas Width="{Binding Path=PVLogic.TotalWidth}" Margin="{Binding Path=PVLogic.Margin}">
 

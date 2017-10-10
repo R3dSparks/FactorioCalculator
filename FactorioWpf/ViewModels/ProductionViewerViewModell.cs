@@ -6,6 +6,7 @@ using Factorio.ProductionViewer;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace FactorioWpf.ViewModels
     /// <summary>
     /// This view model provides the functionallity needed for the production view
     /// </summary>
-    public class ProductionViewerViewModell : BaseViewModell
+    public class ProductionViewerViewModell : BaseViewModell, INotifyPropertyChanged
     {
 
         #region Private Variables
@@ -40,6 +41,18 @@ namespace FactorioWpf.ViewModels
             get
             {
                 return m_PVLogic;
+            }
+        }
+
+        public string RootQuantity
+        {
+            get
+            {
+                return m_PVLogic.RootContainer.Quantity.ToString();
+            }
+            set
+            {
+                m_PVLogic.RootContainer.Quantity = Convert.ToDouble(value);
             }
         }
 

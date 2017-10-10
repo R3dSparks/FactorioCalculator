@@ -39,6 +39,9 @@ namespace Factorio
             set
             {
                 m_quantity = value;
+                if (m_topAssembly == null)
+                    updateAssembly();
+
             }
         }
 
@@ -71,7 +74,7 @@ namespace Factorio
             set
             {
                 m_craftingStation = value;
-                changedCraftingStation();
+                updateAssembly();
             }
         }
 
@@ -136,35 +139,41 @@ namespace Factorio
             }
         }
 
+
+
+        #endregion
+
+        #region Private Methods
+
         /// <summary>
         /// Is called whenever the CraftingStation Property is changed
         /// </summary>
         /// <param name="craftingStation"></param>
-        private void changedCraftingStation(FactorioAssembly topAssembly)
+        private void updateAssembly(FactorioAssembly topAssembly)
         {
-                Quantity = (ItemQuantity * ((topAssembly.Quantity * topAssembly.AssemblyItem.Productivity)) / (this.AssemblyItem.Productivity * topAssembly.AssemblyItem.CraftingOutput));
+            Quantity = (ItemQuantity * ((topAssembly.Quantity * topAssembly.AssemblyItem.Productivity)) / (this.AssemblyItem.Productivity * topAssembly.AssemblyItem.CraftingOutput));
 
-                Quantity *= topAssembly.CraftingSpeed / CraftingSpeed;
+            Quantity *= topAssembly.CraftingSpeed / CraftingSpeed;
 
             foreach (var subAssembly in this.SubAssembly)
             {
-                subAssembly.changedCraftingStation(this);
+                subAssembly.updateAssembly(this);
             }
 
         }
 
-        private void changedCraftingStation()
+        private void updateAssembly()
         {
-            if(m_topAssembly != null)
+            if (m_topAssembly != null)
             {
                 Quantity = (ItemQuantity * ((m_topAssembly.Quantity * m_topAssembly.AssemblyItem.Productivity)) / (this.AssemblyItem.Productivity * m_topAssembly.AssemblyItem.CraftingOutput));
 
                 Quantity *= m_topAssembly.CraftingSpeed / CraftingSpeed;
             }
-            
+
             foreach (var subAssembly in this.SubAssembly)
             {
-                subAssembly.changedCraftingStation(this);
+                subAssembly.updateAssembly(this);
             }
 
         }

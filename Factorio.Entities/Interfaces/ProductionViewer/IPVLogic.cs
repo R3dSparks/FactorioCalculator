@@ -23,6 +23,10 @@ namespace Factorio.Entities.Interfaces.ProductionViewer
         /// </summary>
         List<IPVLine> Lines { get; }
 
+        /// <summary>
+        /// Top container of the tree structure
+        /// </summary>
+        IPVFactorioItemContainer RootContainer { get; }
 
         /// <summary>
         /// images which are shown
