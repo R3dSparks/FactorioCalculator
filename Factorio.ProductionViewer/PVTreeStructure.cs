@@ -2,12 +2,15 @@
 using Factorio.Entities.Interfaces;
 using Factorio.Entities.Interfaces.ProductionViewer;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 
 namespace Factorio.ProductionViewer
 {
-    public class PVTreeStructure : IPVLogic
+    public class PVTreeStructure : IPVLogic, INotifyPropertyChanged
     {
+
+        public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
         #region Private Variables
 

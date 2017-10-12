@@ -21,25 +21,32 @@
         </Grid.ColumnDefinitions>
 
         <!-- Grid for the information panel -->
-        <Grid Grid.Column="0" >
+        <Border BorderBrush="Black" BorderThickness="1">
+            <Grid Grid.Column="0" Margin="5 5 5 5" >
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
 
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Quantity:"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=RootQuantity, UpdateSourceTrigger=PropertyChanged}" MinWidth="25"/>
+                    <TextBlock Grid.Column="0" Text="Quantity:"/>
+                    <TextBox Grid.Column="1" Text="{Binding Path=RootQuantity, UpdateSourceTrigger=PropertyChanged}" MinWidth="25" />
+                </Grid>
 
-            <Label Grid.Row="1" Content="{Binding Path=PVLogic.RootContainer.Summary}" />
+                <TextBlock Grid.Row="1" Text="Summary:" />
+                <TextBlock Grid.Row="2" Text="{Binding Path=PVLogic.RootContainer.Summary}" />
 
-        </Grid>
+            </Grid>
+        </Border>
+       
         
        
         <!-- Scroll viewer around the assembly tree -->

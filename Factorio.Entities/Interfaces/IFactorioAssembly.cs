@@ -24,8 +24,6 @@ namespace Factorio.Entities.Interfaces
 
         void UpdateAssembly();
 
-        void UpdateAssembly(IFactorioAssembly topAssembly);
-
         double CraftingSpeed { get; }
        
 

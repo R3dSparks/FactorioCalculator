@@ -75,7 +75,8 @@ namespace Factorio
             set
             {
                 m_craftingStation = value;
-                UpdateAssembly();
+                if (m_topAssembly == null)
+                    UpdateAssembly();
             }
         }
 
@@ -185,23 +186,6 @@ namespace Factorio
 
         #region Private Methods
 
-        /// <summary>
-        /// Is called whenever the CraftingStation Property is changed
-        /// </summary>
-        /// <param name="craftingStation"></param>
-        public void UpdateAssembly(IFactorioAssembly topAssembly)
-        {
-            Quantity = (ItemQuantity * ((topAssembly.Quantity * topAssembly.AssemblyItem.Productivity)) / (this.AssemblyItem.Productivity * topAssembly.AssemblyItem.CraftingOutput));
-
-            Quantity *= topAssembly.CraftingSpeed / CraftingSpeed;
-
-            foreach (var subAssembly in this.SubAssembly)
-            {
-                subAssembly.UpdateAssembly(this);
-            }
-
-        }
-
         public void UpdateAssembly()
         {
             if (m_topAssembly != null)
@@ -213,7 +197,7 @@ namespace Factorio
 
             foreach (var subAssembly in this.SubAssembly)
             {
-                subAssembly.UpdateAssembly(this);
+                subAssembly.UpdateAssembly();
             }
 
         }

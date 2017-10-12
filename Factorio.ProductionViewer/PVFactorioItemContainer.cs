@@ -185,7 +185,7 @@ namespace Factorio.ProductionViewer
 
                 foreach (var dict in this.Assembly.Summary)
                 {
-                    m_summary += dict.Key.Name + ": " + dict.Value + "\n";
+                    m_summary += dict.Key.Name + ": " + Math.Ceiling(dict.Value) + "\n";
                 }
 
                 return m_summary;
@@ -215,10 +215,12 @@ namespace Factorio.ProductionViewer
         {
             foreach (var container in m_FactotioItemContainers)
             {
-                PropertyChanged(container, new PropertyChangedEventArgs("Information"));
-                PropertyChanged(container, new PropertyChangedEventArgs("Summary"));
+                PropertyChanged(container, new PropertyChangedEventArgs(nameof(Information)));
+                PropertyChanged(container, new PropertyChangedEventArgs(nameof(Summary)));
+
             }
-                
+
+
         }
 
         #endregion
