@@ -25,7 +25,7 @@ namespace FactorioWpf.Windows
         {
             InitializeComponent();
 
-            this.DataContext = new ProductionViewerViewModell(logic, item);
+            this.DataContext = new ProductionViewerViewModell(item);
         }
     }
 }

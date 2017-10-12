@@ -6,21 +6,22 @@ using Factorio.Entities;
 using Factorio.DAL;
 using Factorio.Entities.Enum;
 using System.ComponentModel;
+using Factorio.Entities.Interfaces;
 
 namespace Factorio
 {
-    public class FactorioAssembly : INotifyPropertyChanged
+    public class FactorioAssembly : INotifyPropertyChanged, IFactorioAssembly
     {
 
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
         #region Private Variables
 
-        private List<FactorioAssembly> m_subAssembly;
+        private List<IFactorioAssembly> m_subAssembly;
 
         private CraftingStation? m_craftingStation;
 
-        private FactorioAssembly m_topAssembly; 
+        private IFactorioAssembly m_topAssembly; 
 
         private double m_quantity;
 
@@ -40,7 +41,7 @@ namespace Factorio
             {
                 m_quantity = value;
                 if (m_topAssembly == null)
-                    updateAssembly();
+                    UpdateAssembly();
 
             }
         }
@@ -50,12 +51,12 @@ namespace Factorio
         /// <summary>
         /// List of assemlies that are needed to run this assembly
         /// </summary>
-        public List<FactorioAssembly> SubAssembly
+        public List<IFactorioAssembly> SubAssembly
         {
             get
             {
                 if (m_subAssembly == null)
-                    m_subAssembly = new List<FactorioAssembly>();
+                    m_subAssembly = new List<IFactorioAssembly>();
 
                 return m_subAssembly;
             }
@@ -74,7 +75,7 @@ namespace Factorio
             set
             {
                 m_craftingStation = value;
-                updateAssembly();
+                UpdateAssembly();
             }
         }
 
@@ -146,12 +147,30 @@ namespace Factorio
         #region Public Methods
 
         /// <summary>
-        /// Create a list with information about this assemby
+        /// Get a list of which items and how many crafting stations are needed
         /// </summary>
+        /// <param name="summary"></param>
         /// <returns></returns>
-        public List<int> GetSummary()
+        public Dictionary<FactorioItem, double> GetSummary(Dictionary<FactorioItem, double> summary = null)
         {
-            return null;
+            if(summary == null)
+                summary = new Dictionary<FactorioItem, double>();
+
+            if (summary.ContainsKey(this.AssemblyItem) == false)
+            {
+                summary.Add(this.AssemblyItem, this.Quantity);
+            }
+            else
+            {
+                summary[this.AssemblyItem] += this.Quantity;
+            }
+
+            foreach (var assembly in this.SubAssembly)
+            {
+                assembly.GetSummary(summary);
+            }
+
+            return summary;
         }
 
         #endregion
@@ -162,7 +181,7 @@ namespace Factorio
         /// Is called whenever the CraftingStation Property is changed
         /// </summary>
         /// <param name="craftingStation"></param>
-        private void updateAssembly(FactorioAssembly topAssembly)
+        public void UpdateAssembly(IFactorioAssembly topAssembly)
         {
             Quantity = (ItemQuantity * ((topAssembly.Quantity * topAssembly.AssemblyItem.Productivity)) / (this.AssemblyItem.Productivity * topAssembly.AssemblyItem.CraftingOutput));
 
@@ -170,12 +189,12 @@ namespace Factorio
 
             foreach (var subAssembly in this.SubAssembly)
             {
-                subAssembly.updateAssembly(this);
+                subAssembly.UpdateAssembly(this);
             }
 
         }
 
-        private void updateAssembly()
+        public void UpdateAssembly()
         {
             if (m_topAssembly != null)
             {
@@ -186,7 +205,7 @@ namespace Factorio
 
             foreach (var subAssembly in this.SubAssembly)
             {
-                subAssembly.updateAssembly(this);
+                subAssembly.UpdateAssembly(this);
             }
 
         }

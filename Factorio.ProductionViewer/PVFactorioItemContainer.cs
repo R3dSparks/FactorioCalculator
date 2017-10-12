@@ -1,4 +1,5 @@
 ﻿using Factorio.Entities.Enum;
+using Factorio.Entities.Interfaces;
 using Factorio.Entities.Interfaces.ProductionViewer;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Factorio.ProductionViewer
         /// <summary>
         /// The assembly displayed in this container
         /// </summary>
-        private FactorioAssembly m_assembly;
+        private IFactorioAssembly m_assembly;
 
         /// <summary>
         /// Settings for this container
@@ -42,7 +43,10 @@ namespace Factorio.ProductionViewer
         /// </summary>
         private CraftingStation? m_selectedCraftingStation;
 
-        private PVTreeStructure m_viewModell;
+        /// <summary>
+        /// <see cref="PVTreeStructure"/> this container is in
+        /// </summary>
+        private List<IPVFactorioItemContainer> m_FactotioItemContainers;
 
         #endregion
 
@@ -57,8 +61,7 @@ namespace Factorio.ProductionViewer
             set
             {
                 m_assembly.Quantity = value;
-                foreach (var container in this.m_viewModell.FactorioItemContainers)
-                    PropertyChanged(container, new PropertyChangedEventArgs("Information"));
+                updatePropertyChangedForAllContainers();
             }
         }
 
@@ -73,10 +76,7 @@ namespace Factorio.ProductionViewer
                 m_selectedCraftingStation = value;
                 Assembly.CraftingStation = value;
 
-                foreach (var container in m_viewModell.FactorioItemContainers)
-                {
-                    PropertyChanged(container, new PropertyChangedEventArgs("Information"));
-                }
+                updatePropertyChangedForAllContainers();
                 
             }
         }
@@ -97,9 +97,9 @@ namespace Factorio.ProductionViewer
             }
         }
 
-        public int Width { get; set; }
+        public int SubTreeWidth { get; set; }
 
-        public FactorioAssembly Assembly
+        public IFactorioAssembly Assembly
         {
             get
             {
@@ -177,12 +177,25 @@ namespace Factorio.ProductionViewer
 
         #region Constructors
 
-        public PVFactorioItemContainer(FactorioAssembly assembly, int level, PVSettings settings, PVTreeStructure viewModell)
+        public PVFactorioItemContainer(IFactorioAssembly assembly, int level, PVSettings settings, List<IPVFactorioItemContainer> factorioItemContainers)
         {
             this.m_assembly = assembly;
             this.Level = level;
             this.m_settings = settings;
-            this.m_viewModell = viewModell;
+            this.m_FactotioItemContainers = factorioItemContainers;
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Call <see cref="PropertyChanged"/> for every item container
+        /// </summary>
+        private void updatePropertyChangedForAllContainers()
+        {
+            foreach (var container in m_FactotioItemContainers)
+                PropertyChanged(container, new PropertyChangedEventArgs("Information"));
         }
 
         #endregion

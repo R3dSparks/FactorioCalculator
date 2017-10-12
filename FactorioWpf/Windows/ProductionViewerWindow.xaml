@@ -20,6 +20,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
+        <!-- Grid for the information panel -->
         <Grid Grid.Column="0" >
 
             <Grid.ColumnDefinitions>
@@ -36,17 +37,18 @@
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Quantity:"/>
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=RootQuantity, UpdateSourceTrigger=PropertyChanged}" MinWidth="25"/>
 
-            <Label Grid.Row="1" Content="Summary:" />
+            <Label Grid.Row="1" Content="{Binding Path=Summary}" />
 
         </Grid>
         
        
-
+        <!-- Scroll viewer around the assembly tree -->
         <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
 
             <Canvas Width="{Binding Path=PVLogic.TotalWidth}" Height="{Binding Path=PVLogic.TotalHeight}" Margin="{Binding Path=PVLogic.Margin}">
 
-                <ItemsControl ItemsSource="{Binding FactorioItemContainers}" >
+                <!-- Items controll for assembly container -->
+                <ItemsControl ItemsSource="{Binding Path=PVLogic.FactorioItemContainers}" >
                     
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -98,8 +100,8 @@
                 </ItemsControl>
 
 
-
-                <ItemsControl ItemsSource="{Binding Lines}">
+                <!-- Items control for connecting lines -->
+                <ItemsControl ItemsSource="{Binding Path=PVLogic.Lines}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas />

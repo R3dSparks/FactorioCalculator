@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Factorio.Entities.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,17 @@ namespace Factorio.Entities.Interfaces.ProductionViewer
 {
     public interface IPVFactorioItemContainer
     {
+        /// <summary>
+        /// List of crafting stations for the CraftingStation ComboBox
+        /// </summary>
+        List<CraftingStation> AssemblyOptions { get; }
 
-        int Width { get; }
+        /// <summary>
+        /// Width of the container with all following containers and offsets
+        /// </summary>
+        int SubTreeWidth { get; }
+
+        IFactorioAssembly Assembly { get;}
 
         /// <summary>
         /// Height of the container
@@ -37,6 +47,9 @@ namespace Factorio.Entities.Interfaces.ProductionViewer
         /// </summary>
         IPVImage Image { get; }
 
+        /// <summary>
+        /// Crafting station quantity for an FactorioItem
+        /// </summary>
         double Quantity { get; set; }
 
     }

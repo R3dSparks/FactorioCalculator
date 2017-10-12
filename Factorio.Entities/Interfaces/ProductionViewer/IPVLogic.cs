@@ -19,18 +19,18 @@ namespace Factorio.Entities.Interfaces.ProductionViewer
         Thickness Margin { get; }
 
         /// <summary>
-        /// lines which connects the pictures
-        /// </summary>
-        List<IPVLine> Lines { get; }
-
-        /// <summary>
         /// Top container of the tree structure
         /// </summary>
         IPVFactorioItemContainer RootContainer { get; }
 
         /// <summary>
-        /// images which are shown
+        /// Lines which connects the pictures
         /// </summary>
-        ObservableCollection<IPVFactorioItemContainer> FactorioItemContainers { get; }
+        List<IPVLine> Lines { get; }
+
+        /// <summary>
+        /// <see cref="IPVFactorioItemContainer"/> that are shown
+        /// </summary>
+        List<IPVFactorioItemContainer> FactorioItemContainers { get; }
     }
 }

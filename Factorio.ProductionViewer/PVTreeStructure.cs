@@ -1,11 +1,7 @@
-﻿using Factorio;
+﻿using Factorio.Entities;
+using Factorio.Entities.Interfaces;
 using Factorio.Entities.Interfaces.ProductionViewer;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Factorio.ProductionViewer
@@ -17,32 +13,39 @@ namespace Factorio.ProductionViewer
 
 
         private PVSettings m_settings;
-        private FactorioAssembly m_parentAssembly;
         private List<IPVLine> m_lines;
-        private ObservableCollection<IPVFactorioItemContainer> m_factorioItemContainers;
-        private IPVFactorioItemContainer m_rootContainer;
+        private List<IPVFactorioItemContainer> m_factorioItemContainers;
+        private PVFactorioItemContainer m_rootContainer;
 
 
         #endregion
 
         #region Interface Properties
 
+        public IPVFactorioItemContainer RootContainer
+        {
+            get
+            {
+                return m_rootContainer;
+            }
+        }
+
         /// <summary>
-        /// images which are shown
+        /// List off all <see cref="PVFactorioItemContainer"/>
         /// </summary>
-        public ObservableCollection<IPVFactorioItemContainer> FactorioItemContainers
+        public List<IPVFactorioItemContainer> FactorioItemContainers
         {
             get
             {
                 if (m_factorioItemContainers == null)
-                    m_factorioItemContainers = new ObservableCollection<IPVFactorioItemContainer>();
+                    m_factorioItemContainers = new List<IPVFactorioItemContainer>();
                 return m_factorioItemContainers;
             }
             private set { m_factorioItemContainers = value; }
         }
 
         /// <summary>
-        /// lines which connects the pictures
+        /// Lines which connects the pictures
         /// </summary>
         public List<IPVLine> Lines
         {
@@ -55,27 +58,16 @@ namespace Factorio.ProductionViewer
             private set { m_lines = value; }
         }
 
-
-
-        #endregion
-
-        #region Properties
-
-        public IPVFactorioItemContainer RootContainer
-        {
-            get
-            {
-                return m_rootContainer;
-            }
-        }
-
+        /// <summary>
+        /// Total height of the tree
+        /// </summary>
         public int TotalHeight
         {
             get
             {
                 int height = 0;
 
-                foreach(var container in FactorioItemContainers)
+                foreach (var container in FactorioItemContainers)
                 {
                     if (container.Top > height)
                         height = container.Top;
@@ -92,7 +84,7 @@ namespace Factorio.ProductionViewer
         {
             get
             {
-                return FactorioItemContainers[FactorioItemContainers.Count - 1].Width;
+                return FactorioItemContainers[FactorioItemContainers.Count - 1].SubTreeWidth;
             }
         }
 
@@ -120,58 +112,23 @@ namespace Factorio.ProductionViewer
             }
         }
 
-        /// <summary>
-        /// Public accessor for the parent assembly of the tree structure
-        /// </summary>
-        public FactorioAssembly ParentAssembly
-        {
-            get { return m_parentAssembly; }
-            private set { m_parentAssembly = value; }
-        }
-
-
 
         #endregion
 
         #region Constructors
 
-
-
         /// <summary>
-        /// create a new tree struction for the prorduction viewer and use the data from the parameter
+        /// Create a new tree structior for the production viewer and use the data from the parameter
         /// </summary>
-        /// <param name="assembly">build a tree structure out of this data</param>
-        public PVTreeStructure(FactorioAssembly assembly)
+        /// <param name="assembly">Build a tree structure from this data</param>
+        public PVTreeStructure(IFactorioAssembly assembly)
         {
-            this.ParentAssembly = assembly;
-            buildTreeStructure(this.ParentAssembly);
+            buildTreeStructure(assembly);
         }
-
-
-
-        #endregion
-
-        #region Public Methods
-
-
-
-        /// <summary>
-        /// rebuild this tree structure
-        /// </summary>
-        public void Rebuild()
-        {
-            this.Lines = new List<IPVLine>();
-            this.FactorioItemContainers = new ObservableCollection<IPVFactorioItemContainer>();
-            buildTreeStructure(this.ParentAssembly);
-        }
-
-
 
         #endregion
 
         #region Private Methods
-
-
 
         /// <summary>
         /// build the tree structure out of the given assembly
@@ -179,15 +136,15 @@ namespace Factorio.ProductionViewer
         /// <param name="assembly"></param>
         /// <param name="position"></param>
         /// <param name="level"></param>
-        private PVFactorioItemContainer buildTreeStructure(FactorioAssembly assembly, int position = 0, int level = 0)
+        private PVFactorioItemContainer buildTreeStructure(IFactorioAssembly assembly, int position = 0, int level = 0)
         {
-            PVFactorioItemContainer container = new PVFactorioItemContainer(assembly, level, this.Settings, this);
+            PVFactorioItemContainer container = new PVFactorioItemContainer(assembly, level, this.Settings, this.FactorioItemContainers);
 
             if (level == 0)
                 m_rootContainer = container;
 
             container.Left = position;
-            container.Width = 0;
+            container.SubTreeWidth = 0;
 
             PVFactorioItemContainer firstSubContainer = null;
             PVFactorioItemContainer lastSubContainer = null;
@@ -197,7 +154,7 @@ namespace Factorio.ProductionViewer
                 // Build a branch for the current subassembly and position it right to the last subassembly
                 PVFactorioItemContainer currentSubContainer = buildTreeStructure(
                     container.Assembly.SubAssembly[i],
-                    container.Left + container.Width,
+                    container.Left + container.SubTreeWidth,
                     level + 1);
 
                 if (firstSubContainer == null)
@@ -207,7 +164,7 @@ namespace Factorio.ProductionViewer
 
                 Lines.Add(new PVLine(container, currentSubContainer));
 
-                container.Width += currentSubContainer.Width;
+                container.SubTreeWidth += currentSubContainer.SubTreeWidth;
             }
 
             if(firstSubContainer != null)
@@ -215,7 +172,7 @@ namespace Factorio.ProductionViewer
                 container.Left = (lastSubContainer.Left - firstSubContainer.Left) / 2 + firstSubContainer.Left;
             }
             else
-                container.Width = this.Settings.ItemContainerWidth + this.Settings.WidthOffset;
+                container.SubTreeWidth = this.Settings.ItemContainerWidth + this.Settings.WidthOffset;
 
 
 

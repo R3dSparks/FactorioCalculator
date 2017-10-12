@@ -1,34 +1,24 @@
 ﻿using Factorio;
 using Factorio.Entities;
-using Factorio.Entities.Enum;
 using Factorio.Entities.Interfaces.ProductionViewer;
 using Factorio.ProductionViewer;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace FactorioWpf.ViewModels
 {
     /// <summary>
     /// This view model provides the functionallity needed for the production view
     /// </summary>
-    public class ProductionViewerViewModell : BaseViewModell, INotifyPropertyChanged
+    public class ProductionViewerViewModell : BaseViewModell
     {
 
         #region Private Variables
 
-
-
-        private IFactorioLogic m_logic;
-
         private FactorioAssembly m_factorioAssembly;
-        private ObservableCollection<IPVFactorioItemContainer> m_factorioItemContainers;
+        private List<IPVFactorioItemContainer> m_factorioItemContainers;
         private List<IPVLine> m_lines;
+        private string m_summary;
 
         private IPVLogic m_PVLogic;
 
@@ -36,6 +26,24 @@ namespace FactorioWpf.ViewModels
 
         #region Public Properties
 
+        public string Summary
+        {
+            get
+            {
+                m_summary = string.Empty;
+
+                foreach (var dict in m_PVLogic.RootContainer.Assembly.GetSummary())
+                {
+                    m_summary += dict.Key.Name + ": " + dict.Value + "\n";
+                }
+
+                return m_summary;
+            }
+        }
+
+        /// <summary>
+        /// Contains all information about the assembly tree
+        /// </summary>
         public IPVLogic PVLogic
         {
             get
@@ -44,6 +52,9 @@ namespace FactorioWpf.ViewModels
             }
         }
 
+        /// <summary>
+        /// Quantity of crafting stations for the root assembly
+        /// </summary>
         public string RootQuantity
         {
             get
@@ -57,21 +68,21 @@ namespace FactorioWpf.ViewModels
         }
 
         /// <summary>
-        /// 
+        /// List with all tree nodes
         /// </summary>
-        public ObservableCollection<IPVFactorioItemContainer> FactorioItemContainers
+        public List<IPVFactorioItemContainer> FactorioItemContainers
         {
             get
             {
                 if (m_factorioItemContainers == null)
-                    m_factorioItemContainers = new ObservableCollection<IPVFactorioItemContainer>();
+                    m_factorioItemContainers = new List<IPVFactorioItemContainer>();
 
                 return m_factorioItemContainers;
             }
         }
 
         /// <summary>
-        /// 
+        /// List with all tree lines
         /// </summary>
         public List<IPVLine> Lines
         {
@@ -93,10 +104,8 @@ namespace FactorioWpf.ViewModels
         /// <summary>
         /// Create new ProductionView for an <see cref="FactorioItem"/>
         /// </summary>
-        public ProductionViewerViewModell(IFactorioLogic logic, FactorioItem item)
+        public ProductionViewerViewModell(FactorioItem item)
         {
-            m_logic = logic;
-
             m_factorioAssembly = new FactorioAssembly(item);
             m_PVLogic = new PVTreeStructure(m_factorioAssembly);
 
