@@ -37,7 +37,7 @@
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Quantity:"/>
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=RootQuantity, UpdateSourceTrigger=PropertyChanged}" MinWidth="25"/>
 
-            <Label Grid.Row="1" Content="{Binding Path=Summary}" />
+            <Label Grid.Row="1" Content="{Binding Path=PVLogic.RootContainer.Summary}" />
 
         </Grid>
         

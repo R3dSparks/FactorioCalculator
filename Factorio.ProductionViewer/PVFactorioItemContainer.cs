@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Factorio.Entities;
 
 namespace Factorio.ProductionViewer
 {
@@ -22,6 +23,8 @@ namespace Factorio.ProductionViewer
         /// The assembly displayed in this container
         /// </summary>
         private IFactorioAssembly m_assembly;
+
+        private string m_summary;
 
         /// <summary>
         /// Settings for this container
@@ -51,6 +54,7 @@ namespace Factorio.ProductionViewer
         #endregion
 
         #region Public Properties
+        
 
         public double Quantity
         {
@@ -173,6 +177,21 @@ namespace Factorio.ProductionViewer
             }
         }
 
+        public string Summary
+        {
+            get
+            {
+                m_summary = string.Empty;
+
+                foreach (var dict in this.Assembly.Summary)
+                {
+                    m_summary += dict.Key.Name + ": " + dict.Value + "\n";
+                }
+
+                return m_summary;
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -195,7 +214,11 @@ namespace Factorio.ProductionViewer
         private void updatePropertyChangedForAllContainers()
         {
             foreach (var container in m_FactotioItemContainers)
+            {
                 PropertyChanged(container, new PropertyChangedEventArgs("Information"));
+                PropertyChanged(container, new PropertyChangedEventArgs("Summary"));
+            }
+                
         }
 
         #endregion

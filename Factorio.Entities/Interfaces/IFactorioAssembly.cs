@@ -12,6 +12,8 @@ namespace Factorio.Entities.Interfaces
 
         Dictionary<FactorioItem, double> GetSummary(Dictionary<FactorioItem, double> summary = null);
 
+        Dictionary<FactorioItem, double> Summary { get; }
+
         CraftingStation CraftingStation { get; set; }
 
         double Quantity { get; set; }

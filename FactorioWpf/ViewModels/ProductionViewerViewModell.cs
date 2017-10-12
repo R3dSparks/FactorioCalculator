@@ -18,28 +18,12 @@ namespace FactorioWpf.ViewModels
         private FactorioAssembly m_factorioAssembly;
         private List<IPVFactorioItemContainer> m_factorioItemContainers;
         private List<IPVLine> m_lines;
-        private string m_summary;
 
         private IPVLogic m_PVLogic;
 
         #endregion
 
         #region Public Properties
-
-        public string Summary
-        {
-            get
-            {
-                m_summary = string.Empty;
-
-                foreach (var dict in m_PVLogic.RootContainer.Assembly.GetSummary())
-                {
-                    m_summary += dict.Key.Name + ": " + dict.Value + "\n";
-                }
-
-                return m_summary;
-            }
-        }
 
         /// <summary>
         /// Contains all information about the assembly tree

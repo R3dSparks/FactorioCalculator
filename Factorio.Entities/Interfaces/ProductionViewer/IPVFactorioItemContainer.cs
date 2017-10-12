@@ -14,6 +14,8 @@ namespace Factorio.Entities.Interfaces.ProductionViewer
         /// </summary>
         List<CraftingStation> AssemblyOptions { get; }
 
+        string Summary { get; }
+
         /// <summary>
         /// Width of the container with all following containers and offsets
         /// </summary>

@@ -90,6 +90,14 @@ namespace Factorio
             }
         }
 
+        public Dictionary<FactorioItem, double> Summary
+        {
+            get
+            {
+                return GetSummary();
+            }
+        }
+
         #endregion
 
         #region Constructor
