@@ -25,6 +25,9 @@ namespace Factorio.ProductionViewer
 
         #region Interface Properties
 
+        /// <summary>
+        /// Root container from which the assembly tree origin
+        /// </summary>
         public IPVFactorioItemContainer RootContainer
         {
             get
@@ -103,7 +106,7 @@ namespace Factorio.ProductionViewer
         }
 
         /// <summary>
-        /// Settings for this prduction viewer
+        /// Settings for this production viewer
         /// </summary>
         public PVSettings Settings
         {
