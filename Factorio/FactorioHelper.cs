@@ -7,15 +7,15 @@ namespace Factorio
     public static class FactorioHelper
     {
         /// <summary>
-        /// Default crafting speeds for the different crafting station types
+        /// Default crafting station for the different crafting station types
         /// </summary>
         public static readonly Dictionary<CraftingType, CraftingStation> DefaultCraftingStation = new Dictionary<CraftingType, CraftingStation>()
         {
-            {CraftingType.AssemblingMachine, CraftingStation.AssemblingMachine1},
+            {CraftingType.AssemblingMachine, CraftingStation.AssemblingMachine3},
             {CraftingType.ChemicalPlant, CraftingStation.ChemicalPlant },
-            {CraftingType.Furnace, CraftingStation.StoneFurnace },
+            {CraftingType.Furnace, CraftingStation.ElectricFurnace },
             {CraftingType.Refinery, CraftingStation.Refinary },
-            {CraftingType.Drill, CraftingStation.CoalDrill },
+            {CraftingType.Drill, CraftingStation.ElectricDrill },
         };
 
         /// <summary>
@@ -35,6 +35,11 @@ namespace Factorio
             {CraftingStation.ElectricDrill, 1 }
         };
 
+        /// <summary>
+        /// Get all crafting stations from a crafting type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static List<CraftingStation> GetCraftingStationsFromCraftingType(CraftingType type)
         {
             List<CraftingStation> stations = new List<CraftingStation>();
