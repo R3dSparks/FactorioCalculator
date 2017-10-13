@@ -216,9 +216,10 @@ namespace Factorio.ProductionViewer
             foreach (var container in m_FactotioItemContainers)
             {
                 PropertyChanged(container, new PropertyChangedEventArgs(nameof(Information)));
-                PropertyChanged(container, new PropertyChangedEventArgs(nameof(Summary)));
-
             }
+
+            // Update the root container to update the summary UI
+            PropertyChanged(m_FactotioItemContainers[m_FactotioItemContainers.Count - 1], new PropertyChangedEventArgs(nameof(Summary)));
         }
 
         #endregion
