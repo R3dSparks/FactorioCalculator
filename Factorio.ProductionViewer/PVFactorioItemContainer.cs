@@ -219,8 +219,6 @@ namespace Factorio.ProductionViewer
                 PropertyChanged(container, new PropertyChangedEventArgs(nameof(Summary)));
 
             }
-
-
         }
 
         #endregion

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace FactorioWpf.ViewModels
 {
     /// <summary>
-    /// This view model provides the functionallity needed for the production view
+    /// This view model provides the functionality needed for the production view
     /// </summary>
     public class ProductionViewerViewModell : BaseViewModell
     {

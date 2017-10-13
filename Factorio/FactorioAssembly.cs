@@ -40,8 +40,12 @@ namespace Factorio
             set
             {
                 m_quantity = value;
+
+                // Only update if this is the top most assembly
                 if (m_topAssembly == null)
+                {
                     UpdateAssembly();
+                }
 
             }
         }
@@ -75,8 +79,7 @@ namespace Factorio
             set
             {
                 m_craftingStation = value;
-                if (m_topAssembly == null)
-                    UpdateAssembly();
+                UpdateAssembly();
             }
         }
 
