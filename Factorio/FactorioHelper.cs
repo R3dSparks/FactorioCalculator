@@ -11,9 +11,9 @@ namespace Factorio
         /// </summary>
         public static readonly Dictionary<CraftingType, CraftingStation> DefaultCraftingStation = new Dictionary<CraftingType, CraftingStation>()
         {
-            {CraftingType.AssemblingMachine, CraftingStation.AssemblingMachine3},
+            {CraftingType.AssemblingMachine, CraftingStation.AssemblingMachine2},
             {CraftingType.ChemicalPlant, CraftingStation.ChemicalPlant },
-            {CraftingType.Furnace, CraftingStation.ElectricFurnace },
+            {CraftingType.Furnace, CraftingStation.StoneFurnace },
             {CraftingType.Refinery, CraftingStation.Refinary },
             {CraftingType.Drill, CraftingStation.ElectricDrill },
         };

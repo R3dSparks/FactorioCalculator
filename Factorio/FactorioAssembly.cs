@@ -31,6 +31,9 @@ namespace Factorio
 
         public FactorioItem AssemblyItem { get; private set; }
 
+        /// <summary>
+        /// Number of crafting stations needed
+        /// </summary>
         public double Quantity
         {
             get
@@ -84,7 +87,7 @@ namespace Factorio
         }
 
         /// <summary>
-        /// Crafting speed for this assembly. Get default item crafting speed if crafting station is not set.
+        /// Crafting speed for this assembly.
         /// </summary>
         public double CraftingSpeed
         {

@@ -89,7 +89,8 @@ namespace Factorio.ProductionViewer
         {
             get
             {
-                return $"Quantity: {this.Assembly.Quantity}\nProductivity: {this.Assembly.AssemblyItem.Productivity}";
+                return  $"Quantity: {this.Assembly.Quantity}\n" +
+                        $"IpS: {this.Assembly.Quantity / this.Assembly.AssemblyItem.CraftingTime * this.Assembly.CraftingSpeed}";
             }
         }
 
