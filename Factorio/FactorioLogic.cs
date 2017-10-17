@@ -50,7 +50,7 @@ namespace Factorio
             get
             {
                 if (m_xmlDal == null)
-                    m_xmlDal = new FactorioXmlDal();
+                    m_xmlDal = new FactorioItemXmlDal();
                 return m_xmlDal;
             }
             set

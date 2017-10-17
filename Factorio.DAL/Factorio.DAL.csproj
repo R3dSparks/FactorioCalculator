@@ -40,7 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FactorioSettingsDAL.cs" />
+    <Compile Include="FactorioItemXmlDal.cs" />
+    <Compile Include="FactorioSettingsDal.cs" />
     <Compile Include="FactorioXmlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FactorioXmlDal.cs" />

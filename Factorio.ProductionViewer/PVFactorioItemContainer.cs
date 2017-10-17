@@ -4,10 +4,6 @@ using Factorio.Entities.Interfaces.ProductionViewer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Factorio.Entities;
 
 namespace Factorio.ProductionViewer
 {

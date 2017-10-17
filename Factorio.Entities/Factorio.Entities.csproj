@@ -57,7 +57,7 @@
     <Compile Include="Helper\ObservableDictionary.cs" />
     <Compile Include="Interfaces\IFactorioAssembly.cs" />
     <Compile Include="Interfaces\IFactorioLogic.cs" />
-    <Compile Include="Interfaces\IFactorioSettingsDAL.cs" />
+    <Compile Include="Interfaces\IFactorioSettings.cs" />
     <Compile Include="Interfaces\ProductionViewer\IPVFactorioItemContainer.cs" />
     <Compile Include="Interfaces\ProductionViewer\IPVLogic.cs" />
     <Compile Include="Interfaces\IFactorioXmlDal.cs" />

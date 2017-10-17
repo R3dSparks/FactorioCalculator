@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Factorio.Entities.Interfaces
 {
-    public interface IFactorioSettingsDAL
+    public interface IFactorioSettings
     {
-
-        string PathToIconImages { get; set; }
-
+        string RootPathToIconImages { get; set; }
     }
 }
