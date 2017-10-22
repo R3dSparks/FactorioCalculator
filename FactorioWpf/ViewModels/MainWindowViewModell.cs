@@ -15,6 +15,7 @@ namespace FactorioWpf.ViewModels
         private IFactorioLogic fLogic;
 
         #region Commands
+        private RelayCommand m_openSettingsDialog;
 
         private RelayCommand m_deletelistBoxItem;
 
@@ -29,6 +30,17 @@ namespace FactorioWpf.ViewModels
         #endregion
 
         #region Public Properties
+
+        public ICommand OpenSettingsDialog
+        {
+            get
+            {
+                if (m_openSettingsDialog == null)
+                    m_openSettingsDialog = new RelayCommand(OpenSettings);
+
+                return m_openSettingsDialog;
+            }
+        }
 
         public ICommand OpenListBoxItemProduction
         {
@@ -122,6 +134,13 @@ namespace FactorioWpf.ViewModels
         #endregion
 
         #region Command Methods
+        
+        private void OpenSettings()
+        {
+            SettingsWindow settingsWindow = new SettingsWindow(fLogic);
+
+            settingsWindow.ShowDialog();
+        }
 
         private void OpenProductionWindow()
         {

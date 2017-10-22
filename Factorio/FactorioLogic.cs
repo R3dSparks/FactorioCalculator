@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Factorio.Entities;
 using Factorio.DAL;
 using System.Collections.ObjectModel;
+using Factorio.Entities.Interfaces;
 
 namespace Factorio
 {
@@ -22,6 +23,7 @@ namespace Factorio
         /// </summary>
         public string ItemListXmlPath { get; private set; }
 
+        public IFactorioSettings Settings { get; set; }
 
         /// <summary>
         /// Contains all items of this application
@@ -75,10 +77,11 @@ namespace Factorio
         /// <summary>
         /// Create FactorioLogic with path to items file
         /// </summary>
-        /// <param name="path">Path to items file</param>
+        /// <param name="path">Basepath to FactorioCalculator folder</param>
         public FactorioLogic(string path)
         {
-            ItemListXmlPath = path;
+            ItemListXmlPath = path + @"\Data\ItemList.xml";
+            Settings = new FactorioSettings(path + @"\Settings.xml");
         }
 
 

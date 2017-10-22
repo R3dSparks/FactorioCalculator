@@ -10,6 +10,7 @@ namespace Factorio
 {
     public class FactorioSettings : IFactorioSettings
     {
+        private FactorioSettingsDal m_factorioSettingsDal;
 
         private string m_rootPathToIconImages;
 
@@ -18,7 +19,7 @@ namespace Factorio
             get
             {
                 if (m_rootPathToIconImages == null)
-                    m_rootPathToIconImages = FactorioSettingsDal.LoadSetting(FactorioSettingsDal.XmlRootIconImagePath);
+                    m_rootPathToIconImages = m_factorioSettingsDal.LoadSetting(FactorioSettingsDal.XmlRootIconImagePath);
                 return m_rootPathToIconImages;
             }
             set
@@ -27,9 +28,9 @@ namespace Factorio
             }
         }
 
-        public FactorioSettings()
+        public FactorioSettings(string path)
         {
-
+            m_factorioSettingsDal = new FactorioSettingsDal(path);
         }
 
     }

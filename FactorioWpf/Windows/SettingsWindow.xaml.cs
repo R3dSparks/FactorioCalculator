@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Factorio.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,11 @@ namespace FactorioWpf.Windows
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        public SettingsWindow()
+        public SettingsWindow(IFactorioLogic factorioLogic)
         {
             InitializeComponent();
+
+            this.DataContext = factorioLogic;
         }
     }
 }

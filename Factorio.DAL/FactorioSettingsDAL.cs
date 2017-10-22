@@ -9,32 +9,40 @@ using System.Xml.Linq;
 
 namespace Factorio.DAL
 {
-    public static class FactorioSettingsDal
+    public class FactorioSettingsDal
     {
         #region XmlMarkers
         public static readonly string XmlMainElement = "Settings";
         public static readonly string XmlRootIconImagePath = "RootIconImagePath";
         #endregion
 
-        // Get path to Settings in AppData
-        private static string pathToSettings = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"FactorioCalculator\Settings.xml");
+        private string m_pathToSettings;
 
-        public static string LoadSetting(string settingName)
+        public FactorioSettingsDal(string path)
         {
-            if (File.Exists(pathToSettings) == false)
-                FactorioXmlHelper.CreateXml(pathToSettings, XmlMainElement);
+            m_pathToSettings = path;
+        }
 
-            XDocument settings = XDocument.Load(pathToSettings);
+        public string LoadSetting(string settingName)
+        {
+            if (File.Exists(m_pathToSettings) == false)
+                FactorioXmlHelper.CreateXml(m_pathToSettings, XmlMainElement);
+
+            XDocument settings = XDocument.Load(m_pathToSettings);
+
+            if(settings.Element(settingName).FirstAttribute == null)
+                FactorioXmlHelper.AddAttribute(m_pathToSettings, settingName);
+
 
             return settings.Element(settingName).FirstAttribute.ToString();
         }
 
-        public static void SaveSetting(string settingName, string value)
+        public void SaveSetting(string settingName, string value)
         {
-            if (File.Exists(pathToSettings) == false)
-                FactorioXmlHelper.CreateXml(pathToSettings, XmlMainElement);
+            if (File.Exists(m_pathToSettings) == false)
+                FactorioXmlHelper.CreateXml(m_pathToSettings, XmlMainElement);
 
-            XDocument settings = XDocument.Load(pathToSettings);
+            XDocument settings = XDocument.Load(m_pathToSettings);
 
             settings.Element(settingName).FirstAttribute.SetValue(value);
         }

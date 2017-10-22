@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:FactorioWpf.Windows"
         mc:Ignorable="d"
         Title="SettingsWindow" Height="300" Width="300">
+
     <Grid>
-        
+        <Label Content="{Binding Path=Settings.RootPathToIconImages}" />
     </Grid>
+
 </Window>

@@ -36,6 +36,12 @@ namespace Factorio.DAL
             return File.Exists(path);
         }
 
+        internal static void AddAttribute(string m_pathToSettings, string settingName)
+        {
+            XDocument doc = XDocument.Load(m_pathToSettings);
+            
+        }
+
         /// <summary>
         /// Create a standart xml file
         /// </summary>
