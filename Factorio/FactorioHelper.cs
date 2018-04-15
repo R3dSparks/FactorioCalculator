@@ -13,7 +13,7 @@ namespace Factorio
         {
             {CraftingType.AssemblingMachine, CraftingStation.AssemblingMachine2},
             {CraftingType.ChemicalPlant, CraftingStation.ChemicalPlant },
-            {CraftingType.Furnace, CraftingStation.StoneFurnace },
+            {CraftingType.Furnace, CraftingStation.ElectricFurnace },
             {CraftingType.Refinery, CraftingStation.Refinary },
             {CraftingType.Drill, CraftingStation.ElectricDrill },
         };
@@ -23,14 +23,14 @@ namespace Factorio
         /// </summary>
         public static readonly Dictionary<CraftingStation, double> CraftingSpeeds = new Dictionary<CraftingStation, double>()
         {
-            {CraftingStation.AssemblingMachine1 , 0.5},
-            {CraftingStation.AssemblingMachine2 , 0.75},
-            {CraftingStation.AssemblingMachine3 , 1.25},
-            {CraftingStation.ChemicalPlant , 1.25},
-            {CraftingStation.ElectricFurnace , 2},
-            {CraftingStation.Refinary , 1},
-            {CraftingStation.SteelFurnace , 2},
-            {CraftingStation.StoneFurnace , 1},
+            {CraftingStation.AssemblingMachine1, 0.5},
+            {CraftingStation.AssemblingMachine2, 0.75},
+            {CraftingStation.AssemblingMachine3, 1.25},
+            {CraftingStation.ChemicalPlant, 1.25},
+            {CraftingStation.ElectricFurnace, 2},
+            {CraftingStation.Refinary, 1},
+            {CraftingStation.SteelFurnace, 2},
+            {CraftingStation.StoneFurnace, 1},
             {CraftingStation.CoalDrill, 1 },
             {CraftingStation.ElectricDrill, 1 }
         };
