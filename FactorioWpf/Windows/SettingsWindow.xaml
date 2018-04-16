@@ -8,7 +8,19 @@
         Title="SettingsWindow" Height="300" Width="300">
 
     <Grid>
-        <Label Content="{Binding Path=Settings.RootPathToIconImages}" />
+
+        <Grid.ColumnDefinitions>
+            
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <TextBox Text="{Binding Path=Settings.RootPathToIconImages}" />
+
+        <Button Content="Save" />
+        <Button Content="Cancel" />
     </Grid>
 
 </Window>

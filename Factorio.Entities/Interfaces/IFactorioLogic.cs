@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Factorio.Entities.Interfaces;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Factorio.Entities
@@ -16,6 +17,7 @@ namespace Factorio.Entities
         /// </summary>
         ObservableCollection<FactorioItem> Items { get; }
 
+        IFactorioSettings Settings { get; set; }
 
         #endregion
         
