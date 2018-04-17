@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DB9D90B7-E73C-4CCF-9124-28339A754923}</ProjectGuid>
+    <ProjectGuid>{300B762D-74E2-4EE8-B839-97871AD7EEFD}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>FactorioTest</RootNamespace>
-    <AssemblyName>FactorioTest</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>FactorioCalculator.Test</RootNamespace>
+    <AssemblyName>FactorioCalculator.Test</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
@@ -50,16 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Factorio.DAL\Factorio.DAL.csproj">
-      <Project>{bf393920-f0a8-41d8-8be0-cf245ce6cf4e}</Project>
+      <Project>{BF393920-F0A8-41D8-8BE0-CF245CE6CF4E}</Project>
       <Name>Factorio.DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Factorio.Entities\Factorio.Entities.csproj">
-      <Project>{6a92c8f5-841d-4ea2-bb7c-59b7e261fa0d}</Project>
-      <Name>Factorio.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Factorio\Factorio.csproj">
-      <Project>{c3f2becf-01ec-48d0-ae8f-d9a034a17d98}</Project>
-      <Name>Factorio</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

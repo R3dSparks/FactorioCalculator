@@ -8,7 +8,6 @@ namespace Factorio.Entities
     /// <summary>
     /// This object represents one item in factorio
     /// </summary>
-    [ImplementPropertyChanged]
     public class FactorioItem : INotifyPropertyChanged
     {
         #region Private Variables

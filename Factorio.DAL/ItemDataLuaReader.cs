@@ -15,13 +15,15 @@ namespace Factorio.DAL
 
         private StreamReader m_streamReader;
 
+        private readonly char m_startOfObject = '{';
+        private readonly char m_endOfObject = '}';
 
         public struct ItemData
         {
-            string type;
-            string name;
-            string icon;
-            string subgroup;
+            public string type;
+            public string name;
+            public string icon;
+            public string subgroup;
         }
 
         public ItemDataLuaReader(string path)
@@ -33,15 +35,9 @@ namespace Factorio.DAL
 
         public ItemData? ReadNextItemData()
         {
-            throw new NotImplementedException();
-
-            if (m_streamReader.EndOfStream)
-                return null;
-
             readToNextItem();
 
-
-
+            return null;
         }
 
         public List<ItemData> ReadAllItemData()
@@ -51,7 +47,15 @@ namespace Factorio.DAL
 
         private void readToNextItem()
         {
-                while (!m_streamReader.EndOfStream && m_streamReader.Read() != '{' && m_streamReader.Peek() != '{') ;
+           
+            while (!m_streamReader.EndOfStream)
+            {
+                if(m_streamReader.Read() == m_startOfObject)
+                {
+                    if (m_streamReader.Peek() != m_startOfObject)
+                        return;
+                }
+            }
         }
 
     }

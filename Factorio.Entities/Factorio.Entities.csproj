@@ -53,6 +53,7 @@
     <Compile Include="Entites\FactorioItem.cs" />
     <Compile Include="Exceptions\DiagnosticEvents.cs" />
     <Compile Include="Exceptions\FactorioException.cs" />
+    <Compile Include="Helper\LuaString.cs" />
     <Compile Include="Helper\ObservableDictionary.cs" />
     <Compile Include="Interfaces\IFactorioAssembly.cs" />
     <Compile Include="Interfaces\IFactorioLogic.cs" />
